@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan Officers Academy | Prep for PMA, Navy, LCC & AFNS</title>
+    
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        army: { light: '#027a35', DEFAULT: '#01411C', dark: '#000c05' },
+                        navy: '#00205b',
+                        gold: '#D4AF37'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #000c05; color: #e2e8f0; overflow-x: hidden; }
+        .military-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; }
+        .glass-nav { background: rgba(0, 12, 5, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
+        
+        /* Smooth Page Transition Animation */
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: pageIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(30px); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        .premium-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(10px); 
+            transition: all 0.4s ease; 
+        }
+        .premium-card:hover { border-color: #D4AF37; background: rgba(212, 175, 55, 0.05); transform: translateY(-5px); }
+
+        #chat-widget { width: 350px; height: 500px; background: #001a0b; border: 1px solid #D4AF37; border-radius: 20px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+        .bot-msg { background: rgba(255, 255, 255, 0.1); border-radius: 12px 12px 12px 0px; margin-bottom: 10px; padding: 12px; font-size: 0.75rem; }
+        .user-msg { background: #D4AF37; color: #001a0b; border-radius: 12px 12px 0px 12px; align-self: flex-end; margin-bottom: 10px; padding: 12px; font-size: 0.75rem; font-weight: 600; }
+        
+        .navy-gradient { background: linear-gradient(135deg, #00205b 0%, #000c05 100%); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-[100] glass-nav">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4 cursor-pointer group" id="main-logo" title="Triple Click for Admin">
+                <img src="logo.png" class="h-10 transition-transform group-hover:scale-110">
+                <div>
+                    <h1 class="military-font font-bold text-xl text-white leading-none">Pakistan Officers Academy</h1>
+                    <p class="text-gold text-[9px] tracking-[0.3em] font-bold uppercase">Preparing the Protectors</p>
+                </div>
+            </div>
+            <div class="hidden lg:flex items-center space-x-8 text-[10px] font-bold uppercase tracking-widest text-gray-300">
+                <a href="javascript:void(0)" onclick="showView('landing')" class="hover:text-gold transition">Home</a>
+                <a href="javascript:void(0)" onclick="showView('about-view')" class="hover:text-gold transition">Our Story</a>
+                <a href="javascript:void(0)" onclick="showView('apply-view')" class="bg-gold text-army-dark px-6 py-2.5 rounded-full hover:bg-white transition shadow-lg">Apply Now</a>
+                <a href="javascript:void(0)" onclick="showView('portal')" class="hover:text-gold transition">Student Portal</a>
+            </div>
+            <button class="lg:hidden text-gold z-[120]" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" id="menu-icon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobile-menu" class="fixed inset-0 bg-army-dark z-[110] flex flex-col items-center justify-center space-y-8 text-white hidden">
+        <a href="javascript:void(0)" onclick="showView('landing'); toggleMobileMenu()" class="military-font text-3xl">Home</a>
+        <a href="javascript:void(0)" onclick="showView('about-view'); toggleMobileMenu()" class="military-font text-3xl">About</a>
+        <a href="javascript:void(0)" onclick="showView('apply-view'); toggleMobileMenu()" class="military-font text-3xl text-gold font-bold">Apply Now</a>
+        <a href="javascript:void(0)" onclick="showView('portal'); toggleMobileMenu()" class="military-font text-3xl">Student Portal</a>
+        <button onclick="toggleMobileMenu()" class="mt-8 p-4 bg-white/5 rounded-full text-gold"><i data-lucide="x" class="w-10 h-10"></i></button>
+    </div>
+
+    <main>
+        <!-- 1. LANDING PAGE -->
+        <div id="landing" class="view-section active">
+            <!-- HERO -->
+            <section class="relative h-[95vh] flex items-center justify-center text-center px-6 overflow-hidden">
+                <img src="image1.jpg.png" alt="Hero" class="absolute inset-0 w-full h-full object-cover z-0 opacity-30">
+                <div class="absolute inset-0 bg-gradient-to-b from-army-dark/90 via-transparent to-army-dark z-10"></div>
+                <div class="max-w-4xl relative z-20" data-aos="zoom-out">
+                    <h1 class="text-5xl md:text-8xl font-bold military-font mb-8 text-white leading-tight">Master the <span class="text-gold">Initial Test</span></h1>
+                    <p class="text-gray-300 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light leading-relaxed">Join Pakistan's premier institute for specialized military testing preparation. We build the intelligence and physical grit required for success.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="showView('apply-view')" class="bg-gold text-army-dark px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:scale-105 transition shadow-2xl">Book My Seat</button>
+                        <button onclick="toggleChat()" class="border border-white/20 px-10 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition">Consult AI Duty Officer</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW SECTION 1: BATCH 12 INITIAL PREP -->
+            <section class="py-24 container mx-auto px-6">
+                <div class="bg-gradient-to-r from-gold/10 to-army/10 p-12 rounded-[3rem] border border-gold/30 flex flex-col md:flex-row justify-between items-center gap-10" data-aos="fade-up">
+                    <div class="md:w-2/3">
+                        <span class="text-gold font-bold text-xs uppercase tracking-widest mb-4 block">New Batch Enrollment</span>
+                        <h2 class="military-font text-5xl font-bold text-white mb-6 leading-tight">Batch 12: <span class="text-gold">Initial Preparation</span></h2>
+                        <p class="text-gray-400 mb-8 leading-relaxed">Our flagship Batch 12 program is designed for aggressive academic and intelligence drill preparation. We cover Verbal, Non-Verbal, and Academic patterns from all Selection Centers.</p>
+                        <ul class="grid grid-cols-2 gap-4 text-xs font-bold text-gray-300 uppercase tracking-widest">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-gold w-4 h-4"></i> 100% Pattern Match</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-gold w-4 h-4"></i> Daily Mock Tests</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/3 w-full text-center">
+                        <div class="p-8 premium-card rounded-3xl border-gold/40">
+                            <p class="text-gold text-sm font-bold mb-2 uppercase">Seats Remaining</p>
+                            <h4 class="text-5xl font-bold text-white mb-6">14</h4>
+                            <button onclick="showView('apply-view')" class="w-full bg-gold text-army-dark py-4 rounded-xl font-bold uppercase tracking-widest text-xs">Join Batch 12</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW SECTION 2: PAK NAVY SSC 2026-B -->
+            <section class="py-32 navy-gradient">
+                <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
+                    <div class="relative" data-aos="fade-right">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80" class="rounded-[3rem] border-4 border-navy shadow-2xl opacity-60">
+                        <div class="absolute top-6 left-6 bg-navy text-white px-6 py-2 rounded-full font-bold text-[10px] uppercase tracking-widest">Navy Wing</div>
+                    </div>
+                    <div class="space-y-8" data-aos="fade-left">
+                        <h2 class="military-font text-5xl font-bold text-white uppercase">Join Pak Navy <br><span class="text-gold">SSC Course 2026-B</span></h2>
+                        <p class="text-gray-400 leading-relaxed font-light">Prepare for the Short Service Commission (SSC) 2026-B Course. Specialized coaching for Technical, Supply, Education, and Law branches. Our training ensures you meet the professional and psychological standards of the Pakistan Navy.</p>
+                        <div class="flex gap-6 pt-4">
+                            <div class="text-center"><h4 class="text-3xl font-bold text-white">40+</h4><p class="text-[9px] text-gray-500 uppercase tracking-widest">Selected last session</p></div>
+                            <div class="w-px h-12 bg-white/10"></div>
+                            <div class="text-center"><h4 class="text-3xl font-bold text-white">100%</h4><p class="text-[9px] text-gray-500 uppercase tracking-widest">Medical Clearance</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW SECTION 3: WINGS BREAKDOWN (PMA, LCC, AFNS, AMC) -->
+            <section class="py-32 container mx-auto px-6">
+                <div class="text-center mb-20" data-aos="fade-up">
+                    <h2 class="military-font text-4xl font-bold text-white mb-4">Initial Preparation <span class="text-gold">Wings</span></h2>
+                    <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.4em]">Batch 12 Specializations</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Cards -->
+                    <div class="premium-card p-10 rounded-[3rem] text-center" data-aos="zoom-in" data-aos-delay="100">
+                        <h4 class="text-gold font-bold text-2xl mb-4">PMA-158</h4>
+                        <p class="text-[10px] text-gray-500 leading-relaxed">Full Academic & Intelligence mastery for Long Course 158.</p>
+                    </div>
+                    <div class="premium-card p-10 rounded-[3rem] text-center" data-aos="zoom-in" data-aos-delay="200">
+                        <h4 class="text-gold font-bold text-2xl mb-4">LCC</h4>
+                        <p class="text-[10px] text-gray-500 leading-relaxed">Dedicated training for the Lady Cadet Course selection.</p>
+                    </div>
+                    <div class="premium-card p-10 rounded-[3rem] text-center" data-aos="zoom-in" data-aos-delay="300">
+                        <h4 class="text-gold font-bold text-2xl mb-4">AFNS 26</h4>
+                        <p class="text-[10px] text-gray-500 leading-relaxed">Specialized nursing and interview prep for AFNS-26.</p>
+                    </div>
+                    <div class="premium-card p-10 rounded-[3rem] text-center" data-aos="zoom-in" data-aos-delay="400">
+                        <h4 class="text-gold font-bold text-2xl mb-4">AMC 26</h4>
+                        <p class="text-[10px] text-gray-500 leading-relaxed">Master the Army Medical College entrance and selection.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STATS -->
+            <section class="py-24 bg-white/[0.02] border-y border-gold/10">
+                <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center" data-aos="fade-up">
+                    <div><h3 class="text-gold text-6xl font-bold military-font">10K+</h3><p class="text-white font-bold text-[10px] uppercase tracking-widest mt-2">Students Trained</p></div>
+                    <div><h3 class="text-white text-4xl font-bold military-font">850+</h3><p class="text-gray-500 text-[10px] uppercase font-bold mt-2">Army Selections</p></div>
+                    <div><h3 class="text-white text-4xl font-bold military-font">300+</h3><p class="text-gray-500 text-[10px] uppercase font-bold mt-2">Navy Selections</p></div>
+                    <div><h3 class="text-white text-4xl font-bold military-font">190+</h3><p class="text-gray-500 text-[10px] uppercase font-bold mt-2">Air Force Selections</p></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 2. ABOUT VIEW -->
+        <div id="about-view" class="view-section pt-32 pb-24 container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center mb-32" data-aos="fade-up">
+                <div class="space-y-8">
+                    <h2 class="military-font text-5xl font-bold text-white uppercase tracking-widest leading-tight">Leadership <span class="text-gold">Focus</span></h2>
+                    <div class="space-y-6 text-gray-400 italic border-l-4 border-gold pl-8 text-xl leading-relaxed">
+                        <p>"Excellence is not an outcome; it is a mindset. At Pakistan Officers Academy, we groom that mindset into every student."</p>
+                        <p class="not-italic text-white font-bold text-sm uppercase tracking-widest">— Sir Awais Sultan, CEO</p>
+                    </div>
+                </div>
+                <div class="rounded-[3rem] overflow-hidden border-4 border-gold/20 shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80" class="w-full grayscale">
+                </div>
+            </div>
+            <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                <h2 class="military-font text-5xl font-bold text-white mb-10">Academy <span class="text-gold">Story</span></h2>
+                <p class="text-gray-400 text-lg leading-relaxed font-light">Founded in 2005, the Pakistan Officers Academy was built to bridge the gap between civilian education and military selection standards. Our alumni serve with honor in every branch of the Armed Forces.</p>
+                <button onclick="showView('landing')" class="mt-16 bg-white text-army-dark px-12 py-4 rounded-full font-bold uppercase text-[10px] tracking-[0.4em] hover:bg-gold transition">Back to Academy</button>
+            </div>
+        </div>
+
+        <!-- 3. ADMISSION PORTAL VIEW -->
+        <div id="apply-view" class="view-section pt-32 pb-24 container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto bg-army rounded-[3.5rem] p-12 border border-gold/30 shadow-2xl text-left" data-aos="zoom-in">
+                <h2 class="military-font text-4xl font-bold text-white text-center mb-2 uppercase tracking-widest">Enlistment Desk</h2>
+                <p class="text-gray-400 text-center text-[10px] font-bold uppercase tracking-[0.4em] mb-12">Session Enrollment: 2026-B</p>
+                <form id="admission-form" class="grid md:grid-cols-2 gap-8">
+                    <input type="text" id="adm-name" placeholder="Student Full Name" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white" required>
+                    <input type="tel" id="adm-phone" placeholder="WhatsApp Number" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white" required>
+                    <input type="email" id="adm-email" placeholder="Email Address" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white" required>
+                    <input type="text" id="adm-city" placeholder="Current City" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white" required>
+                    <select id="adm-course" class="md:col-span-2 bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white appearance-none">
+                        <option class="bg-army-dark">Initial Preparation (Batch 12)</option>
+                        <option class="bg-army-dark">ISSB Masterclass</option>
+                        <option class="bg-army-dark">Lady Cadet Course (LCC)</option>
+                        <option class="bg-army-dark">AMC / AFNS Prep</option>
+                    </select>
+                    <button type="submit" class="md:col-span-2 bg-gold text-army-dark py-5 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-white transition shadow-xl">Confirm Enrollment</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 4. STUDENT PORTAL -->
+        <div id="portal" class="view-section pt-32 pb-24 container mx-auto px-6 max-w-md text-center">
+            <div class="bg-white/5 p-12 rounded-[3.5rem] border border-white/10" data-aos="zoom-in">
+                <h2 class="military-font text-3xl font-bold text-white mb-10 tracking-widest uppercase">Student Portal</h2>
+                <div class="space-y-6 text-left">
+                    <div><label class="text-[9px] uppercase font-bold text-gray-500 ml-2">Student ID</label><input type="text" class="w-full bg-white/5 border border-white/10 rounded-2xl p-5 outline-none focus:border-gold text-white text-xs"></div>
+                    <div><label class="text-[9px] uppercase font-bold text-gray-500 ml-2">Passcode</label><input type="password" class="w-full bg-white/5 border border-white/10 rounded-2xl p-5 outline-none focus:border-gold text-white text-xs"></div>
+                    <button class="w-full bg-gold text-army-dark py-4 rounded-xl font-bold uppercase tracking-widest text-xs mt-4">Login</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. ADMIN VIEW -->
+        <div id="admin" class="view-section pt-32 pb-24 container mx-auto px-6">
+            <div class="flex justify-between items-center mb-12">
+                <h2 class="military-font text-3xl font-bold text-gold underline tracking-tighter">HQ Command Center</h2>
+                <button onclick="showView('landing')" class="bg-white/10 border border-white/20 px-8 py-2 rounded-full font-bold text-[10px] uppercase">Logout</button>
+            </div>
+            <div class="grid md:grid-cols-2 gap-10 mb-12">
+                <div class="bg-white/5 p-10 rounded-[3rem] border border-white/10 text-center"><p class="text-gray-500 text-[10px] uppercase font-bold mb-2">Confirmed Admissions</p><h3 id="stat-total" class="text-6xl font-bold text-white military-font">0</h3></div>
+                <div class="bg-white/5 p-10 rounded-[3rem] border border-white/10 text-center"><p class="text-gray-500 text-[10px] uppercase font-bold mb-2">Chat Leads</p><h3 id="stat-leads" class="text-6xl font-bold text-gold military-font">0</h3></div>
+            </div>
+            <div class="bg-white/5 rounded-[3rem] border border-white/10 overflow-hidden"><table class="w-full text-left text-xs uppercase tracking-widest font-bold"><thead class="bg-white/5 text-gray-500"><tr class="border-b border-white/5"><th class="px-8 py-6">Student Name</th><th class="px-8 py-6 text-gold">Track</th><th class="px-8 py-6">Contact Details</th></tr></thead><tbody id="admin-table-body" class="divide-y divide-white/5"></tbody></table></div>
+        </div>
+    </main>
+
+    <!-- ADMIN MODAL -->
+    <div id="admin-modal" class="fixed inset-0 bg-army-dark/98 backdrop-blur-3xl z-[200] flex items-center justify-center hidden p-6">
+        <div class="bg-white/5 p-12 rounded-[4rem] border border-gold/20 w-full max-w-sm text-center shadow-2xl">
+            <h3 class="military-font text-gold text-3xl mb-10 uppercase tracking-widest font-bold">HQ Checkpoint</h3>
+            <div class="space-y-5 mb-12"><input type="text" id="admin-user" placeholder="Command Username" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-gold text-white text-sm"><input type="password" id="admin-pass" placeholder="Secret Token" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-gold text-white text-sm"></div>
+            <button onclick="verifyAdmin()" class="w-full bg-gold text-army-dark py-5 rounded-2xl font-bold tracking-widest uppercase text-xs">Verify Authorization</button>
+            <button onclick="closeAdminModal()" class="mt-6 text-gray-500 text-[10px] font-bold uppercase">Decline</button>
+        </div>
+    </div>
+
+    <!-- CHATBOT -->
+    <div id="chat-container" class="fixed bottom-6 right-6 z-[150] flex flex-col items-end">
+        <div id="chat-widget" class="hidden flex-col mb-4 overflow-hidden border border-gold/30 shadow-2xl">
+            <div class="bg-army p-5 text-white flex items-center justify-between"><span class="font-bold text-[10px] uppercase tracking-widest flex items-center gap-2"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Duty Officer AI</span><button onclick="toggleChat()"><i data-lucide="x" class="w-4 h-4 text-gray-400"></i></button></div>
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4 bg-army-dark flex flex-col scroll-smooth"><div class="bot-msg max-w-[85%] text-gray-300">Reporting for duty! Type <span class="font-bold text-gold uppercase">"JOIN"</span> to book your admission now.</div></div>
+            <div class="p-4 bg-army flex gap-3 border-t border-white/10"><input type="text" id="chat-input" placeholder="Type command..." class="flex-1 bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-white outline-none"><button onclick="handleChat()" class="bg-gold text-army-dark p-3 rounded-xl hover:bg-white transition"><i data-lucide="send" class="w-4 h-4"></i></button></div>
+        </div>
+        <button onclick="toggleChat()" class="w-16 h-16 bg-gold text-army-dark rounded-2xl shadow-xl flex items-center justify-center hover:scale-110 border border-gold/30 transition-all"><i data-lucide="message-square"></i></button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="py-24 border-t border-white/5 bg-[#000502]">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-3 gap-16 mb-16">
+                <div>
+                    <h3 class="military-font text-white text-3xl font-bold mb-8">Pakistan Officers <span class="text-gold">Academy</span></h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8 max-w-sm">The elite training wings for future commanders. Specializing in PMA Initial Prep, ISSB Simulations, Navy SSC, AFNS, and AMC courses.</p>
+                    <div class="flex gap-6 text-gray-500">
+                        <a href="#" class="hover:text-gold transition"><i data-lucide="facebook"></i></a>
+                        <a href="#" class="hover:text-gold transition"><i data-lucide="instagram"></i></a>
+                        <a href="#" class="hover:text-gold transition"><i data-lucide="youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="military-font text-gold text-sm font-bold mb-8 tracking-widest uppercase">Headquarters Contact</h4>
+                    <ul class="space-y-6 text-gray-400 text-sm">
+                        <li class="flex items-center gap-4"><i data-lucide="phone" class="text-gold w-5 h-5"></i> +92 317 5088193</li>
+                        <li class="flex items-center gap-4"><i data-lucide="mail" class="text-gold w-5 h-5"></i> pakarmyofficer2k22@gmail.com</li>
+                        <li class="flex items-center gap-4"><i data-lucide="map-pin" class="text-gold w-5 h-5"></i> Rawalpindi / Islamabad Centers</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="military-font text-gold text-sm font-bold mb-8 tracking-widest uppercase">Office of the CEO</h4>
+                    <p class="text-white font-bold text-lg mb-2">Sir Awais Sultan</p>
+                    <p class="text-gray-500 text-xs uppercase tracking-widest mb-8">Founder & Chief Executive Officer</p>
+                    <button onclick="showView('apply-view')" class="text-gold border border-gold/30 px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-gold hover:text-army-dark transition">Start Your Career</button>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] text-white/20 uppercase tracking-[0.4em] gap-6">
+                <p>&copy; 2026 Pakistan Officers Academy. All Rights Reserved.</p>
+                <p>Designed for Strategic Excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. SUPABASE CLIENT
+        const poaClient = supabase.createClient('https://gasusvkixdamvuxnlybn.supabase.co', 'sb_publishable___fsO7b4X0pby_5aenAL8Q_mPnPCU2p');
+
+        // 2. SPA NAVIGATION
+        function showView(viewId) {
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            const target = document.getElementById(viewId);
+            if(target) { target.classList.add('active'); window.scrollTo(0, 0); lucide.createIcons(); AOS.refresh(); if(viewId === 'admin') loadAdminData(); }
+        }
+
+        // 3. MOBILE MENU
+        function toggleMobileMenu() { 
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            // Toggle icon if needed
+        }
+
+        // 4. ADMIN ACCESS
+        let clickTracker = 0;
+        document.getElementById('main-logo').addEventListener('click', () => { 
+            clickTracker++; if(clickTracker === 3) { document.getElementById('admin-modal').classList.remove('hidden'); clickTracker = 0; } setTimeout(() => clickTracker = 0, 2500); 
+        });
+        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
+        function verifyAdmin() { 
+            const u = document.getElementById('admin-user').value; const p = document.getElementById('admin-pass').value;
+            if(u === 'admin' && p === 'pao1234') { closeAdminModal(); showView('admin'); } else { alert("ACCESS DENIED."); } 
+        }
+
+        // 5. ADMISSION FORM
+        document.getElementById('admission-form').addEventListener('submit', async (e) => { 
+            e.preventDefault(); const btn = e.target.querySelector('button'); btn.innerText = "TRANSMITTING...";
+            const student = { student_id: 'S-' + Math.floor(10000 + Math.random() * 90000), name: document.getElementById('adm-name').value, phone: document.getElementById('adm-phone').value, email: document.getElementById('adm-email').value, city: document.getElementById('adm-city').value, course: document.getElementById('adm-course').value, status: 'Confirmed' };
+            const { error } = await poaClient.from('students').insert([student]);
+            if (!error) { alert("SUCCESS! YOUR ID: " + student.student_id); e.target.reset(); showView('portal'); } else { alert("ERROR: Check connection."); } btn.innerText = "Confirm Enrollment"; 
+        });
+
+        // 6. ADMIN DATA
+        async function loadAdminData() { 
+            const { data: st } = await poaClient.from('students').select('*').order('created_at', {ascending: false});
+            const { data: ld } = await poaClient.from('chatbot_leads').select('*').order('created_at', {ascending: false});
+            document.getElementById('stat-total').innerText = st?.length || 0; document.getElementById('stat-leads').innerText = ld?.length || 0;
+            const tbody = document.getElementById('admin-table-body'); tbody.innerHTML = '';
+            (st || []).forEach(s => { tbody.innerHTML += `<tr class="bg-white/5 border-b border-white/5"><td class="px-8 py-6 font-bold text-white uppercase">${s.name}</td><td class="px-8 py-6 text-gold uppercase">${s.course}</td><td class="px-8 py-6 text-gray-500 font-bold text-[8px]">P: ${s.phone}<br>E: ${s.email}</td></tr>`; });
+            (ld || []).forEach(l => { tbody.innerHTML += `<tr class="bg-blue-500/5 border-b border-white/5"><td class="px-8 py-6 font-bold text-gray-400 uppercase">${l.name} (AI LEAD)</td><td class="px-8 py-6 text-blue-400 uppercase">${l.interested_course || 'INQUIRY'}</td><td class="px-8 py-6 text-gray-500 font-bold text-[8px]">P: ${l.phone}</td></tr>`; });
+        }
+
+        // 7. CHATBOT
+        let cState = 0; let leadData = {};
+        function toggleChat() { document.getElementById('chat-widget').classList.toggle('hidden'); document.getElementById('chat-widget').classList.toggle('flex'); lucide.createIcons(); }
+        async function handleChat() { 
+            const inp = document.getElementById('chat-input'); const box = document.getElementById('chat-messages'); if(!inp.value) return;
+            const val = inp.value; box.innerHTML += `<div class="user-msg p-3 text-xs max-w-[85%]">${val}</div>`; inp.value = ""; box.scrollTop = box.scrollHeight;
+            let reply = "I can book your admission. Type 'JOIN'."; const low = val.toLowerCase();
+            if(low.includes('join') || low.includes('admission') || cState > 0) {
+                if(cState === 0) { reply = "Understood. Starting Admission. What is your **Full Name**?"; cState = 1; }
+                else if(cState === 1) { leadData.name = val; reply = "Thanks. Your **WhatsApp Number**?"; cState = 2; }
+                else if(cState === 2) { leadData.phone = val; reply = "Which **City**?"; cState = 3; }
+                else if(cState === 3) { leadData.city = val; reply = "Which **Course**? (ISSB, PMA-158, Navy, AMC, AFNS)"; cState = 4; }
+                else if(cState === 4) { leadData.interested_course = val; const sID = 'S-' + Math.floor(10000 + Math.random() * 90000); reply = "Admission Success! ID: " + sID + ". Our HQ will call you."; await poaClient.from('chatbot_leads').insert([leadData]); await poaClient.from('students').insert([{...leadData, student_id: sID, course: val, status: 'Confirmed'}]); cState = 0; }
+            } else if(low.includes('fee')) { reply = "ISSB: 35k, Initial: 25k. Type 'JOIN' to apply."; }
+            setTimeout(() => { box.innerHTML += `<div class="bot-msg p-3 text-xs text-gray-300 max-w-[85%] mb-2">${reply}</div>`; box.scrollTop = box.scrollHeight; }, 700);
+        }
+
+        window.onload = () => { AOS.init({ duration: 800, once: true }); lucide.createIcons(); };
+    </script>
+</body>
+</html>
