@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pakistan Officers Academy | Prep for PMA, Navy, LCC & AFNS</title>
-    
-    <!-- Dependencies -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    
-    <!-- Animations -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pakistan Officers Academy | PMA, Navy, AFNS, LCC & AMC Prep</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <script src="https://unpkg.com/lucide@latest">
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js">
+    </script>
 
     <script>
         tailwind.config = {
@@ -22,7 +26,12 @@
                     colors: {
                         army: { light: '#027a35', DEFAULT: '#01411C', dark: '#000c05' },
                         navy: '#00205b',
-                        gold: '#D4AF37'
+                        gold: { DEFAULT: '#D4AF37', light: '#F0D060', dark: '#A8892A' }
+                    },
+                    fontFamily: {
+                        display: ['Bebas Neue', 'sans-serif'],
+                        heading: ['Rajdhani', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
                     }
                 }
             }
@@ -30,352 +39,2893 @@
     </script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #000c05; color: #e2e8f0; overflow-x: hidden; }
-        .military-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; }
-        .glass-nav { background: rgba(0, 12, 5, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
-        
-        /* Smooth Page Transition Animation */
-        .view-section { display: none; }
-        .view-section.active { display: block; animation: pageIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-
-        @keyframes pageIn {
-            from { opacity: 0; transform: translateY(30px); filter: blur(5px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        /* ── BASE ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.3);
+            --army-dark: #000c05;
+            --army: #01411C;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000c05;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            cursor: none;
         }
 
-        .premium-card { 
-            background: rgba(255, 255, 255, 0.03); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            backdrop-filter: blur(10px); 
-            transition: all 0.4s ease; 
+        /* ── CUSTOM CURSOR ── */
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s, width 0.2s, height 0.2s;
         }
-        .premium-card:hover { border-color: #D4AF37; background: rgba(212, 175, 55, 0.05); transform: translateY(-5px); }
+        #cursor-ring {
+            width: 36px;
+            height: 36px;
+            border: 1.5px solid rgba(212, 175, 55, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s ease-out;
+        }
+        body:hover #cursor-dot {
+            opacity: 1;
+        }
+        a:hover~#cursor-ring,
+        button:hover~#cursor-ring {
+            transform: translate(-50%, -50%) scale(1.8);
+        }
 
-        #chat-widget { width: 350px; height: 500px; background: #001a0b; border: 1px solid #D4AF37; border-radius: 20px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
-        .bot-msg { background: rgba(255, 255, 255, 0.1); border-radius: 12px 12px 12px 0px; margin-bottom: 10px; padding: 12px; font-size: 0.75rem; }
-        .user-msg { background: #D4AF37; color: #001a0b; border-radius: 12px 12px 0px 12px; align-self: flex-end; margin-bottom: 10px; padding: 12px; font-size: 0.75rem; font-weight: 600; }
-        
-        .navy-gradient { background: linear-gradient(135deg, #00205b 0%, #000c05 100%); }
+        /* ── NAVIGATION ── */
+        .glass-nav {
+            background: rgba(0, 12, 5, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+        }
+        .nav-link {
+            position: relative;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover {
+            color: var(--gold);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ── PAGE TRANSITIONS ── */
+        .view-section {
+            display: none;
+        }
+        .view-section.active {
+            display: block;
+            animation: pageReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes pageReveal {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── HERO ── */
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        .hero-bg-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.18;
+            transform: scale(1.05);
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+        @keyframes heroZoom {
+            from {
+                transform: scale(1.05);
+            }
+            to {
+                transform: scale(1.12);
+            }
+        }
+        .hero-gradient {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 100%, rgba(1, 65, 28, 0.6) 0%, transparent 70%),
+                linear-gradient(to bottom, rgba(0, 12, 5, 0.7) 0%, transparent 40%, rgba(0, 12, 5, 0.95) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* HERO TYPEWRITER */
+        .typewriter-wrap {
+            overflow: hidden;
+        }
+        .hero-main-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 9rem);
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+            color: white;
+        }
+        .hero-main-title .gold-word {
+            color: var(--gold);
+            text-shadow: 0 0 60px rgba(212, 175, 55, 0.4), 0 0 120px rgba(212, 175, 55, 0.15);
+        }
+        .hero-eyebrow {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.45em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* GLITCH EFFECT */
+        .glitch {
+            position: relative;
+        }
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            color: inherit;
+        }
+        .glitch::before {
+            color: var(--gold);
+            animation: glitch1 4s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+        .glitch::after {
+            color: #fff;
+            animation: glitch2 4s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+        @keyframes glitch1 {
+            0%,
+            90%,
+            100% {
+                transform: none;
+                opacity: 0;
+            }
+            92% {
+                transform: translate(-3px, 2px);
+                opacity: 0.7;
+            }
+            94% {
+                transform: translate(3px, -2px);
+                opacity: 0.7;
+            }
+            96% {
+                transform: none;
+                opacity: 0;
+            }
+        }
+        @keyframes glitch2 {
+            0%,
+            90%,
+            100% {
+                transform: none;
+                opacity: 0;
+            }
+            93% {
+                transform: translate(3px, 2px);
+                opacity: 0.7;
+            }
+            95% {
+                transform: translate(-3px, -2px);
+                opacity: 0.7;
+            }
+            97% {
+                transform: none;
+                opacity: 0;
+            }
+        }
+
+        /* SCAN LINE */
+        .scanline {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.03) 2px,
+                    rgba(0, 0, 0, 0.03) 4px);
+        }
+
+        /* HERO STAT PILLS */
+        .stat-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 100px;
+            padding: 10px 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        .stat-pill:hover {
+            background: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+        }
+        .stat-pill .num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .stat-pill .label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* CTA BUTTONS */
+        .btn-primary {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: var(--gold);
+            color: #000c05;
+            padding: 16px 36px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.4);
+        }
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-ghost {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 15px 36px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(8px);
+        }
+        .btn-ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.06);
+            transform: translateY(-2px);
+        }
+
+        /* SCROLL INDICATOR */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollDrop 2s ease-in-out infinite;
+        }
+        @keyframes scrollDrop {
+            0% {
+                transform: scaleY(0);
+                transform-origin: top;
+                opacity: 1;
+            }
+            50% {
+                transform: scaleY(1);
+                transform-origin: top;
+                opacity: 1;
+            }
+            100% {
+                transform: scaleY(1);
+                transform-origin: bottom;
+                opacity: 0;
+            }
+        }
+        .scroll-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 8px;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: rgba(212, 175, 55, 0.5);
+            writing-mode: vertical-rl;
+        }
+
+        /* SECTION LABEL */
+        .section-eyebrow {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.45em;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-eyebrow::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--gold);
+        }
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+        }
+
+        /* CARDS */
+        .card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 2px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+        .card:hover::before {
+            transform: translateX(100%);
+        }
+        .card:hover {
+            border-color: rgba(212, 175, 55, 0.25);
+            background: rgba(212, 175, 55, 0.04);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(212, 175, 55, 0.1);
+        }
+
+        /* WING CARDS */
+        .wing-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            padding: 40px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+        .wing-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .wing-card:hover::after {
+            opacity: 1;
+        }
+        .wing-card:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
+        }
+        .wing-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 80px;
+            line-height: 1;
+            color: rgba(212, 175, 55, 0.06);
+            position: absolute;
+            bottom: -10px;
+            right: 20px;
+            transition: color 0.4s;
+        }
+        .wing-card:hover .wing-number {
+            color: rgba(212, 175, 55, 0.12);
+        }
+        .wing-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.05em;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .wing-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            line-height: 1.7;
+        }
+
+        /* BATCH BANNER */
+        .batch-banner {
+            background: linear-gradient(135deg, rgba(1, 65, 28, 0.3) 0%, rgba(0, 12, 5, 0.8) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .batch-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* FEATURE ROW */
+        .feature-check {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: color 0.2s;
+        }
+        .feature-check:hover {
+            color: white;
+        }
+        .feature-check .check-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--gold);
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .stat-item {
+            padding: 48px 32px;
+            text-align: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            transition: background 0.3s;
+        }
+        .stat-item:last-child {
+            border-right: none;
+        }
+        .stat-item:hover {
+            background: rgba(212, 175, 55, 0.03);
+        }
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        .stat-item:hover::before {
+            transform: scaleX(1);
+        }
+        .stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1;
+            letter-spacing: 0.02em;
+        }
+        .stat-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 6px;
+        }
+
+        /* SECTION DIVIDER */
+        .section-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            margin: 24px 0;
+        }
+
+        /* NAVY PANEL */
+        .navy-panel {
+            background: linear-gradient(135deg, #00205b 0%, #000c05 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .navy-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* BRANCH CARDS */
+        .branch-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .branch-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        .branch-card:hover::before {
+            transform: scaleX(1);
+        }
+        .branch-card:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: rgba(212, 175, 55, 0.25);
+            transform: translateY(-6px);
+        }
+        .branch-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: var(--gold);
+            transition: all 0.3s;
+        }
+        .branch-card:hover .branch-icon {
+            background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        .branch-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: white;
+            margin-bottom: 6px;
+        }
+        .branch-sub {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* IMAGE FRAMES */
+        .img-frame {
+            position: relative;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .img-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(1.05);
+            transition: all 0.6s;
+        }
+        .img-frame:hover img {
+            filter: grayscale(0%) contrast(1.1);
+            transform: scale(1.03);
+        }
+        .img-badge {
+            position: absolute;
+            background: var(--gold);
+            color: #000c05;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            z-index: 3;
+        }
+
+        /* ADMIN STUFF */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 2px;
+            backdrop-filter: blur(10px);
+        }
+        .admin-input {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            padding: 12px 16px;
+            color: white;
+            width: 100%;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .admin-input:focus {
+            border-color: var(--gold);
+        }
+        .admin-textarea {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            padding: 12px 16px;
+            color: white;
+            width: 100%;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            min-height: 90px;
+            resize: vertical;
+            transition: border 0.3s;
+        }
+        .admin-textarea:focus {
+            border-color: var(--gold);
+        }
+        .admin-btn {
+            padding: 10px 24px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .admin-btn-primary {
+            background: var(--gold);
+            color: #000c05;
+        }
+        .admin-btn-primary:hover {
+            background: #c4a032;
+        }
+        .admin-btn-danger {
+            background: rgba(255, 50, 50, 0.15);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 50, 50, 0.2);
+        }
+        .admin-btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #ccc;
+        }
+        .admin-btn-success {
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+        .section-tab {
+            cursor: pointer;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid transparent;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+        }
+        .section-tab.active {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.08);
+        }
+        .section-tab:hover {
+            color: var(--gold);
+        }
+        .section-selector {
+            cursor: pointer;
+            padding: 8px 14px;
+            border-left: 3px solid transparent;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.2s;
+            background: transparent;
+        }
+        .section-selector:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .section-selector.active-section {
+            border-left-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.06);
+        }
+        .toggle-switch {
+            width: 42px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+        .toggle-switch.active {
+            background: var(--gold);
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .toggle-switch.active::after {
+            transform: translateX(18px);
+        }
+        .img-preview {
+            max-height: 100px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            background: #01411C;
+            border: 1px solid var(--gold);
+            color: white;
+            padding: 14px 28px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.05em;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.6);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .image-upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: border 0.3s;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .image-upload-area:hover {
+            border-color: var(--gold);
+        }
+
+        /* FORM */
+        .form-field {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 18px 20px;
+            color: white;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            outline: none;
+            transition: border 0.3s;
+            border-radius: 2px;
+        }
+        .form-field:focus {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.04);
+        }
+        .form-field::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .form-field option {
+            background: #01411C;
+        }
+
+        /* PAYMENT SECTION */
+        .payment-method-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 2px;
+            padding: 18px 20px;
+            transition: all 0.3s;
+        }
+        .payment-method-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.05);
+        }
+        .payment-method-card .method-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .payment-method-card .detail {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Inter', sans-serif;
+        }
+        .payment-method-card .detail strong {
+            color: white;
+        }
+        .screenshot-preview {
+            max-height: 140px;
+            object-fit: cover;
+            border-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* CHAT */
+        #chat-widget {
+            width: 360px;
+            height: 520px;
+            background: #001a0b;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 2px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+        }
+        .bot-msg {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 0 12px 12px 12px;
+            margin-bottom: 10px;
+            padding: 12px 14px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .user-msg {
+            background: var(--gold);
+            color: #000c05;
+            border-radius: 12px 12px 0 12px;
+            align-self: flex-end;
+            margin-bottom: 10px;
+            padding: 12px 14px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* HOVER GLOW */
+        .glow-hover {
+            transition: box-shadow 0.3s;
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+        }
+
+        /* MOBILE MENU */
+        #mobile-menu {
+            background: #000c05;
+        }
+
+        /* LCP SECTION STYLES */
+        .lcp-section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        /* COLOR PICKER */
+        .color-picker-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .color-picker-wrap input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            background: transparent;
+            padding: 2px;
+        }
+
+        /* GRID OVERLAY */
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* border pulse */
+        .border-pulse {
+            animation: borderPulse 3s ease-in-out infinite;
+        }
+        @keyframes borderPulse {
+            0%,
+            100% {
+                border-color: rgba(212, 175, 55, 0.15);
+            }
+            50% {
+                border-color: rgba(212, 175, 55, 0.4);
+            }
+        }
+
+        /* responsive */
+        @media (max-width: 768px) {
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stat-item:nth-child(2) {
+                border-right: none;
+            }
+            .hero-main-title {
+                font-size: 4.5rem;
+            }
+            #chat-widget {
+                width: 300px;
+                height: 460px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-main-title {
+                font-size: 3.5rem;
+            }
+            #chat-widget {
+                width: 280px;
+                height: 420px;
+                right: 0;
+            }
+        }
+
+        /* footer */
+        footer {
+            background: #000805;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .footer-link {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: var(--gold);
+        }
+
+        /* admin payment badge */
+        .payment-badge {
+            font-size: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 3px 8px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+        .payment-badge.confirmed {
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+        .payment-badge.pending {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+        .payment-badge.missing {
+            background: rgba(248, 113, 113, 0.12);
+            color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.15);
+        }
+
+        .screenshot-thumb {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .screenshot-thumb:hover {
+            border-color: var(--gold);
+            transform: scale(1.05);
+        }
+
+        .payment-instruction {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            border-left: 2px solid var(--gold);
+            padding-left: 12px;
+            margin: 8px 0;
+        }
+        /* dashboard card */
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 2px;
+            padding: 40px;
+        }
+        .dashboard-card .info-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .dashboard-card .info-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: white;
+        }
+        .whatsapp-section {
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.08) 0%, rgba(0, 12, 5, 0.9) 100%);
+            border-top: 1px solid rgba(37, 211, 102, 0.15);
+            border-bottom: 1px solid rgba(37, 211, 102, 0.15);
+        }
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .whatsapp-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.3);
+        }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- NAVIGATION -->
-    <nav class="fixed w-full z-[100] glass-nav">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-4 cursor-pointer group" id="main-logo" title="Triple Click for Admin">
-                <img src="logo.png" class="h-10 transition-transform group-hover:scale-110">
+    <!-- CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ===== NAV ===== -->
+    <nav class="fixed w-full z-[100] glass-nav" id="main-nav">
+        <div class="max-w-screen-xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-5 cursor-pointer" id="main-logo" title="Triple Click for Admin">
+                <img id="nav-logo-img" src="logo.png" class="h-9" alt="POA Logo" />
                 <div>
-                    <h1 class="military-font font-bold text-xl text-white leading-none">Pak army Officers Academy</h1>
-                    <p class="text-gold text-[9px] tracking-[0.3em] font-bold uppercase">Preparing the Protectors</p>
+                    <h1 id="nav-title" class="font-display text-xl text-white tracking-wide leading-none" style="font-family:'Bebas Neue',sans-serif;letter-spacing:0.05em;">Pakistan Officers Academy</h1>
+                    <p id="nav-subtitle" class="text-[8px] tracking-[0.4em] font-bold uppercase" style="color:var(--gold);">Preparing the Protectors</p>
                 </div>
             </div>
-            <div class="hidden lg:flex items-center space-x-8 text-[10px] font-bold uppercase tracking-widest text-gray-300">
-                <a href="javascript:void(0)" onclick="showView('landing')" class="hover:text-gold transition">Home</a>
-                <a href="javascript:void(0)" onclick="showView('about-view')" class="hover:text-gold transition">Our Story</a>
-                <a href="javascript:void(0)" onclick="showView('apply-view')" class="bg-gold text-army-dark px-6 py-2.5 rounded-full hover:bg-white transition shadow-lg">Apply Now</a>
-                <a href="javascript:void(0)" onclick="showView('portal')" class="hover:text-gold transition">Student Portal</a>
+            <div class="hidden lg:flex items-center gap-8" id="nav-links">
+                <a href="javascript:void(0)" onclick="showView('landing')" class="nav-link">Home</a>
+                <a href="javascript:void(0)" onclick="showView('about-view')" class="nav-link">Our Story</a>
+                <a href="javascript:void(0)" onclick="showView('portal')" class="nav-link">Student Portal</a>
+                <!-- Dynamic: Apply Now or Dashboard -->
+                <div id="nav-cta-container">
+                    <button onclick="showView('apply-view')" class="btn-primary" style="padding:12px 28px;font-size:10px;" id="nav-apply-btn">Apply Now</button>
+                    <button onclick="showView('dashboard-view')" class="btn-primary" style="padding:12px 28px;font-size:10px;display:none;" id="nav-dashboard-btn">Dashboard</button>
+                </div>
             </div>
-            <button class="lg:hidden text-gold z-[120]" onclick="toggleMobileMenu()">
-                <i data-lucide="menu" id="menu-icon"></i>
+            <button class="lg:hidden text-white" onclick="toggleMobileMenu()" id="menu-btn">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
     </nav>
 
-    <!-- MOBILE MENU OVERLAY -->
-    <div id="mobile-menu" class="fixed inset-0 bg-army-dark z-[110] flex flex-col items-center justify-center space-y-8 text-white hidden">
-        <a href="javascript:void(0)" onclick="showView('landing'); toggleMobileMenu()" class="military-font text-3xl">Home</a>
-        <a href="javascript:void(0)" onclick="showView('about-view'); toggleMobileMenu()" class="military-font text-3xl">About</a>
-        <a href="javascript:void(0)" onclick="showView('apply-view'); toggleMobileMenu()" class="military-font text-3xl text-gold font-bold">Apply Now</a>
-        <a href="javascript:void(0)" onclick="showView('portal'); toggleMobileMenu()" class="military-font text-3xl">Student Portal</a>
-        <button onclick="toggleMobileMenu()" class="mt-8 p-4 bg-white/5 rounded-full text-gold"><i data-lucide="x" class="w-10 h-10"></i></button>
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="fixed inset-0 z-[110] flex flex-col items-center justify-center gap-10 hidden">
+        <a href="javascript:void(0)" onclick="showView('landing');toggleMobileMenu()" class="font-display text-4xl text-white" style="font-family:'Bebas Neue',sans-serif;">Home</a>
+        <a href="javascript:void(0)" onclick="showView('about-view');toggleMobileMenu()" class="font-display text-4xl text-white" style="font-family:'Bebas Neue',sans-serif;">Our Story</a>
+        <a href="javascript:void(0)" onclick="showView('apply-view');toggleMobileMenu()" class="font-display text-4xl" style="font-family:'Bebas Neue',sans-serif;color:var(--gold);">Apply Now</a>
+        <a href="javascript:void(0)" onclick="showView('portal');toggleMobileMenu()" class="font-display text-4xl text-white" style="font-family:'Bebas Neue',sans-serif;">Portal</a>
+        <button onclick="toggleMobileMenu()" class="mt-4 text-gray-500"><i data-lucide="x" class="w-8 h-8"></i></button>
     </div>
 
     <main>
-        <!-- 1. LANDING PAGE -->
+        <!-- ============================================================ -->
+        <!-- LANDING PAGE -->
+        <!-- ============================================================ -->
         <div id="landing" class="view-section active">
-            <!-- HERO -->
-            <section class="relative h-[95vh] flex items-center justify-center text-center px-6 overflow-hidden">
-                <img src="image1.jpg.png" alt="Hero" class="absolute inset-0 w-full h-full object-cover z-0 opacity-30">
-                <div class="absolute inset-0 bg-gradient-to-b from-army-dark/90 via-transparent to-army-dark z-10"></div>
-                <div class="max-w-4xl relative z-20" data-aos="zoom-out">
-                    <h1 class="text-5xl md:text-8xl font-bold military-font mb-8 text-white leading-tight">Master the <span class="text-gold">Initial Test</span></h1>
-                    <p class="text-gray-300 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light leading-relaxed">Join Pakistan's premier institute for specialized military testing preparation. We build the intelligence and physical grit required for success.</p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button onclick="showView('apply-view')" class="bg-gold text-army-dark px-10 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:scale-105 transition shadow-2xl">Book My Seat</button>
-                        <button onclick="toggleChat()" class="border border-white/20 px-10 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition">Consult AI Duty Officer</button>
+
+            <!-- ===== HERO ===== -->
+            <section class="hero-section" data-section="hero">
+                <div class="scanline"></div>
+                <canvas id="hero-canvas"></canvas>
+                <img id="hero-bg" src="image1.jpg.png" alt="" class="hero-bg-img" />
+                <div class="hero-gradient"></div>
+
+                <!-- VERTICAL LABEL LEFT -->
+                <div class="absolute left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:flex flex-col items-center gap-4">
+                    <div style="writing-mode:vertical-rl;font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.4em;text-transform:uppercase;color:rgba(212,175,55,0.4);">PAKISTAN OFFICERS ACADEMY</div>
+                    <div style="width:1px;height:80px;background:linear-gradient(to bottom,rgba(212,175,55,0.4),transparent);"></div>
+                </div>
+
+                <!-- HERO CONTENT -->
+                <div class="hero-content max-w-screen-xl mx-auto px-6 w-full" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="max-w-4xl">
+                        <div class="section-eyebrow mb-8" data-aos="fade-right" data-aos-delay="100">
+                            Pakistan's Premier Military Prep Institute
+                        </div>
+                        <div class="typewriter-wrap mb-6">
+                            <h1 id="hero-title" class="hero-main-title glitch" data-text="MASTER THE">MASTER THE</h1>
+                            <h1 class="hero-main-title"><span class="gold-word">INITIAL TEST</span></h1>
+                        </div>
+                        <p id="hero-desc" class="text-gray-400 text-base md:text-lg mb-12 max-w-xl leading-relaxed font-light" data-aos="fade-up" data-aos-delay="200">
+                            Join Pakistan's elite institute for specialized military testing. We forge the intelligence, discipline, and grit required for service in the Armed Forces.
+                        </p>
+
+                        <!-- STAT PILLS -->
+                        <div class="flex flex-wrap gap-3 mb-12" data-aos="fade-up" data-aos-delay="300">
+                            <div class="stat-pill">
+                                <div>
+                                    <div class="num">10K+</div>
+                                    <div class="label">Students Trained</div>
+                                </div>
+                            </div>
+                            <div class="stat-pill">
+                                <div>
+                                    <div class="num">850+</div>
+                                    <div class="label">Army Selected</div>
+                                </div>
+                            </div>
+                            <div class="stat-pill">
+                                <div>
+                                    <div class="num">85%</div>
+                                    <div class="label">ISSB Pass Rate</div>
+                                </div>
+                            </div>
+                            <div class="stat-pill" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.4);">
+                                <div>
+                                    <div class="num" style="color:white;">14</div>
+                                    <div class="label" style="color:var(--gold);">Seats Left — Batch 12</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BUTTONS -->
+                        <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="400">
+                            <button onclick="showView('apply-view')" class="btn-primary">
+                                <i data-lucide="shield" class="w-4 h-4"></i>
+                                Secure My Seat
+                            </button>
+                            <button onclick="toggleChat()" class="btn-ghost">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                Consult Duty Officer
+                            </button>
+                        </div>
                     </div>
+                </div>
+
+                <!-- SCROLL INDICATOR -->
+                <div class="scroll-indicator">
+                    <span class="scroll-label">Scroll</span>
+                    <div class="scroll-line"></div>
                 </div>
             </section>
 
-            <!-- NEW SECTION 1: BATCH 12 INITIAL PREP -->
-            <section class="py-24 container mx-auto px-6">
-                <div class="bg-gradient-to-r from-gold/10 to-army/10 p-12 rounded-[3rem] border border-gold/30 flex flex-col md:flex-row justify-between items-center gap-10" data-aos="fade-up">
-                    <div class="md:w-2/3">
-                        <span class="text-gold font-bold text-xs uppercase tracking-widest mb-4 block">New Batch Enrollment</span>
-                        <h2 class="military-font text-5xl font-bold text-white mb-6 leading-tight">Batch 12: <span class="text-gold">Initial Preparation</span></h2>
-                        <p class="text-gray-400 mb-8 leading-relaxed">Our flagship Batch 12 program is designed for aggressive academic and intelligence drill preparation. We cover Verbal, Non-Verbal, and Academic patterns from all Selection Centers.</p>
-                        <ul class="grid grid-cols-2 gap-4 text-xs font-bold text-gray-300 uppercase tracking-widest">
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-gold w-4 h-4"></i> 100% Pattern Match</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-gold w-4 h-4"></i> Daily Mock Tests</li>
-                        </ul>
-                    </div>
-                    <div class="md:w-1/3 w-full text-center">
-                        <div class="p-8 premium-card rounded-3xl border-gold/40">
-                            <p class="text-gold text-sm font-bold mb-2 uppercase">Seats Remaining</p>
-                            <h4 class="text-5xl font-bold text-white mb-6">14</h4>
-                            <button onclick="showView('apply-view')" class="w-full bg-gold text-army-dark py-4 rounded-xl font-bold uppercase tracking-widest text-xs">Join Batch 12</button>
+            <!-- ===== NEW BATCH 16 / AFNS-26 SECTION ===== -->
+            <section class="lcp-section" data-section="batch16" data-aos="fade-up" style="background:linear-gradient(135deg, rgba(0,12,5,0.95) 0%, rgba(1,65,28,0.3) 100%); border-top:1px solid rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.04);">
+                <div class="max-w-screen-xl mx-auto px-6">
+                    <div class="grid lg:grid-cols-2 gap-16 items-start">
+                        <!-- Left Column: Tests & Details -->
+                        <div data-aos="fade-right">
+                            <div class="section-eyebrow mb-6" id="batch16-badge">New Batch Enrollment</div>
+                            <h2 id="batch16-title" class="section-title text-5xl md:text-6xl text-white mb-6" style="font-family:'Bebas Neue',sans-serif;">
+                                Batch 16: <span style="color:var(--gold);">AFNS-26 Preparation</span>
+                            </h2>
+                            <p id="batch16-desc" class="text-gray-400 leading-relaxed mb-8" style="font-size:14px;">
+                                <span class="text-white font-semibold">Tests Covered:</span> Verbal, Non-Verbal, Academic, Personality, Interview — comprehensive preparation for AFNS-26.
+                            </p>
+                            <ul class="space-y-2 mb-8 text-gray-300 text-sm">
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-4 text-gold"></i> <span>Verbal Test</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-4 text-gold"></i> <span>Non-Verbal Test</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-4 text-gold"></i> <span>Academic</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-4 text-gold"></i> <span>Personality</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-4 text-gold"></i> <span>Interview</span></li>
+                            </ul>
+                            <div class="glass-card p-6 border border-gold/20 mb-6">
+                                <p class="text-gold text-xs font-bold uppercase tracking-widest mb-2" style="font-family:'Rajdhani',sans-serif;">For Girls (FSc Pre-Medical)</p>
+                                <p class="text-gray-300 text-sm leading-relaxed" dir="rtl" style="font-family:'Inter',sans-serif; text-align:right;">
+                                    وہ تمام گرلز جو ایف ایس سی پری میڈیکل کے بعد پاکستان آرمی، میں بطور لیفٹیننٹ شامل ہونا چاہتی ہیں، وہ تحریری امتحان کی تیاری کے لیے بیچ-16 میں شامل ہو سکتی ہیں۔
+                                </p>
+                            </div>
+                            <div class="glass-card p-6 border border-gold/20">
+                                <p class="text-gold text-xs font-bold uppercase tracking-widest mb-2" style="font-family:'Rajdhani',sans-serif;">AFNS-26 Registration</p>
+                                <p class="text-gray-300 text-sm leading-relaxed" dir="rtl" style="font-family:'Inter',sans-serif; text-align:right;">
+                                    وہ لڑکیاں جنہوں نے FSc پری میڈیکل کیا ہے، وہ AFNS-26 میں اپلائی کر سکتی ہیں۔ اس کی رجسٹریشن شروع ہوگئی ہے۔<br>
+                                    Those Students Who Appeared in Part-2 Exams can Apply On The Basis Of Hope Certificate.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Features & Info -->
+                        <div data-aos="fade-left" data-aos-delay="150">
+                            <div class="glass-card p-8 glow-hover border border-gold/20">
+                                <h3 class="text-2xl font-bold text-white mb-4" style="font-family:'Bebas Neue',sans-serif;">Batch 16 Features</h3>
+                                <ul class="space-y-3 text-gray-300 text-sm">
+                                    <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i> <span>✅ معیاری لائیو لیکچرز</span></li>
+                                    <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i> <span>✅ ٹرائل ٹیسٹس</span></li>
+                                    <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i> <span>✅ مستند گائیڈ بک</span></li>
+                                    <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i> <span>✅ ریکارڈڈ لیکچرز</span></li>
+                                    <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i> <span>✅ پاسٹ پیپرز</span></li>
+                                </ul>
+                                <hr class="border-white/10 my-6" />
+                                <div class="space-y-3 text-sm">
+                                    <p><span class="text-gold font-bold">📌 رجسٹریشن:</span> <span class="text-gray-300">ابھی جاری ہے — رجسٹریشن کے بعد آپ کو لیکچرز میں شامل کر دیا جائے گا۔</span></p>
+                                    <p><span class="text-gold font-bold">⏰ وقت:</span> <span class="text-gray-300">رات 8:00 بجے سے 9:00 بجے تک</span></p>
+                                    <p><span class="text-gold font-bold">💻 پلیٹ فارم:</span> <span class="text-gray-300">ذوم ایپ</span></p>
+                                    <p><span class="text-gold font-bold">⚠️ Limited Seats Available</span></p>
+                                    <p><span class="text-gold font-bold">📅 Deadline:</span> <span class="text-gray-300">07 July 2026</span></p>
+                                    <p><span class="text-gold font-bold">📚 Classes From:</span> <span class="text-gray-300">08 July 2026</span></p>
+                                </div>
+                                <button onclick="showView('apply-view')" class="btn-primary w-full justify-center mt-6">Enroll Now</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- NEW SECTION 2: PAK NAVY SSC 2026-B -->
-            <section class="py-32 navy-gradient">
-                <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
-                    <div class="relative" data-aos="fade-right">
-                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80" class="rounded-[3rem] border-4 border-navy shadow-2xl opacity-60">
-                        <div class="absolute top-6 left-6 bg-navy text-white px-6 py-2 rounded-full font-bold text-[10px] uppercase tracking-widest">Navy Wing</div>
-                    </div>
-                    <div class="space-y-8" data-aos="fade-left">
-                        <h2 class="military-font text-5xl font-bold text-white uppercase">Join Pak Navy <br><span class="text-gold">SSC Course 2026-B</span></h2>
-                        <p class="text-gray-400 leading-relaxed font-light">Prepare for the Short Service Commission (SSC) 2026-B Course. Specialized coaching for Technical, Supply, Education, and Law branches. Our training ensures you meet the professional and psychological standards of the Pakistan Navy.</p>
-                        <div class="flex gap-6 pt-4">
-                            <div class="text-center"><h4 class="text-3xl font-bold text-white">40+</h4><p class="text-[9px] text-gray-500 uppercase tracking-widest">Selected last session</p></div>
-                            <div class="w-px h-12 bg-white/10"></div>
-                            <div class="text-center"><h4 class="text-3xl font-bold text-white">100%</h4><p class="text-[9px] text-gray-500 uppercase tracking-widest">Medical Clearance</p></div>
+            <!-- ===== BATCH 12 BANNER ===== -->
+            <section class="py-24" data-section="batch12" data-aos="fade-up">
+                <div class="max-w-screen-xl mx-auto px-6">
+                    <div class="batch-banner p-12 md:p-16 flex flex-col lg:flex-row justify-between items-center gap-12 border-pulse">
+                        <div class="lg:w-2/3">
+                            <div class="section-eyebrow mb-6">
+                                <span id="batch12-badge">New Batch Enrollment</span>
+                            </div>
+                            <h2 id="batch12-title" class="section-title text-5xl md:text-6xl text-white mb-8" style="font-family:'Bebas Neue',sans-serif;">
+                                Batch 12: <span style="color:var(--gold);">Initial Preparation</span>
+                            </h2>
+                            <p id="batch12-desc" class="text-gray-400 leading-relaxed mb-8 max-w-lg" style="font-size:14px;">
+                                Our flagship Batch 12 program delivers aggressive academic and intelligence drill preparation. We cover Verbal, Non-Verbal, and Academic patterns from all Selection Centers across Pakistan.
+                            </p>
+                            <div class="flex flex-wrap gap-6">
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>100% Pattern Match</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Daily Mock Tests</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Expert Faculty Panel</div>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/3 w-full">
+                            <div class="glass-card p-8 glow-hover">
+                                <p style="color:var(--gold);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Available Seats</p>
+                                <h3 style="font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:1;color:white;margin-bottom:8px;">14</h3>
+                                <p class="text-gray-500 text-xs mb-8">Enrollment closes soon. Reserve now to avoid missing out.</p>
+                                <button onclick="showView('apply-view')" class="btn-primary w-full justify-center">Enroll in Batch 12</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- NEW SECTION 3: WINGS BREAKDOWN (PMA, LCC, AFNS, AMC) -->
-            <section class="py-32 container mx-auto px-6">
-                <div class="text-center mb-20" data-aos="fade-up">
-                    <h2 class="military-font text-4xl font-bold text-white mb-4">Initial Preparation <span class="text-gold">Wings</span></h2>
-                    <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.4em]">Batch 12 Specializations</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Cards -->
-                    <div class="premium-card p-10 rounded-[3rem] text-center" data-aos="zoom-in" data-aos-delay="100">
-                        <h4 class="text-gold font-bold text-2xl mb-4">PMA-158</h4>
-                        <p class="text-[10px] text-gray-500 leading-relaxed">Full Academic & Intelligence mastery for Long Course 158.</p>
+            <!-- ===== WINGS ===== -->
+            <section class="lcp-section" data-section="wings" data-aos="fade-up">
+                <div class="max-w-screen-xl mx-auto px-6">
+                    <div class="mb-16">
+                        <div class="section-eyebrow mb-4">Batch 12 Specializations</div>
+                        <h2 id="wings-title" class="section-title text-5xl md:text-6xl text-white" style="font-family:'Bebas Neue',sans-serif;">
+                            Preparation <span style="color:var(--gold);">Wings</span>
+                        </h2>
+                        <div class="section-divider"></div>
+                        <p id="wings-sub" class="text-gray-500 text-sm max-w-md">Four specialized tracks engineered for each branch's unique selection criteria.</p>
                     </div>
-                    <div class="premium-card p-10 rounded-[3rem] text-center" data-aos="zoom-in" data-aos-delay="200">
-                        <h4 class="text-gold font-bold text-2xl mb-4">LCC</h4>
-                        <p class="text-[10px] text-gray-500 leading-relaxed">Dedicated training for the Lady Cadet Course selection.</p>
-                    </div>
-                    <div class="premium-card p-10 rounded-[3rem] text-center" data-aos="zoom-in" data-aos-delay="300">
-                        <h4 class="text-gold font-bold text-2xl mb-4">AFNS 26</h4>
-                        <p class="text-[10px] text-gray-500 leading-relaxed">Specialized nursing and interview prep for AFNS-26.</p>
-                    </div>
-                    <div class="premium-card p-10 rounded-[3rem] text-center" data-aos="zoom-in" data-aos-delay="400">
-                        <h4 class="text-gold font-bold text-2xl mb-4">AMC 26</h4>
-                        <p class="text-[10px] text-gray-500 leading-relaxed">Master the Army Medical College entrance and selection.</p>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-1">
+                        <div class="wing-card" data-aos="fade-up" data-aos-delay="0">
+                            <div class="wing-number">01</div>
+                            <p style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.6);margin-bottom:12px;">Army Wing</p>
+                            <div class="wing-title">PMA-158</div>
+                            <p class="wing-desc">Full Academic & Intelligence mastery for Long Course 158. Structured drill sessions targeting all Selection Center patterns.</p>
+                        </div>
+                        <div class="wing-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="wing-number">02</div>
+                            <p style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.6);margin-bottom:12px;">Lady Wing</p>
+                            <div class="wing-title">LCC</div>
+                            <p class="wing-desc">Dedicated coaching for the Lady Cadet Course selection process, covering all academic and personality assessment requirements.</p>
+                        </div>
+                        <div class="wing-card" data-aos="fade-up" data-aos-delay="200">
+                            <div class="wing-number">03</div>
+                            <p style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.6);margin-bottom:12px;">Nursing Wing</p>
+                            <div class="wing-title">AFNS 26</div>
+                            <p class="wing-desc">Specialized nursing exam prep and panel interview simulation for the Armed Forces Nursing Service 2026.</p>
+                        </div>
+                        <div class="wing-card" data-aos="fade-up" data-aos-delay="300">
+                            <div class="wing-number">04</div>
+                            <p style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.6);margin-bottom:12px;">Medical Wing</p>
+                            <div class="wing-title">AMC 26</div>
+                            <p class="wing-desc">Comprehensive entrance preparation for Army Medical College including Bio, Chemistry, Physics, and Interview grooming.</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- STATS -->
-            <section class="py-24 bg-white/[0.02] border-y border-gold/10">
-                <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center" data-aos="fade-up">
-                    <div><h3 class="text-gold text-6xl font-bold military-font">10K+</h3><p class="text-white font-bold text-[10px] uppercase tracking-widest mt-2">Students Trained</p></div>
-                    <div><h3 class="text-white text-4xl font-bold military-font">850+</h3><p class="text-gray-500 text-[10px] uppercase font-bold mt-2">Army Selections</p></div>
-                    <div><h3 class="text-white text-4xl font-bold military-font">300+</h3><p class="text-gray-500 text-[10px] uppercase font-bold mt-2">Navy Selections</p></div>
-                    <div><h3 class="text-white text-4xl font-bold military-font">190+</h3><p class="text-gray-500 text-[10px] uppercase font-bold mt-2">Air Force Selections</p></div>
-                </div>
-            </section>
-        </div>
-
-        <!-- 2. ABOUT VIEW -->
-        <div id="about-view" class="view-section pt-32 pb-24 container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center mb-32" data-aos="fade-up">
-                <div class="space-y-8">
-                    <h2 class="military-font text-5xl font-bold text-white uppercase tracking-widest leading-tight">Leadership <span class="text-gold">Focus</span></h2>
-                    <div class="space-y-6 text-gray-400 italic border-l-4 border-gold pl-8 text-xl leading-relaxed">
-                        <p>"Excellence is not an outcome; it is a mindset. At Pakistan Officers Academy, we groom that mindset into every student."</p>
-                        <p class="not-italic text-white font-bold text-sm uppercase tracking-widest">— Sir Awais Sultan, CEO</p>
+            <!-- ===== PMA INITIAL ===== -->
+            <section class="lcp-section bg-army-dark" data-section="pma-initial" style="background:rgba(0,12,5,0.6);border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);">
+                <div class="max-w-screen-xl mx-auto px-6">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div data-aos="fade-right">
+                            <div class="section-eyebrow mb-6" id="pma-initial-badge">Elite Training</div>
+                            <h2 id="pma-initial-title" class="section-title text-5xl md:text-6xl text-white mb-6" style="font-family:'Bebas Neue',sans-serif;">
+                                PMA Initial Test<br><span style="color:var(--gold);">Preparation</span>
+                            </h2>
+                            <div class="section-divider"></div>
+                            <p id="pma-initial-desc" class="text-gray-400 leading-relaxed mb-10" style="font-size:14px;">
+                                Master the PMA Long Course initial test with our comprehensive curriculum. Academic (English, Math, GK), Intelligence (Verbal & Non-Verbal), and Personality Assessment — all under one roof.
+                            </p>
+                            <div class="space-y-1 mb-10">
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Complete academic syllabus coverage</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Intelligence quotient (IQ) drills</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Personality & psychological evaluation</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>50+ full-length mock tests</div>
+                            </div>
+                            <button onclick="showView('apply-view')" class="btn-primary">Enroll Now</button>
+                        </div>
+                        <div data-aos="fade-left" data-aos-delay="150">
+                            <div class="img-frame" style="height:500px;">
+                                <img id="pma-initial-img" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80" alt="PMA Initial" />
+                                <div class="img-badge" style="bottom:24px;right:24px;">Batch 12</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="rounded-[3rem] overflow-hidden border-4 border-gold/20 shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80" class="w-full grayscale">
+            </section>
+
+            <!-- ===== NAVY SSC ===== -->
+            <section class="lcp-section navy-panel" data-section="navy-ssc">
+                <div class="grid-overlay"></div>
+                <div class="max-w-screen-xl mx-auto px-6 relative z-10">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div data-aos="fade-right">
+                            <div class="img-frame" style="height:480px;">
+                                <img id="navy-ssc-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80" alt="Navy" />
+                                <div class="img-badge" style="top:24px;left:24px;background:#00205b;color:white;">Navy Wing</div>
+                            </div>
+                        </div>
+                        <div data-aos="fade-left" data-aos-delay="150">
+                            <div class="section-eyebrow mb-6" id="navy-ssc-badge" style="color:#60a5fa;">Naval Headquarters</div>
+                            <h2 id="navy-ssc-title" class="section-title text-5xl md:text-6xl text-white mb-6" style="font-family:'Bebas Neue',sans-serif;">
+                                Pak Navy<br><span style="color:var(--gold);">SSC 2026-B</span>
+                            </h2>
+                            <div class="section-divider"></div>
+                            <p id="navy-ssc-desc" class="text-gray-400 leading-relaxed mb-10" style="font-size:14px;">
+                                Specialized coaching for the Short Service Commission 2026-B Course — Technical, Supply, Education, and Law branches. We prepare you to meet every professional and psychological standard of the Pakistan Navy.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 mb-10">
+                                <div class="glass-card p-5 text-center">
+                                    <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:white;line-height:1;">40+</div>
+                                    <div style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">Selected Last Session</div>
+                                </div>
+                                <div class="glass-card p-5 text-center">
+                                    <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);line-height:1;">100%</div>
+                                    <div style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">Medical Clearance</div>
+                                </div>
+                            </div>
+                            <button onclick="showView('apply-view')" class="btn-primary">Join Navy Prep</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== NAVY DETAILED (BRANCHES) ===== -->
+            <section class="lcp-section" data-section="navy-detailed" data-aos="fade-up" style="background:rgba(0,12,5,0.8);">
+                <div class="max-w-screen-xl mx-auto px-6">
+                    <div class="text-center mb-16">
+                        <div class="section-eyebrow justify-center mb-4" id="navy-detailed-badge" style="justify-content:center;">Naval Branches</div>
+                        <h2 id="navy-detailed-title" class="section-title text-5xl md:text-6xl text-white" style="font-family:'Bebas Neue',sans-serif;">
+                            Pakistan Navy <span style="color:var(--gold);">SSC</span>
+                        </h2>
+                        <p id="navy-detailed-sub" class="text-gray-500 text-sm mt-4 max-w-xl mx-auto">Short Service Commission 2026-B — four specialized branches, one comprehensive prep program.</p>
+                    </div>
+                    <div class="grid md:grid-cols-4 gap-1 mb-16">
+                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="0">
+                            <div class="branch-icon"><i data-lucide="cpu" class="w-6 h-6"></i></div>
+                            <div class="branch-name">Technical</div>
+                            <div class="branch-sub">Engineering & IT</div>
+                        </div>
+                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="80">
+                            <div class="branch-icon"><i data-lucide="package" class="w-6 h-6"></i></div>
+                            <div class="branch-name">Supply</div>
+                            <div class="branch-sub">Logistics & Admin</div>
+                        </div>
+                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="160">
+                            <div class="branch-icon"><i data-lucide="book-open" class="w-6 h-6"></i></div>
+                            <div class="branch-name">Education</div>
+                            <div class="branch-sub">Teaching & Training</div>
+                        </div>
+                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="240">
+                            <div class="branch-icon"><i data-lucide="scale" class="w-6 h-6"></i></div>
+                            <div class="branch-name">Law</div>
+                            <div class="branch-sub">Legal & JAG</div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <p id="navy-detailed-desc" class="text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8" style="font-size:14px;">Each branch has a specialized entrance test. Our coaching covers branch-specific preparation, psychological assessment, and physical fitness standards required by the Pakistan Navy.</p>
+                        <button onclick="showView('apply-view')" class="btn-ghost">Start Navy Prep</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== AFNS ===== -->
+            <section class="lcp-section" data-section="afns" style="background:linear-gradient(to bottom,rgba(0,12,5,0.9),rgba(1,65,28,0.15),rgba(0,12,5,0.9));">
+                <div class="max-w-screen-xl mx-auto px-6">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div data-aos="fade-right" class="order-2 lg:order-1">
+                            <div class="img-frame" style="height:500px;">
+                                <img id="afns-img" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80" alt="AFNS" />
+                                <div class="img-badge" style="top:24px;left:24px;background:#00205b;color:white;">Nursing Wing</div>
+                            </div>
+                        </div>
+                        <div data-aos="fade-left" data-aos-delay="150" class="order-1 lg:order-2">
+                            <div class="section-eyebrow mb-6" id="afns-badge">Medical Corps</div>
+                            <h2 id="afns-title" class="section-title text-5xl md:text-6xl text-white mb-6" style="font-family:'Bebas Neue',sans-serif;">
+                                AFNS <span style="color:var(--gold);">2026</span><br>Preparation
+                            </h2>
+                            <div class="section-divider"></div>
+                            <p id="afns-desc" class="text-gray-400 leading-relaxed mb-10" style="font-size:14px;">
+                                Specialized coaching for the Armed Forces Nursing Service entrance exam. Our curriculum covers Nursing Subjects (Anatomy, Physiology, Pharmacology), English, GK, and Interview techniques.
+                            </p>
+                            <div class="space-y-1 mb-10">
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Nursing subject mastery</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Medical terminology & ethics</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Mock interviews with nursing panel</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>100% pass rate last session</div>
+                            </div>
+                            <button onclick="showView('apply-view')" class="btn-primary">Apply for AFNS</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== ISSB ===== -->
+            <section class="lcp-section" data-section="issb" data-aos="fade-up" style="background:rgba(0,10,4,0.95);border-top:1px solid rgba(255,255,255,0.04);">
+                <div class="max-w-screen-xl mx-auto px-6">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div data-aos="fade-right">
+                            <div class="section-eyebrow mb-6" id="issb-badge">Psychological Warfare</div>
+                            <h2 id="issb-title" class="section-title text-5xl md:text-6xl text-white mb-6" style="font-family:'Bebas Neue',sans-serif;">
+                                ISSB <span style="color:var(--gold);">Psych</span><br>Assessment
+                            </h2>
+                            <div class="section-divider"></div>
+                            <p id="issb-desc" class="text-gray-400 leading-relaxed mb-10" style="font-size:14px;">
+                                Master the Inter Services Selection Board psychological tests. We cover Picture Story Writing, Word Association, Sentence Completion, and TAT with personalized feedback from ex-ISSB officers.
+                            </p>
+                            <div class="space-y-1 mb-10">
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Story writing & TAT mastery</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Group Testing Officer (GTO) drills</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Interview simulation with ex-ISSB officers</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>85% selection rate in last 2 years</div>
+                            </div>
+                            <button onclick="showView('apply-view')" class="btn-primary">Start ISSB Prep</button>
+                        </div>
+                        <div data-aos="fade-left" data-aos-delay="150">
+                            <div class="img-frame" style="height:500px;">
+                                <img id="issb-img" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80" alt="ISSB" />
+                                <div class="img-badge" style="bottom:24px;right:24px;background:#027a35;">Expert Panel</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== AMC ===== -->
+            <section class="lcp-section" data-section="amc" style="background:linear-gradient(135deg,rgba(0,12,5,0.95) 0%,rgba(0,32,91,0.2) 100%);">
+                <div class="max-w-screen-xl mx-auto px-6">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div data-aos="fade-right" class="order-2 lg:order-1">
+                            <div class="img-frame" style="height:500px;">
+                                <img id="amc-img" src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80" alt="AMC" />
+                                <div class="img-badge" style="top:24px;left:24px;background:var(--gold);color:#000c05;">Medical Entrance</div>
+                            </div>
+                        </div>
+                        <div data-aos="fade-left" data-aos-delay="150" class="order-1 lg:order-2">
+                            <div class="section-eyebrow mb-6" id="amc-badge">Army Medical Corps</div>
+                            <h2 id="amc-title" class="section-title text-5xl md:text-6xl text-white mb-6" style="font-family:'Bebas Neue',sans-serif;">
+                                AMC <span style="color:var(--gold);">2026</span><br>Entrance Prep
+                            </h2>
+                            <div class="section-divider"></div>
+                            <p id="amc-desc" class="text-gray-400 leading-relaxed mb-10" style="font-size:14px;">
+                                Comprehensive AMC entrance preparation covering Biology, Chemistry, Physics, English, and General Knowledge with special focus on medical entrance patterns and interview preparation.
+                            </p>
+                            <div class="space-y-1 mb-10">
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Full science curriculum coverage</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Mock exams with medical professionals</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Interview & personality grooming</div>
+                                <div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>95% success rate in AMC 2025</div>
+                            </div>
+                            <button onclick="showView('apply-view')" class="btn-primary">Enroll for AMC</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== STATS ===== -->
+            <section data-section="stats" data-aos="fade-up">
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-value" style="color:var(--gold);">10K+</div>
+                        <div class="stat-label">Students Trained</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value text-white">850+</div>
+                        <div class="stat-label">Army Selections</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value text-white">300+</div>
+                        <div class="stat-label">Navy Selections</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value text-white">190+</div>
+                        <div class="stat-label">Air Force Selections</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== WHATSAPP GROUP SECTION (NEW) ===== -->
+            <section class="whatsapp-section py-24 text-center" data-aos="fade-up">
+                <div class="max-w-screen-xl mx-auto px-6">
+                    <div class="section-eyebrow justify-center mb-6" style="justify-content:center;">Join Our Community</div>
+                    <h2 class="section-title text-5xl md:text-6xl text-white mb-6" style="font-family:'Bebas Neue',sans-serif;">
+                        WhatsApp <span style="color:#25D366;">Channel</span>
+                    </h2>
+                    <p class="text-gray-400 max-w-xl mx-auto leading-relaxed mb-10">
+                        Stay updated with live lectures, test schedules, and important announcements. Join our official WhatsApp channel.
+                    </p>
+                    <a href="https://whatsapp.com/channel/0029VaSarXAAzNbyJh1OxU3l" target="_blank" class="whatsapp-btn">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        Join Channel
+                    </a>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ===== ABOUT ===== -->
+        <div id="about-view" class="view-section pt-32 pb-24">
+            <div class="max-w-screen-xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-20 items-center mb-24" data-aos="fade-up">
+                    <div class="space-y-8">
+                        <div class="section-eyebrow">Our Story</div>
+                        <h2 class="section-title text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">Leadership <span style="color:var(--gold);">Focus</span></h2>
+                        <div class="border-l-2 pl-8 py-4 space-y-4" style="border-color:var(--gold);">
+                            <p class="text-gray-400 italic text-lg leading-relaxed">"Excellence is not an outcome; it is a mindset. At Pakistan Officers Academy, we groom that mindset into every student."</p>
+                            <p class="text-white font-bold text-xs tracking-widest uppercase" style="font-family:'Rajdhani',sans-serif;">— Sir Awais Sultan, CEO</p>
+                        </div>
+                    </div>
+                    <div class="img-frame" style="height:500px;">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80" alt="Leadership" style="filter:grayscale(80%);" />
+                    </div>
+                </div>
+                <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
+                    <h2 class="section-title text-5xl text-white mb-8" style="font-family:'Bebas Neue',sans-serif;">Academy <span style="color:var(--gold);">Story</span></h2>
+                    <p class="text-gray-400 leading-relaxed mb-12" style="font-size:15px;">Founded in 2005, Pakistan Officers Academy was built to bridge the gap between civilian education and military selection standards. Our alumni serve with honor in every branch of the Armed Forces of Pakistan.</p>
+                    <button onclick="showView('landing')" class="btn-ghost">Back to Academy</button>
                 </div>
             </div>
-            <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
-                <h2 class="military-font text-5xl font-bold text-white mb-10">Academy <span class="text-gold">Story</span></h2>
-                <p class="text-gray-400 text-lg leading-relaxed font-light">Founded in 2005, the Pakistan Officers Academy was built to bridge the gap between civilian education and military selection standards. Our alumni serve with honor in every branch of the Armed Forces.</p>
-                <button onclick="showView('landing')" class="mt-16 bg-white text-army-dark px-12 py-4 rounded-full font-bold uppercase text-[10px] tracking-[0.4em] hover:bg-gold transition">Back to Academy</button>
-            </div>
         </div>
 
-        <!-- 3. ADMISSION PORTAL VIEW -->
-        <div id="apply-view" class="view-section pt-32 pb-24 container mx-auto px-6 text-center">
-            <div class="max-w-3xl mx-auto bg-army rounded-[3.5rem] p-12 border border-gold/30 shadow-2xl text-left" data-aos="zoom-in">
-                <h2 class="military-font text-4xl font-bold text-white text-center mb-2 uppercase tracking-widest">Enlistment Desk</h2>
-                <p class="text-gray-400 text-center text-[10px] font-bold uppercase tracking-[0.4em] mb-12">Session Enrollment: 2026-B</p>
-                <form id="admission-form" class="grid md:grid-cols-2 gap-8">
-                    <input type="text" id="adm-name" placeholder="Student Full Name" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white" required>
-                    <input type="tel" id="adm-phone" placeholder="WhatsApp Number" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white" required>
-                    <input type="email" id="adm-email" placeholder="Email Address" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white" required>
-                    <input type="text" id="adm-city" placeholder="Current City" class="bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white" required>
-                    <select id="adm-course" class="md:col-span-2 bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-gold text-white appearance-none">
-                        <option class="bg-army-dark">Initial Preparation (Batch 12)</option>
-                        <option class="bg-army-dark">ISSB Masterclass</option>
-                        <option class="bg-army-dark">Lady Cadet Course (LCC)</option>
-                        <option class="bg-army-dark">AMC / AFNS Prep</option>
-                    </select>
-                    <button type="submit" class="md:col-span-2 bg-gold text-army-dark py-5 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-white transition shadow-xl">Confirm Enrollment</button>
-                </form>
-            </div>
-        </div>
+        <!-- ===== APPLY ===== -->
+        <div id="apply-view" class="view-section pt-32 pb-24">
+            <div class="max-w-screen-xl mx-auto px-6">
+                <div class="max-w-2xl mx-auto" data-aos="fade-up">
+                    <div class="section-eyebrow justify-center mb-6" style="justify-content:center;">Session 2026-B</div>
+                    <h2 class="section-title text-5xl text-white text-center mb-12" style="font-family:'Bebas Neue',sans-serif;">Enlistment <span style="color:var(--gold);">Desk</span></h2>
 
-        <!-- 4. STUDENT PORTAL -->
-        <div id="portal" class="view-section pt-32 pb-24 container mx-auto px-6 max-w-md text-center">
-            <div class="bg-white/5 p-12 rounded-[3.5rem] border border-white/10" data-aos="zoom-in">
-                <h2 class="military-font text-3xl font-bold text-white mb-10 tracking-widest uppercase">Student Portal</h2>
-                <div class="space-y-6 text-left">
-                    <div><label class="text-[9px] uppercase font-bold text-gray-500 ml-2">Student ID</label><input type="text" class="w-full bg-white/5 border border-white/10 rounded-2xl p-5 outline-none focus:border-gold text-white text-xs"></div>
-                    <div><label class="text-[9px] uppercase font-bold text-gray-500 ml-2">Passcode</label><input type="password" class="w-full bg-white/5 border border-white/10 rounded-2xl p-5 outline-none focus:border-gold text-white text-xs"></div>
-                    <button class="w-full bg-gold text-army-dark py-4 rounded-xl font-bold uppercase tracking-widest text-xs mt-4">Login</button>
+                    <div class="glass-card p-10 glow-hover">
+                        <!-- PAYMENT INSTRUCTIONS -->
+                        <div class="mb-8 p-6 border border-gold/25 rounded bg-gold/5">
+                            <h3 class="text-gold font-bold text-lg mb-4" style="font-family:'Rajdhani',sans-serif;letter-spacing:0.05em;">💳 Payment Required to Complete Enrollment</h3>
+                            <p class="text-gray-400 text-sm mb-5">Please send the fee to either method below, then upload a screenshot of your payment.</p>
+
+                            <div class="grid md:grid-cols-2 gap-4 mb-5">
+                                <div class="payment-method-card">
+                                    <div class="method-title">📱 Jazzcash</div>
+                                    <div class="detail"><strong>Account No:</strong> 0310 0446012</div>
+                                    <div class="detail"><strong>Title:</strong> Sania Zafar</div>
+                                </div>
+                                <div class="payment-method-card">
+                                    <div class="method-title">🏦 Easypaisa</div>
+                                    <div class="detail"><strong>Account No:</strong> 03436746106</div>
+                                    <div class="detail"><strong>Title:</strong> Imtiaz</div>
+                                </div>
+                            </div>
+
+                            <div class="payment-instruction">
+                                ⚠️ <strong>Must Share a Screenshot After Payment.</strong> After verification, you'll be added to the group.
+                            </div>
+                        </div>
+
+                        <form id="admission-form" class="grid md:grid-cols-2 gap-5" enctype="multipart/form-data">
+                            <input type="text" id="adm-name" placeholder="Student Full Name" class="form-field" required />
+                            <input type="tel" id="adm-phone" placeholder="WhatsApp Number" class="form-field" required />
+                            <input type="email" id="adm-email" placeholder="Email Address" class="form-field" required />
+                            <input type="text" id="adm-city" placeholder="Current City" class="form-field" required />
+                            <select id="adm-course" class="form-field md:col-span-2">
+                                <option>Initial Preparation (Batch 12)</option>
+                                <option>ISSB Masterclass</option>
+                                <option>Lady Cadet Course (LCC)</option>
+                                <option>AMC / AFNS Prep</option>
+                                <option>Batch 16 (AFNS-26)</option>
+                            </select>
+
+                            <!-- Payment Method Selection -->
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">Payment Method</label>
+                                <select id="adm-payment-method" class="form-field">
+                                    <option value="Jazzcash">Jazzcash — 0310 0446012 (Sania Zafar)</option>
+                                    <option value="Easypaisa">Easypaisa — 03436746106 (Imtiaz)</option>
+                                </select>
+                            </div>
+
+                            <!-- Screenshot Upload -->
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">📸 Upload Payment Screenshot</label>
+                                <input type="file" id="adm-screenshot" accept="image/png,image/jpeg,image/jpg,image/webp" class="form-field" required style="padding:14px 16px;background:rgba(255,255,255,0.02);" />
+                                <div id="screenshot-preview-container" class="mt-3"></div>
+                                <p class="text-[10px] text-gray-500 mt-1">PNG, JPG or WEBP — max 5MB</p>
+                            </div>
+
+                            <button type="submit" class="btn-primary md:col-span-2 justify-center" style="padding:18px;">
+                                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                                Confirm Enrollment with Payment
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 5. ADMIN VIEW -->
-        <div id="admin" class="view-section pt-32 pb-24 container mx-auto px-6">
-            <div class="flex justify-between items-center mb-12">
-                <h2 class="military-font text-3xl font-bold text-gold underline tracking-tighter">HQ Command Center</h2>
-                <button onclick="showView('landing')" class="bg-white/10 border border-white/20 px-8 py-2 rounded-full font-bold text-[10px] uppercase">Logout</button>
+        <!-- ===== PORTAL (STUDENT LOGIN) ===== -->
+        <div id="portal" class="view-section pt-32 pb-24">
+            <div class="max-w-md mx-auto px-6" data-aos="fade-up">
+                <h2 class="section-title text-4xl text-white text-center mb-12" style="font-family:'Bebas Neue',sans-serif;">Student <span style="color:var(--gold);">Portal</span></h2>
+                <div class="glass-card p-10 glow-hover">
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2" style="font-family:'Rajdhani',sans-serif;">Student ID</label>
+                            <input type="text" id="login-id" class="form-field" placeholder="Enter your ID" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2" style="font-family:'Rajdhani',sans-serif;">Phone (Passcode)</label>
+                            <input type="text" id="login-phone" class="form-field" placeholder="Your WhatsApp number" />
+                        </div>
+                        <button onclick="loginStudent()" class="btn-primary w-full justify-center mt-4" style="padding:16px;">Login to Dashboard</button>
+                        <p class="text-xs text-gray-500 text-center mt-4">Use the Student ID provided after enrollment and your phone number.</p>
+                    </div>
+                </div>
             </div>
-            <div class="grid md:grid-cols-2 gap-10 mb-12">
-                <div class="bg-white/5 p-10 rounded-[3rem] border border-white/10 text-center"><p class="text-gray-500 text-[10px] uppercase font-bold mb-2">Confirmed Admissions</p><h3 id="stat-total" class="text-6xl font-bold text-white military-font">0</h3></div>
-                <div class="bg-white/5 p-10 rounded-[3rem] border border-white/10 text-center"><p class="text-gray-500 text-[10px] uppercase font-bold mb-2">Chat Leads</p><h3 id="stat-leads" class="text-6xl font-bold text-gold military-font">0</h3></div>
+        </div>
+
+        <!-- ===== DASHBOARD VIEW (NEW) ===== -->
+        <div id="dashboard-view" class="view-section pt-32 pb-24">
+            <div class="max-w-4xl mx-auto px-6" data-aos="fade-up">
+                <div class="flex justify-between items-center mb-12 flex-wrap gap-4">
+                    <h2 class="section-title text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">Welcome, <span id="dash-name" style="color:var(--gold);">Student</span></h2>
+                    <button onclick="logoutStudent()" class="btn-ghost" style="padding:10px 24px;font-size:10px;">Logout</button>
+                </div>
+                <div class="dashboard-card">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <div class="info-label">Student ID</div>
+                            <div class="info-value" id="dash-id">—</div>
+                        </div>
+                        <div>
+                            <div class="info-label">Full Name</div>
+                            <div class="info-value" id="dash-name-full">—</div>
+                        </div>
+                        <div>
+                            <div class="info-label">Course</div>
+                            <div class="info-value" id="dash-course">—</div>
+                        </div>
+                        <div>
+                            <div class="info-label">City</div>
+                            <div class="info-value" id="dash-city">—</div>
+                        </div>
+                        <div>
+                            <div class="info-label">Payment Status</div>
+                            <div class="info-value text-green-400" id="dash-payment">Paid</div>
+                        </div>
+                        <div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value text-gold" id="dash-status">Active</div>
+                        </div>
+                    </div>
+                    <div class="mt-10 p-6 border border-gold/20 rounded bg-gold/5">
+                        <p class="text-gray-300 text-sm leading-relaxed">✅ You are enrolled and verified. You will be added to the official group shortly. Check your WhatsApp for updates.</p>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white/5 rounded-[3rem] border border-white/10 overflow-hidden"><table class="w-full text-left text-xs uppercase tracking-widest font-bold"><thead class="bg-white/5 text-gray-500"><tr class="border-b border-white/5"><th class="px-8 py-6">Student Name</th><th class="px-8 py-6 text-gold">Track</th><th class="px-8 py-6">Contact Details</th></tr></thead><tbody id="admin-table-body" class="divide-y divide-white/5"></tbody></table></div>
+        </div>
+
+        <!-- ===== ADMIN ===== -->
+        <div id="admin" class="view-section pt-32 pb-24">
+            <div class="max-w-screen-xl mx-auto px-6">
+                <div class="flex justify-between items-center mb-10 flex-wrap gap-4">
+                    <div>
+                        <div class="section-eyebrow mb-2">Command Center</div>
+                        <h2 class="section-title text-4xl" style="font-family:'Bebas Neue',sans-serif;color:var(--gold);">HQ Dashboard</h2>
+                    </div>
+                    <div class="flex gap-3 flex-wrap">
+                        <button onclick="showView('landing')" class="btn-ghost" style="padding:10px 20px;font-size:10px;">View Site</button>
+                        <button onclick="refreshAdminData()" class="btn-primary" style="padding:10px 20px;font-size:10px;" id="admin-refresh-btn">
+                            <i data-lucide="refresh-cw" class="w-3 h-3"></i> Sync
+                        </button>
+                        <button onclick="resetAllContent()" class="admin-btn admin-btn-danger" style="font-size:10px;padding:10px 20px;">Reset All</button>
+                    </div>
+                </div>
+                <!-- Stats -->
+                <div class="grid md:grid-cols-4 gap-4 mb-10">
+                    <div class="glass-card p-6 text-center"><p class="text-gray-500 text-xs uppercase font-bold tracking-widest mb-2" style="font-family:'Rajdhani',sans-serif;">Confirmed Admissions</p><h3 id="stat-total" class="text-4xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">0</h3></div>
+                    <div class="glass-card p-6 text-center"><p class="text-gray-500 text-xs uppercase font-bold tracking-widest mb-2" style="font-family:'Rajdhani',sans-serif;">Chat Leads</p><h3 id="stat-leads" class="text-4xl font-bold" style="font-family:'Bebas Neue',sans-serif;color:var(--gold);">0</h3></div>
+                    <div class="glass-card p-6 text-center"><p class="text-gray-500 text-xs uppercase font-bold tracking-widest mb-2" style="font-family:'Rajdhani',sans-serif;">Paid Enrollments</p><h3 id="stat-paid" class="text-4xl font-bold text-green-400" style="font-family:'Bebas Neue',sans-serif;">0</h3></div>
+                    <div class="glass-card p-6 text-center"><p class="text-gray-500 text-xs uppercase font-bold tracking-widest mb-2" style="font-family:'Rajdhani',sans-serif;">Sections</p><h3 id="stat-sections" class="text-4xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">13</h3></div>
+                </div>
+                <!-- Tabs -->
+                <div class="flex flex-wrap gap-2 mb-8 pb-4 border-b border-white/5">
+                    <button class="section-tab active" data-tab="content">📝 Content</button>
+                    <button class="section-tab" data-tab="media">🖼️ Media</button>
+                    <button class="section-tab" data-tab="header">🎯 Branding</button>
+                    <button class="section-tab" data-tab="students">👨‍🎓 Students</button>
+                </div>
+                <!-- Content Tab -->
+                <div id="tab-content" class="admin-tab-content">
+                    <div class="grid lg:grid-cols-4 gap-4">
+                        <div>
+                            <div class="glass-card p-4" style="position:sticky;top:100px;">
+                                <p class="text-xs uppercase font-bold text-gray-500 tracking-widest mb-4" style="font-family:'Rajdhani',sans-serif;">Sections</p>
+                                <div id="section-list" class="space-y-1 max-h-96 overflow-y-auto">
+                                    <button class="section-selector w-full text-left active-section" data-section="hero" onclick="loadSectionForEdit('hero')">🏠 Hero</button>
+                                    <button class="section-selector w-full text-left" data-section="batch16" onclick="loadSectionForEdit('batch16')">📘 Batch 16</button>
+                                    <button class="section-selector w-full text-left" data-section="batch12" onclick="loadSectionForEdit('batch12')">📚 Batch 12</button>
+                                    <button class="section-selector w-full text-left" data-section="navy-ssc" onclick="loadSectionForEdit('navy-ssc')">⚓ Navy SSC</button>
+                                    <button class="section-selector w-full text-left" data-section="wings" onclick="loadSectionForEdit('wings')">🪶 Wings</button>
+                                    <button class="section-selector w-full text-left" data-section="pma-initial" onclick="loadSectionForEdit('pma-initial')">🎯 PMA Initial</button>
+                                    <button class="section-selector w-full text-left" data-section="afns" onclick="loadSectionForEdit('afns')">🏥 AFNS</button>
+                                    <button class="section-selector w-full text-left" data-section="navy-detailed" onclick="loadSectionForEdit('navy-detailed')">🚢 Navy Detail</button>
+                                    <button class="section-selector w-full text-left" data-section="issb" onclick="loadSectionForEdit('issb')">🧠 ISSB</button>
+                                    <button class="section-selector w-full text-left" data-section="amc" onclick="loadSectionForEdit('amc')">🔬 AMC</button>
+                                    <button class="section-selector w-full text-left" data-section="stats" onclick="loadSectionForEdit('stats')">📊 Stats</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-3">
+                            <div class="glass-card p-8">
+                                <div id="editor-loading" class="text-center py-20"><div class="spinner mx-auto"></div><p class="text-gray-500 text-xs mt-4 uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Loading...</p></div>
+                                <div id="editor-content" style="display:none;">
+                                    <div class="flex justify-between items-start mb-8">
+                                        <div>
+                                            <h3 id="editor-section-name" class="text-2xl font-bold" style="font-family:'Bebas Neue',sans-serif;color:var(--gold);">Hero Section</h3>
+                                            <p id="editor-section-id" class="text-xs text-gray-500 uppercase tracking-widest mt-1" style="font-family:'Rajdhani',sans-serif;">hero</p>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xs font-bold uppercase tracking-widest text-gray-400" style="font-family:'Rajdhani',sans-serif;">Visible</span>
+                                            <div id="editor-toggle" class="toggle-switch active" onclick="toggleSectionVisibility()"></div>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div><label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">Title</label><input id="edit-title" class="admin-input" placeholder="Section title..." /></div>
+                                        <div><label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">Badge / Eyebrow</label><input id="edit-badge" class="admin-input" placeholder="Badge text..." /></div>
+                                        <div><label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">Description</label><textarea id="edit-desc" class="admin-textarea" placeholder="Description..."></textarea></div>
+                                        <div>
+                                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">Image URL</label>
+                                            <div class="flex gap-2">
+                                                <input id="edit-img" class="admin-input flex-1" placeholder="https://..." />
+                                                <button onclick="document.getElementById('img-upload-input').click()" class="admin-btn admin-btn-secondary">Upload</button>
+                                                <input type="file" id="img-upload-input" accept="image/png,image/jpeg,image/jpg" class="hidden" onchange="uploadSectionImage(event)" />
+                                            </div>
+                                            <div id="edit-img-preview" class="mt-3"></div>
+                                        </div>
+                                        <div class="flex gap-3 pt-4 border-t border-white/5">
+                                            <button onclick="saveSectionContent()" class="admin-btn admin-btn-primary flex items-center gap-2"><i data-lucide="save" class="w-4 h-4"></i> Save</button>
+                                            <button onclick="resetSectionContent()" class="admin-btn admin-btn-danger">Reset</button>
+                                        </div>
+                                        <div id="edit-status" class="text-xs text-gray-500 italic"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Media Tab -->
+                <div id="tab-media" class="admin-tab-content" style="display:none;">
+                    <div class="glass-card p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-white" style="font-family:'Bebas Neue',sans-serif;">📸 Media Library</h3>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="image-upload-area" onclick="document.getElementById('media-upload-input').click()">
+                                <i data-lucide="upload-cloud" class="w-10 h-10 mx-auto mb-3" style="color:rgba(212,175,55,0.5);"></i>
+                                <p class="text-xs font-bold uppercase tracking-widest text-gray-400" style="font-family:'Rajdhani',sans-serif;">Upload PNG / JPG</p>
+                                <input type="file" id="media-upload-input" accept="image/png,image/jpeg,image/jpg" class="hidden" onchange="uploadMediaFile(event)" />
+                            </div>
+                            <div id="media-list" class="md:col-span-2 grid grid-cols-2 gap-4 max-h-96 overflow-y-auto">
+                                <p class="text-gray-500 text-xs col-span-2 text-center py-8">No media yet. Upload your first image.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Header Tab -->
+                <div id="tab-header" class="admin-tab-content" style="display:none;">
+                    <div class="glass-card p-8 max-w-2xl">
+                        <h3 class="text-2xl font-bold mb-8 text-white" style="font-family:'Bebas Neue',sans-serif;">🎯 Branding Settings</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">Logo URL</label>
+                                <div class="flex gap-2">
+                                    <input id="header-logo" class="admin-input flex-1" placeholder="Logo URL..." />
+                                    <button onclick="document.getElementById('logo-upload-input').click()" class="admin-btn admin-btn-secondary">Upload</button>
+                                    <input type="file" id="logo-upload-input" accept="image/png,image/jpeg,image/jpg" class="hidden" onchange="uploadLogo(event)" />
+                                </div>
+                                <div id="logo-preview" class="mt-3"></div>
+                            </div>
+                            <div><label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">Site Title</label><input id="header-title" class="admin-input" /></div>
+                            <div><label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">Tagline</label><input id="header-subtitle" class="admin-input" /></div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2" style="font-family:'Rajdhani',sans-serif;">Primary Color</label>
+                                <div class="color-picker-wrap"><input type="color" id="header-color" value="#D4AF37" /><span id="header-color-hex" class="text-xs text-gray-400">#D4AF37</span></div>
+                            </div>
+                            <button onclick="saveHeaderSettings()" class="admin-btn admin-btn-primary flex items-center gap-2"><i data-lucide="save" class="w-4 h-4"></i> Save Branding</button>
+                            <div id="header-status" class="text-xs text-gray-500 italic"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Students Tab -->
+                <div id="tab-students" class="admin-tab-content" style="display:none;">
+                    <div class="glass-card overflow-hidden">
+                        <div class="p-6 border-b border-white/5 flex justify-between items-center flex-wrap gap-3">
+                            <h3 class="text-xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">👨‍🎓 Student Records</h3>
+                            <div class="flex gap-3 flex-wrap">
+                                <button onclick="exportStudentData()" class="admin-btn admin-btn-secondary flex items-center gap-2"><i data-lucide="download" class="w-3 h-3"></i> Export CSV</button>
+                                <button onclick="markAllPaid()" class="admin-btn admin-btn-primary flex items-center gap-2" style="background:#4ade80;color:#000c05;"><i data-lucide="check-circle" class="w-3 h-3"></i> Mark All Paid</button>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs uppercase tracking-widest font-bold" style="font-family:'Rajdhani',sans-serif;">
+                                <thead class="bg-white/5 text-gray-500 border-b border-white/5">
+                                    <tr>
+                                        <th class="px-6 py-4">ID</th>
+                                        <th class="px-6 py-4" style="color:var(--gold);">Name</th>
+                                        <th class="px-6 py-4">Course</th>
+                                        <th class="px-6 py-4">Contact</th>
+                                        <th class="px-6 py-4">City</th>
+                                        <th class="px-6 py-4">Payment</th>
+                                        <th class="px-6 py-4">Screenshot</th>
+                                        <th class="px-6 py-4">Action</th>
+                                        <th class="px-6 py-4">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-table-body" class="divide-y divide-white/5"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <!-- ADMIN MODAL -->
     <div id="admin-modal" class="fixed inset-0 bg-army-dark/98 backdrop-blur-3xl z-[200] flex items-center justify-center hidden p-6">
-        <div class="bg-white/5 p-12 rounded-[4rem] border border-gold/20 w-full max-w-sm text-center shadow-2xl">
-            <h3 class="military-font text-gold text-3xl mb-10 uppercase tracking-widest font-bold">HQ Checkpoint</h3>
-            <div class="space-y-5 mb-12"><input type="text" id="admin-user" placeholder="Command Username" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-gold text-white text-sm"><input type="password" id="admin-pass" placeholder="Secret Token" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-gold text-white text-sm"></div>
-            <button onclick="verifyAdmin()" class="w-full bg-gold text-army-dark py-5 rounded-2xl font-bold tracking-widest uppercase text-xs">Verify Authorization</button>
-            <button onclick="closeAdminModal()" class="mt-6 text-gray-500 text-[10px] font-bold uppercase">Decline</button>
+        <div class="glass-card p-12 w-full max-w-sm text-center" style="border-color:rgba(212,175,55,0.2);">
+            <div class="section-eyebrow justify-center mb-8" style="justify-content:center;">Secure Area</div>
+            <h3 class="text-4xl font-bold mb-10 text-white" style="font-family:'Bebas Neue',sans-serif;color:var(--gold);">HQ Checkpoint</h3>
+            <div class="space-y-4 mb-10">
+                <input type="text" id="admin-user" placeholder="Command Username" class="form-field" />
+                <input type="password" id="admin-pass" placeholder="Secret Token" class="form-field" />
+            </div>
+            <button onclick="verifyAdmin()" class="btn-primary w-full justify-center" style="padding:16px;">Verify Authorization</button>
+            <button onclick="closeAdminModal()" class="mt-6 text-gray-500 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;font-weight:700;background:none;border:none;cursor:pointer;">Decline</button>
         </div>
     </div>
 
     <!-- CHATBOT -->
     <div id="chat-container" class="fixed bottom-6 right-6 z-[150] flex flex-col items-end">
-        <div id="chat-widget" class="hidden flex-col mb-4 overflow-hidden border border-gold/30 shadow-2xl">
-            <div class="bg-army p-5 text-white flex items-center justify-between"><span class="font-bold text-[10px] uppercase tracking-widest flex items-center gap-2"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Duty Officer AI</span><button onclick="toggleChat()"><i data-lucide="x" class="w-4 h-4 text-gray-400"></i></button></div>
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-4 bg-army-dark flex flex-col scroll-smooth"><div class="bot-msg max-w-[85%] text-gray-300">Reporting for duty! Type <span class="font-bold text-gold uppercase">"JOIN"</span> to book your admission now.</div></div>
-            <div class="p-4 bg-army flex gap-3 border-t border-white/10"><input type="text" id="chat-input" placeholder="Type command..." class="flex-1 bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-white outline-none"><button onclick="handleChat()" class="bg-gold text-army-dark p-3 rounded-xl hover:bg-white transition"><i data-lucide="send" class="w-4 h-4"></i></button></div>
+        <div id="chat-widget" class="hidden flex-col mb-4">
+            <div class="p-4 flex items-center justify-between border-b border-white/10" style="background:rgba(1,65,28,0.8);">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                    <span class="font-bold text-xs uppercase tracking-widest text-white" style="font-family:'Rajdhani',sans-serif;">Duty Officer AI</span>
+                </div>
+                <button onclick="toggleChat()" class="text-gray-400"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-3 flex flex-col" style="background:#001a0b;">
+                <div class="bot-msg text-gray-300">Reporting for duty! Type <span class="font-bold" style="color:var(--gold);">"JOIN"</span> to start your admission now.</div>
+            </div>
+            <div class="p-3 flex gap-2 border-t border-white/10" style="background:rgba(1,65,28,0.6);">
+                <input type="text" id="chat-input" placeholder="Type command..." class="flex-1 text-xs text-white outline-none px-3 py-2 rounded" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);" onkeydown="if(event.key==='Enter')handleChat()" />
+                <button onclick="handleChat()" class="btn-primary" style="padding:8px 14px;font-size:10px;"><i data-lucide="send" class="w-4 h-4"></i></button>
+            </div>
         </div>
-        <button onclick="toggleChat()" class="w-16 h-16 bg-gold text-army-dark rounded-2xl shadow-xl flex items-center justify-center hover:scale-110 border border-gold/30 transition-all"><i data-lucide="message-square"></i></button>
+        <button onclick="toggleChat()" class="w-14 h-14 flex items-center justify-center shadow-xl transition-all hover:scale-110 btn-primary" style="border-radius:2px;">
+            <i data-lucide="message-circle" class="w-6 h-6"></i>
+        </button>
     </div>
 
     <!-- FOOTER -->
-    <footer class="py-24 border-t border-white/5 bg-[#000502]">
-        <div class="container mx-auto px-6">
+    <footer class="pt-24 pb-12">
+        <div class="max-w-screen-xl mx-auto px-6">
             <div class="grid lg:grid-cols-3 gap-16 mb-16">
                 <div>
-                    <h3 class="military-font text-white text-3xl font-bold mb-8">Pakistan Officers <span class="text-gold">Academy</span></h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-8 max-w-sm">The elite training wings for future commanders. Specializing in PMA Initial Prep, ISSB Simulations, Navy SSC, AFNS, and AMC courses.</p>
-                    <div class="flex gap-6 text-gray-500">
-                        <a href="#" class="hover:text-gold transition"><i data-lucide="facebook"></i></a>
-                        <a href="#" class="hover:text-gold transition"><i data-lucide="instagram"></i></a>
-                        <a href="#" class="hover:text-gold transition"><i data-lucide="youtube"></i></a>
+                    <h3 class="text-3xl text-white mb-6" style="font-family:'Bebas Neue',sans-serif;">Pakistan Officers <span style="color:var(--gold);">Academy</span></h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8 max-w-sm">Elite training wings for future commanders. PMA Initial Prep, ISSB, Navy SSC, AFNS, and AMC — under one roof.</p>
+                    <div class="flex gap-5 text-gray-600">
+                        <a href="#" class="footer-link"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="footer-link"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="footer-link"><i data-lucide="youtube" class="w-5 h-5"></i></a>
                     </div>
                 </div>
                 <div>
-                    <h4 class="military-font text-gold text-sm font-bold mb-8 tracking-widest uppercase">Headquarters Contact</h4>
-                    <ul class="space-y-6 text-gray-400 text-sm">
-                        <li class="flex items-center gap-4"><i data-lucide="phone" class="text-gold w-5 h-5"></i> +92 317 5088193</li>
-                        <li class="flex items-center gap-4"><i data-lucide="mail" class="text-gold w-5 h-5"></i> pakarmyofficer2k22@gmail.com</li>
-                        <li class="flex items-center gap-4"><i data-lucide="map-pin" class="text-gold w-5 h-5"></i> Rawalpindi / Islamabad Centers</li>
+                    <h4 class="text-xs font-bold uppercase tracking-widest mb-8" style="font-family:'Rajdhani',sans-serif;color:var(--gold);">HQ Contact</h4>
+                    <ul class="space-y-5 text-gray-400 text-sm">
+                        <li class="flex items-center gap-4"><i data-lucide="phone" class="w-5 h-5" style="color:var(--gold);"></i>+92 317 5088193</li>
+                        <li class="flex items-center gap-4"><i data-lucide="mail" class="w-5 h-5" style="color:var(--gold);"></i>pakarmyofficer2k22@gmail.com</li>
+                        <li class="flex items-center gap-4"><i data-lucide="map-pin" class="w-5 h-5" style="color:var(--gold);"></i>Rawalpindi / Islamabad</li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="military-font text-gold text-sm font-bold mb-8 tracking-widest uppercase">Office of the CEO</h4>
-                    <p class="text-white font-bold text-lg mb-2">Sir Awais Sultan</p>
-                    <p class="text-gray-500 text-xs uppercase tracking-widest mb-8">Founder & Chief Executive Officer</p>
-                    <button onclick="showView('apply-view')" class="text-gold border border-gold/30 px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-gold hover:text-army-dark transition">Start Your Career</button>
+                    <h4 class="text-xs font-bold uppercase tracking-widest mb-8" style="font-family:'Rajdhani',sans-serif;color:var(--gold);">Office of the CEO</h4>
+                    <p class="text-white font-bold text-lg mb-1" style="font-family:'Rajdhani',sans-serif;">Sir Awais Sultan</p>
+                    <p class="text-gray-500 text-xs uppercase tracking-widest mb-8" style="font-family:'Rajdhani',sans-serif;">Founder & Chief Executive Officer</p>
+                    <button onclick="showView('apply-view')" class="btn-ghost" style="padding:12px 24px;font-size:10px;">Start Your Career</button>
                 </div>
             </div>
-            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] text-white/20 uppercase tracking-[0.4em] gap-6">
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-white/20 uppercase tracking-widest gap-4" style="font-family:'Rajdhani',sans-serif;">
                 <p>&copy; 2026 Pakistan Officers Academy. All Rights Reserved.</p>
                 <p>Designed for Strategic Excellence</p>
             </div>
         </div>
     </footer>
 
+    <!-- ======================================================= -->
+    <!-- FIREBASE + FULL LOGIC -->
+    <!-- ======================================================= -->
     <script>
-        // 1. SUPABASE CLIENT
-        const poaClient = supabase.createClient('https://gasusvkixdamvuxnlybn.supabase.co', 'sb_publishable___fsO7b4X0pby_5aenAL8Q_mPnPCU2p');
+        // Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzcxhLR75PgPxAema026n84CFFnhnUE34",
+            authDomain: "poas-9c06a.firebaseapp.com",
+            databaseURL: "https://poas-9c06a-default-rtdb.firebaseio.com",
+            projectId: "poas-9c06a",
+            storageBucket: "poas-9c06a.firebasestorage.app",
+            messagingSenderId: "61768436471",
+            appId: "1:61768436471:web:8b7a546c3d565ac21221f2"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const storage = firebase.storage();
 
-        // 2. SPA NAVIGATION
-        function showView(viewId) {
+        // Defaults
+        const DEFAULT_CONTENT = {
+            hero: { title: 'MASTER THE', desc: "Join Pakistan's elite institute for specialized military testing. We forge the intelligence, discipline, and grit required for service in the Armed Forces.", badge: '',
+                img: 'image1.jpg.png', visible: true },
+            batch16: {
+                title: 'Batch 16: AFNS-26 Preparation',
+                desc: 'Verbal, Non-Verbal, Academic, Personality, Interview — complete preparation for AFNS-26. For girls with FSc Pre-Medical.',
+                badge: 'New Batch Enrollment',
+                img: '',
+                visible: true
+            },
+            batch12: { title: 'Batch 12: Initial Preparation', desc: 'Our flagship Batch 12 program delivers aggressive academic and intelligence drill preparation.',
+                badge: 'New Batch Enrollment', img: '', visible: true },
+            'navy-ssc': { title: 'Pak Navy SSC 2026-B',
+                desc: 'Prepare for the Short Service Commission (SSC) 2026-B Course. Specialized coaching for Technical, Supply, Education, and Law branches.',
+                badge: 'Naval Headquarters', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80',
+                visible: true },
+            wings: { title: 'Preparation Wings', desc: 'Four specialized tracks engineered for each branch.', badge: '',
+                img: '', visible: true },
+            'pma-initial': { title: 'PMA Initial Test Preparation', desc: 'Master the PMA Long Course initial test with our comprehensive curriculum.',
+                badge: 'Elite Training', img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80',
+                visible: true },
+            afns: { title: 'AFNS 2026 Preparation', desc: 'Specialized coaching for the Armed Forces Nursing Service entrance exam.',
+                badge: 'Medical Corps', img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80',
+                visible: true },
+            'navy-detailed': { title: 'Pakistan Navy SSC',
+                desc: 'Each branch has a specialized entrance test. Our coaching covers branch-specific preparation.',
+                badge: 'Naval Branches', img: '', visible: true },
+            issb: { title: 'ISSB Psychological Assessment', desc: 'Master the Inter Services Selection Board psychological tests.',
+                badge: 'Psychological Warfare', img: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80',
+                visible: true },
+            amc: { title: 'AMC 2026 Entrance Prep',
+                desc: 'Comprehensive AMC entrance preparation covering Bio, Chemistry, Physics, English, and GK.',
+                badge: 'Army Medical Corps', img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80',
+                visible: true },
+            stats: { title: '', desc: '', badge: '', img: '', visible: true }
+        };
+        const DEFAULT_HEADER = { logo: 'logo.png', title: 'Pakistan Officers Academy', subtitle: 'Preparing the Protectors',
+            color: '#D4AF37' };
+
+        let currentSection = 'hero';
+        let isAdminMode = false;
+        let loggedInStudent = null; // holds student object when logged in
+
+        // ── CURSOR ──
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mx = 0,
+            my = 0,
+            rx = 0,
+            ry = 0;
+        document.addEventListener('mousemove', e => { mx = e.clientX;
+            my = e.clientY;
+            dot.style.left = mx + 'px';
+            dot.style.top = my + 'px'; });
+
+        function animateCursor() { rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            ring.style.left = rx + 'px';
+            ring.style.top = ry + 'px';
+            requestAnimationFrame(animateCursor); }
+        animateCursor();
+        document.querySelectorAll('a,button').forEach(el => {
+            el.addEventListener('mouseenter', () => { dot.style.transform = 'translate(-50%,-50%) scale(2)';
+                ring.style.transform = 'translate(-50%,-50%) scale(1.6)';
+                ring.style.borderColor = 'rgba(212,175,55,0.8)'; });
+            el.addEventListener('mouseleave', () => { dot.style.transform = 'translate(-50%,-50%) scale(1)';
+                ring.style.transform = 'translate(-50%,-50%) scale(1)';
+                ring.style.borderColor = 'rgba(212,175,55,0.5)'; });
+        });
+
+        // ── HERO PARTICLE CANVAS ──
+        function initParticles() {
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let W = canvas.width = window.innerWidth,
+                H = canvas.height = window.innerHeight;
+            window.addEventListener('resize', () => { W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight; });
+            const particles = Array.from({ length: 60 }, () => ({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                vx: (Math.random() - .5) * .3,
+                vy: (Math.random() - .5) * .3,
+                r: Math.random() * 1.5 + .5,
+                a: Math.random() * .5 + .1
+            }));
+
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                particles.forEach((p, i) => {
+                    particles.slice(i + 1).forEach(q => {
+                        const d = Math.hypot(p.x - q.x, p.y - q.y);
+                        if (d < 150) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(q.x, q.y);
+                            ctx.strokeStyle = `rgba(212,175,55,${(1-d/150)*0.08})`;
+                            ctx.lineWidth = .5;
+                            ctx.stroke();
+                        }
+                    });
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > W) p.vx *= -1;
+                    if (p.y < 0 || p.y > H) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212,175,55,${p.a})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        // ── NAVIGATION ──
+        function showView(id) {
             document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
-            const target = document.getElementById(viewId);
-            if(target) { target.classList.add('active'); window.scrollTo(0, 0); lucide.createIcons(); AOS.refresh(); if(viewId === 'admin') loadAdminData(); }
+            const t = document.getElementById(id);
+            if (t) { t.classList.add('active');
+                window.scrollTo(0, 0);
+                lucide.createIcons();
+                AOS.refresh(); }
+            if (id === 'admin') { loadAdminData();
+                loadAllSectionData();
+                loadHeaderData();
+                loadMediaLibrary(); }
+            updateNavButtons();
         }
 
-        // 3. MOBILE MENU
-        function toggleMobileMenu() { 
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('menu-icon');
-            menu.classList.toggle('hidden');
-            // Toggle icon if needed
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         }
 
-        // 4. ADMIN ACCESS
+        // ── ADMIN AUTH ──
         let clickTracker = 0;
-        document.getElementById('main-logo').addEventListener('click', () => { 
-            clickTracker++; if(clickTracker === 3) { document.getElementById('admin-modal').classList.remove('hidden'); clickTracker = 0; } setTimeout(() => clickTracker = 0, 2500); 
+        document.getElementById('main-logo').addEventListener('click', () => {
+            clickTracker++;
+            if (clickTracker === 3) { document.getElementById('admin-modal').classList.remove('hidden');
+                clickTracker = 0; }
+            setTimeout(() => clickTracker = 0, 2500);
         });
+
         function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
-        function verifyAdmin() { 
-            const u = document.getElementById('admin-user').value; const p = document.getElementById('admin-pass').value;
-            if(u === 'admin' && p === 'pao1234') { closeAdminModal(); showView('admin'); } else { alert("ACCESS DENIED."); } 
+
+        function verifyAdmin() {
+            const u = document.getElementById('admin-user').value;
+            const p = document.getElementById('admin-pass').value;
+            if (u === 'admin' && p === 'pao1234') { closeAdminModal();
+                isAdminMode = true;
+                showView('admin');
+                showToast('✅ Welcome Commander!', 'success'); } else { showToast('❌ ACCESS DENIED.', 'error'); }
         }
 
-        // 5. ADMISSION FORM
-        document.getElementById('admission-form').addEventListener('submit', async (e) => { 
-            e.preventDefault(); const btn = e.target.querySelector('button'); btn.innerText = "TRANSMITTING...";
-            const student = { student_id: 'S-' + Math.floor(10000 + Math.random() * 90000), name: document.getElementById('adm-name').value, phone: document.getElementById('adm-phone').value, email: document.getElementById('adm-email').value, city: document.getElementById('adm-city').value, course: document.getElementById('adm-course').value, status: 'Confirmed' };
-            const { error } = await poaClient.from('students').insert([student]);
-            if (!error) { alert("SUCCESS! YOUR ID: " + student.student_id); e.target.reset(); showView('portal'); } else { alert("ERROR: Check connection."); } btn.innerText = "Confirm Enrollment"; 
+        // ── TOAST ──
+        function showToast(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast show' + (type === 'error' ? ' border-red-500' : '');
+            clearTimeout(t._h);
+            t._h = setTimeout(() => t.classList.remove('show'), 4000);
+        }
+
+        // ── ADMISSION FORM (with payment + screenshot) ──
+        document.getElementById('admission-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner"></span>';
+
+            const name = document.getElementById('adm-name').value.trim();
+            const phone = document.getElementById('adm-phone').value.trim();
+            const email = document.getElementById('adm-email').value.trim();
+            const city = document.getElementById('adm-city').value.trim();
+            const course = document.getElementById('adm-course').value;
+            const paymentMethod = document.getElementById('adm-payment-method').value;
+            const fileInput = document.getElementById('adm-screenshot');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showToast('❌ Please upload a payment screenshot.', 'error');
+                btn.innerHTML = orig;
+                return;
+            }
+
+            const studentId = 'S-' + Math.floor(10000 + Math.random() * 90000);
+
+            try {
+                // Upload screenshot to Firebase Storage
+                const storageRef = storage.ref('payment_screenshots/' + studentId + '_' + Date.now() + '_' + file.name);
+                const uploadSnap = await storageRef.put(file);
+                const screenshotUrl = await uploadSnap.ref.getDownloadURL();
+
+                // Save student data with payment_status = 'Pending' (admin must verify)
+                const studentData = {
+                    student_id: studentId,
+                    name,
+                    phone,
+                    email,
+                    city,
+                    course,
+                    payment_method: paymentMethod,
+                    payment_status: 'Pending', // changed from 'Paid' to 'Pending'
+                    screenshot_url: screenshotUrl,
+                    status: 'Payment Pending',
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+
+                await db.ref('students/' + studentId).set(studentData);
+                await db.ref('chatbot_leads/' + studentId).set({ ...studentData });
+
+                showToast('✅ Enrollment submitted! ID: ' + studentId + ' — Payment pending verification.', 'success');
+                e.target.reset();
+                document.getElementById('screenshot-preview-container').innerHTML = '';
+                showView('portal');
+            } catch (err) {
+                console.error(err);
+                showToast('❌ Error saving enrollment. Please try again.', 'error');
+            } finally {
+                btn.innerHTML = orig;
+            }
         });
 
-        // 6. ADMIN DATA
-        async function loadAdminData() { 
-            const { data: st } = await poaClient.from('students').select('*').order('created_at', {ascending: false});
-            const { data: ld } = await poaClient.from('chatbot_leads').select('*').order('created_at', {ascending: false});
-            document.getElementById('stat-total').innerText = st?.length || 0; document.getElementById('stat-leads').innerText = ld?.length || 0;
-            const tbody = document.getElementById('admin-table-body'); tbody.innerHTML = '';
-            (st || []).forEach(s => { tbody.innerHTML += `<tr class="bg-white/5 border-b border-white/5"><td class="px-8 py-6 font-bold text-white uppercase">${s.name}</td><td class="px-8 py-6 text-gold uppercase">${s.course}</td><td class="px-8 py-6 text-gray-500 font-bold text-[8px]">P: ${s.phone}<br>E: ${s.email}</td></tr>`; });
-            (ld || []).forEach(l => { tbody.innerHTML += `<tr class="bg-blue-500/5 border-b border-white/5"><td class="px-8 py-6 font-bold text-gray-400 uppercase">${l.name} (AI LEAD)</td><td class="px-8 py-6 text-blue-400 uppercase">${l.interested_course || 'INQUIRY'}</td><td class="px-8 py-6 text-gray-500 font-bold text-[8px]">P: ${l.phone}</td></tr>`; });
+        // ── Screenshot preview ──
+        document.getElementById('adm-screenshot').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const container = document.getElementById('screenshot-preview-container');
+            if (!file) { container.innerHTML = ''; return; }
+            if (!file.type.startsWith('image/')) {
+                showToast('❌ Please select an image file.', 'error');
+                this.value = '';
+                container.innerHTML = '';
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('❌ Image too large (max 5MB).', 'error');
+                this.value = '';
+                container.innerHTML = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                container.innerHTML = `<img src="${ev.target.result}" class="screenshot-preview" alt="Payment Screenshot" />`;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // ── CHATBOT ──
+        let cState = 0,
+            leadData = {};
+
+        function toggleChat() {
+            const w = document.getElementById('chat-widget');
+            w.classList.toggle('hidden');
+            w.classList.toggle('flex');
+            lucide.createIcons();
         }
 
-        // 7. CHATBOT
-        let cState = 0; let leadData = {};
-        function toggleChat() { document.getElementById('chat-widget').classList.toggle('hidden'); document.getElementById('chat-widget').classList.toggle('flex'); lucide.createIcons(); }
-        async function handleChat() { 
-            const inp = document.getElementById('chat-input'); const box = document.getElementById('chat-messages'); if(!inp.value) return;
-            const val = inp.value; box.innerHTML += `<div class="user-msg p-3 text-xs max-w-[85%]">${val}</div>`; inp.value = ""; box.scrollTop = box.scrollHeight;
-            let reply = "I can book your admission. Type 'JOIN'."; const low = val.toLowerCase();
-            if(low.includes('join') || low.includes('admission') || cState > 0) {
-                if(cState === 0) { reply = "Understood. Starting Admission. What is your **Full Name**?"; cState = 1; }
-                else if(cState === 1) { leadData.name = val; reply = "Thanks. Your **WhatsApp Number**?"; cState = 2; }
-                else if(cState === 2) { leadData.phone = val; reply = "Which **City**?"; cState = 3; }
-                else if(cState === 3) { leadData.city = val; reply = "Which **Course**? (ISSB, PMA-158, Navy, AMC, AFNS)"; cState = 4; }
-                else if(cState === 4) { leadData.interested_course = val; const sID = 'S-' + Math.floor(10000 + Math.random() * 90000); reply = "Admission Success! ID: " + sID + ". Our HQ will call you."; await poaClient.from('chatbot_leads').insert([leadData]); await poaClient.from('students').insert([{...leadData, student_id: sID, course: val, status: 'Confirmed'}]); cState = 0; }
-            } else if(low.includes('fee')) { reply = "ISSB: 35k, Initial: 25k. Type 'JOIN' to apply."; }
-            setTimeout(() => { box.innerHTML += `<div class="bot-msg p-3 text-xs text-gray-300 max-w-[85%] mb-2">${reply}</div>`; box.scrollTop = box.scrollHeight; }, 700);
+        async function handleChat() {
+            const inp = document.getElementById('chat-input');
+            const box = document.getElementById('chat-messages');
+            if (!inp.value.trim()) return;
+            const val = inp.value.trim();
+            box.innerHTML += `<div class="user-msg">${val}</div>`;
+            inp.value = '';
+            box.scrollTop = box.scrollHeight;
+            let reply = "Type 'JOIN' to begin admission, or ask about 'fee'.";
+            const low = val.toLowerCase();
+            if (low.includes('join') || low.includes('admission') || cState > 0) {
+                if (cState === 0) { reply = "Starting admission. What is your Full Name?";
+                    cState = 1; } else if (cState === 1) { leadData.name = val;
+                    reply = "Thanks. Your WhatsApp Number?";
+                    cState = 2; } else if (cState === 2) { leadData.phone = val;
+                    reply = "Which City?";
+                    cState = 3; } else if (cState === 3) { leadData.city = val;
+                    reply = "Which Course? (ISSB, PMA-158, Navy, AMC, AFNS)";
+                    cState = 4; } else if (cState === 4) {
+                    leadData.interested_course = val;
+                    const sID = 'S-' + Math.floor(10000 + Math.random() * 90000);
+                    reply = '✅ Enrolled! ID: ' + sID + '. Please complete payment via Jazzcash (0310 0446012, Sania Zafar) or Easypaisa (03436746106, Imtiaz) and share screenshot. Our team will verify.';
+                    try {
+                        await db.ref('chatbot_leads/' + sID).set({ ...leadData, student_id: sID, status: 'Payment Pending',
+                            timestamp: firebase.database.ServerValue.TIMESTAMP });
+                        await db.ref('students/' + sID).set({ ...leadData, student_id: sID, course: leadData
+                                .interested_course || 'Inquiry', status: 'Payment Pending',
+                            timestamp: firebase.database.ServerValue.TIMESTAMP });
+                    } catch (e) { console.error(e); }
+                    cState = 0;
+                    leadData = {};
+                }
+            } else if (low.includes('fee')) { reply = "ISSB Masterclass: 35k, Initial Prep: 25k. Payment via Jazzcash (0310 0446012, Sania Zafar) or Easypaisa (03436746106, Imtiaz). Type 'JOIN' to apply."; } else if (low
+                .includes('payment')) {
+                reply = "📱 Jazzcash: 0310 0446012 (Sania Zafar)\n🏦 Easypaisa: 03436746106 (Imtiaz)\nMust share screenshot after payment.";
+            } else { reply = "Type 'JOIN' to start admission, 'fee' for fee details, or 'payment' for payment methods."; }
+            setTimeout(() => {
+                box.innerHTML += `<div class="bot-msg text-gray-300">${reply}</div>`;
+                box.scrollTop = box.scrollHeight;
+            }, 600);
         }
 
-        window.onload = () => { AOS.init({ duration: 800, once: true }); lucide.createIcons(); };
+        // ── ADMIN DATA ──
+        async function loadAdminData() {
+            try {
+                const [sSnap, lSnap] = await Promise.all([db.ref('students').once('value'), db.ref('chatbot_leads')
+                    .once('value')
+                ]);
+                const students = Object.values(sSnap.val() || {});
+                const leads = Object.values(lSnap.val() || {});
+                document.getElementById('stat-total').textContent = students.length;
+                document.getElementById('stat-leads').textContent = leads.length;
+                const paid = students.filter(s => s.payment_status === 'Paid' || s.payment_status === 'Confirmed');
+                document.getElementById('stat-paid').textContent = paid.length;
+
+                const tbody = document.getElementById('admin-table-body');
+                if (students.length) {
+                    tbody.innerHTML = students.map(s => {
+                        const pStatus = s.payment_status || 'Pending';
+                        let badgeClass = 'pending';
+                        let badgeText = 'Pending';
+                        if (pStatus === 'Paid' || pStatus === 'Confirmed') { badgeClass = 'confirmed';
+                            badgeText = '✅ Paid'; } else if (pStatus === 'Missing' || !pStatus) { badgeClass =
+                                'missing';
+                            badgeText = '❌ Missing'; }
+                        const screenshotHtml = s.screenshot_url ?
+                            `<img src="${s.screenshot_url}" class="screenshot-thumb" onclick="window.open('${s.screenshot_url}','_blank')" title="Click to view" />` :
+                            `<span class="text-gray-500 text-[8px]">No SS</span>`;
+                        const actionHtml = (pStatus !== 'Paid' && pStatus !== 'Confirmed') ?
+                            `<button onclick="markStudentPaid('${s.student_id}')" class="admin-btn admin-btn-success" style="padding:4px 12px;font-size:9px;">Mark Paid</button>` :
+                            `<span class="text-green-400 text-[9px]">✔</span>`;
+                        return `
+                            <tr class="border-b border-white/5 hover:bg-white/2">
+                                <td class="px-6 py-4 text-gray-400" style="font-size:9px;">${s.student_id||'—'}</td>
+                                <td class="px-6 py-4 font-bold text-white" style="font-size:10px;">${s.name||'—'}</td>
+                                <td class="px-6 py-4" style="font-size:9px;color:var(--gold);">${s.course||'—'}</td>
+                                <td class="px-6 py-4 text-gray-500" style="font-size:8px;">${s.phone||'—'}<br>${s.email||''}</td>
+                                <td class="px-6 py-4 text-gray-400" style="font-size:9px;">${s.city||'—'}</td>
+                                <td class="px-6 py-4">
+                                    <span class="payment-badge ${badgeClass}">${badgeText}</span>
+                                    <span class="block text-[8px] text-gray-500 mt-1">${s.payment_method||'—'}</span>
+                                </td>
+                                <td class="px-6 py-4">${screenshotHtml}</td>
+                                <td class="px-6 py-4">${actionHtml}</td>
+                                <td class="px-6 py-4 text-green-400" style="font-size:9px;">${s.status||'Active'}</td>
+                            </tr>`;
+                    }).join('');
+                } else {
+                    tbody.innerHTML =
+                        '<tr><td colspan="9" class="px-6 py-8 text-center text-gray-500 text-xs">No records yet.</td></tr>';
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        // ── MARK INDIVIDUAL PAID ──
+        async function markStudentPaid(studentId) {
+            if (!confirm('Mark student ' + studentId + ' as Paid?')) return;
+            try {
+                await db.ref('students/' + studentId).update({
+                    payment_status: 'Paid',
+                    status: 'Confirmed'
+                });
+                showToast('✅ ' + studentId + ' marked as Paid.', 'success');
+                loadAdminData();
+            } catch (e) { console.error(e);
+                showToast('❌ Error updating.', 'error'); }
+        }
+
+        // ── MARK ALL PAID ──
+        async function markAllPaid() {
+            if (!confirm('Mark ALL students as "Paid"? This will update payment_status for every record.')) return;
+            try {
+                const snap = await db.ref('students').once('value');
+                const data = snap.val() || {};
+                const updates = {};
+                for (const [key, val] of Object.entries(data)) {
+                    updates[key + '/payment_status'] = 'Paid';
+                    updates[key + '/status'] = 'Confirmed';
+                }
+                await db.ref('students').update(updates);
+                showToast('✅ All students marked as Paid.', 'success');
+                loadAdminData();
+            } catch (e) { console.error(e);
+                showToast('❌ Error updating.', 'error'); }
+        }
+
+        // ── STUDENT LOGIN ──
+        async function loginStudent() {
+            const id = document.getElementById('login-id').value.trim();
+            const phone = document.getElementById('login-phone').value.trim();
+            if (!id || !phone) { showToast('❌ Please enter both ID and Phone.', 'error'); return; }
+            try {
+                const snap = await db.ref('students/' + id).once('value');
+                const student = snap.val();
+                if (!student) { showToast('❌ Student ID not found.', 'error'); return; }
+                if (student.phone !== phone) { showToast('❌ Phone number does not match.', 'error'); return; }
+                if (student.payment_status !== 'Paid' && student.payment_status !== 'Confirmed') {
+                    showToast('❌ Payment not verified yet. Please wait for admin confirmation.', 'error');
+                    return;
+                }
+                // Login success
+                loggedInStudent = student;
+                localStorage.setItem('poa_student', JSON.stringify(student));
+                updateNavButtons();
+                showView('dashboard-view');
+                // Fill dashboard
+                document.getElementById('dash-name').textContent = student.name || 'Student';
+                document.getElementById('dash-id').textContent = student.student_id || '—';
+                document.getElementById('dash-name-full').textContent = student.name || '—';
+                document.getElementById('dash-course').textContent = student.course || '—';
+                document.getElementById('dash-city').textContent = student.city || '—';
+                document.getElementById('dash-payment').textContent = 'Paid';
+                document.getElementById('dash-status').textContent = student.status || 'Active';
+                showToast('✅ Welcome, ' + student.name + '!', 'success');
+            } catch (e) { console.error(e);
+                showToast('❌ Error logging in.', 'error'); }
+        }
+
+        function logoutStudent() {
+            loggedInStudent = null;
+            localStorage.removeItem('poa_student');
+            updateNavButtons();
+            showView('landing');
+            showToast('👋 Logged out.', 'success');
+        }
+
+        // ── UPDATE NAV BUTTONS ──
+        function updateNavButtons() {
+            const applyBtn = document.getElementById('nav-apply-btn');
+            const dashBtn = document.getElementById('nav-dashboard-btn');
+            const stored = localStorage.getItem('poa_student');
+            if (stored) {
+                try {
+                    const s = JSON.parse(stored);
+                    if (s.payment_status === 'Paid' || s.payment_status === 'Confirmed') {
+                        loggedInStudent = s;
+                        applyBtn.style.display = 'none';
+                        dashBtn.style.display = 'inline-flex';
+                        return;
+                    }
+                } catch (e) {}
+            }
+            if (loggedInStudent && (loggedInStudent.payment_status === 'Paid' || loggedInStudent.payment_status ===
+                    'Confirmed')) {
+                applyBtn.style.display = 'none';
+                dashBtn.style.display = 'inline-flex';
+            } else {
+                applyBtn.style.display = 'inline-flex';
+                dashBtn.style.display = 'none';
+            }
+        }
+
+        // ── CHECK STORED LOGIN ON LOAD ──
+        function checkStoredLogin() {
+            const stored = localStorage.getItem('poa_student');
+            if (stored) {
+                try {
+                    const s = JSON.parse(stored);
+                    if (s.payment_status === 'Paid' || s.payment_status === 'Confirmed') {
+                        loggedInStudent = s;
+                        updateNavButtons();
+                        // Optionally auto-redirect to dashboard if on landing? 
+                        // We'll let user navigate.
+                    } else {
+                        localStorage.removeItem('poa_student');
+                    }
+                } catch (e) { localStorage.removeItem('poa_student'); }
+            }
+            updateNavButtons();
+        }
+
+        // ── SECTION CONTENT (unchanged) ──
+        async function loadAllSectionData() {
+            try {
+                const snap = await db.ref('content').once('value');
+                const data = snap.val() || {};
+                for (const k of Object.keys(DEFAULT_CONTENT)) { if (!data[k]) await db.ref('content/' + k).set(
+                        DEFAULT_CONTENT[k]); }
+                applyAllContentToUI(data);
+            } catch (e) { console.error(e); }
+        }
+
+        function applyAllContentToUI(data) {
+            for (const [k, v] of Object.entries(data)) applySectionToUI(k, v);
+            applyHeaderToUI(data._header || DEFAULT_HEADER);
+        }
+        const SECTION_MAP = {
+            'hero': { title: 'hero-title', desc: 'hero-desc', badge: null, img: 'hero-bg' },
+            'batch16': { title: 'batch16-title', desc: 'batch16-desc', badge: 'batch16-badge', img: null },
+            'batch12': { title: 'batch12-title', desc: 'batch12-desc', badge: 'batch12-badge', img: null },
+            'navy-ssc': { title: 'navy-ssc-title', desc: 'navy-ssc-desc', badge: 'navy-ssc-badge', img: 'navy-ssc-img' },
+            'wings': { title: 'wings-title', desc: null, badge: null, img: null },
+            'pma-initial': { title: 'pma-initial-title', desc: 'pma-initial-desc', badge: 'pma-initial-badge',
+                img: 'pma-initial-img' },
+            'afns': { title: 'afns-title', desc: 'afns-desc', badge: 'afns-badge', img: 'afns-img' },
+            'navy-detailed': { title: 'navy-detailed-title', desc: 'navy-detailed-desc', badge: 'navy-detailed-badge',
+                img: null },
+            'issb': { title: 'issb-title', desc: 'issb-desc', badge: 'issb-badge', img: 'issb-img' },
+            'amc': { title: 'amc-title', desc: 'amc-desc', badge: 'amc-badge', img: 'amc-img' },
+            'stats': { title: null, desc: null, badge: null, img: null }
+        };
+
+        function applySectionToUI(key, s) {
+            const m = SECTION_MAP[key];
+            if (!m) return;
+            if (m.title) { const el = document.getElementById(m.title); if (el) el.textContent = s.title || ''; }
+            if (m.desc) { const el = document.getElementById(m.desc); if (el) el.textContent = s.desc || ''; }
+            if (m.badge) { const el = document.getElementById(m.badge); if (el) el.textContent = s.badge || ''; }
+            if (m.img) { const el = document.getElementById(m.img); if (el) el.src = s.img || ''; }
+            const sec = document.querySelector(`[data-section="${key}"]`);
+            if (sec) sec.style.display = (s.visible !== false) ? '' : 'none';
+        }
+
+        function applyHeaderToUI(h) {
+            if (h.logo) { const el = document.getElementById('nav-logo-img'); if (el) el.src = h.logo; }
+            if (h.title) { const el = document.getElementById('nav-title'); if (el) el.textContent = h.title; }
+            if (h.subtitle) { const el = document.getElementById('nav-subtitle'); if (el) el.textContent = h.subtitle; }
+        }
+
+        async function loadSectionForEdit(key) {
+            currentSection = key;
+            document.querySelectorAll('.section-selector').forEach(el => el.classList.remove('active-section'));
+            document.querySelector(`.section-selector[data-section="${key}"]`)?.classList.add('active-section');
+            document.getElementById('editor-loading').style.display = 'block';
+            document.getElementById('editor-content').style.display = 'none';
+            try {
+                const snap = await db.ref('content/' + key).once('value');
+                const data = snap.val() || DEFAULT_CONTENT[key] || {};
+                document.getElementById('editor-section-name').textContent = key.replace(/-/g, ' ').toUpperCase() +
+                ' Section';
+                document.getElementById('editor-section-id').textContent = key;
+                document.getElementById('edit-title').value = data.title || '';
+                document.getElementById('edit-badge').value = data.badge || '';
+                document.getElementById('edit-desc').value = data.desc || '';
+                document.getElementById('edit-img').value = data.img || '';
+                document.getElementById('editor-toggle').classList.toggle('active', data.visible !== false);
+                const prev = document.getElementById('edit-img-preview');
+                prev.innerHTML = data.img ? `<img src="${data.img}" class="img-preview" />` :
+                    '<span class="text-xs text-gray-500">No image</span>';
+                document.getElementById('editor-loading').style.display = 'none';
+                document.getElementById('editor-content').style.display = 'block';
+            } catch (e) { console.error(e); }
+        }
+
+        function toggleSectionVisibility() { document.getElementById('editor-toggle').classList.toggle('active'); }
+
+        async function saveSectionContent() {
+            const data = {
+                title: document.getElementById('edit-title').value,
+                badge: document.getElementById('edit-badge').value,
+                desc: document.getElementById('edit-desc').value,
+                img: document.getElementById('edit-img').value,
+                visible: document.getElementById('editor-toggle').classList.contains('active')
+            };
+            try {
+                await db.ref('content/' + currentSection).update(data);
+                applySectionToUI(currentSection, data);
+                showToast('✅ Saved: ' + currentSection, 'success');
+                document.getElementById('edit-status').textContent = '✅ Saved at ' + new Date().toLocaleTimeString();
+            } catch (e) { console.error(e);
+                showToast('❌ Error saving.', 'error'); }
+        }
+
+        async function resetSectionContent() {
+            if (!confirm('Reset "' + currentSection + '" to default?')) return;
+            const def = DEFAULT_CONTENT[currentSection];
+            if (!def) return;
+            await db.ref('content/' + currentSection).set(def);
+            applySectionToUI(currentSection, def);
+            loadSectionForEdit(currentSection);
+            showToast('↺ Reset done.', 'success');
+        }
+
+        // ── IMAGE UPLOAD (Data URL) ──
+        function uploadSectionImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                showToast('❌ Please select a valid image file.', 'error');
+                event.target.value = '';
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('❌ Image too large (max 5MB).', 'error');
+                event.target.value = '';
+                return;
+            }
+            showToast('⏳ Reading image...', 'success');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dataUrl = e.target.result;
+                    document.getElementById('edit-img').value = dataUrl;
+                    document.getElementById('edit-img-preview').innerHTML =
+                        `<img src="${dataUrl}" class="img-preview" style="max-height:120px;" />`;
+                    showToast('✅ Image loaded! Click Save to apply.', 'success');
+                    saveSectionContent();
+                } catch (err) {
+                    console.error(err);
+                    showToast('❌ Failed to process image.', 'error');
+                }
+            };
+            reader.onerror = function() {
+                showToast('❌ Failed to read file.', 'error');
+                event.target.value = '';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ── HEADER SETTINGS ──
+        async function loadHeaderData() {
+            try {
+                const snap = await db.ref('content/_header').once('value');
+                const data = snap.val() || DEFAULT_HEADER;
+                document.getElementById('header-logo').value = data.logo || '';
+                document.getElementById('header-title').value = data.title || '';
+                document.getElementById('header-subtitle').value = data.subtitle || '';
+                document.getElementById('header-color').value = data.color || '#D4AF37';
+                document.getElementById('header-color-hex').textContent = data.color || '#D4AF37';
+                const prev = document.getElementById('logo-preview');
+                prev.innerHTML = data.logo ? `<img src="${data.logo}" class="img-preview" style="max-height:50px;" />` :
+                    '';
+            } catch (e) { console.error(e); }
+        }
+
+        async function saveHeaderSettings() {
+            const data = {
+                logo: document.getElementById('header-logo').value,
+                title: document.getElementById('header-title').value,
+                subtitle: document.getElementById('header-subtitle').value,
+                color: document.getElementById('header-color').value
+            };
+            try {
+                await db.ref('content/_header').set(data);
+                applyHeaderToUI(data);
+                showToast('✅ Branding saved!', 'success');
+                document.getElementById('header-status').textContent = '✅ Saved at ' + new Date().toLocaleTimeString();
+            } catch (e) { console.error(e);
+                showToast('❌ Error.', 'error'); }
+        }
+
+        function uploadLogo(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                showToast('❌ Please select an image file.', 'error');
+                event.target.value = '';
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('❌ Image too large (max 5MB).', 'error');
+                event.target.value = '';
+                return;
+            }
+            showToast('⏳ Reading logo...', 'success');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dataUrl = e.target.result;
+                    document.getElementById('header-logo').value = dataUrl;
+                    document.getElementById('logo-preview').innerHTML =
+                        `<img src="${dataUrl}" class="img-preview" style="max-height:50px;" />`;
+                    showToast('✅ Logo loaded! Click Save Branding to apply.', 'success');
+                } catch (err) {
+                    console.error(err);
+                    showToast('❌ Failed to process logo.', 'error');
+                }
+            };
+            reader.onerror = function() {
+                showToast('❌ Failed to read file.', 'error');
+                event.target.value = '';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ── MEDIA LIBRARY ──
+        async function uploadMediaFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            showToast('⏳ Uploading...', 'success');
+            try {
+                const snap = await storage.ref('media/' + Date.now() + '_' + file.name).put(file);
+                const url = await snap.ref.getDownloadURL();
+                await db.ref('media').push({ url, name: file.name, timestamp: firebase.database.ServerValue
+                        .TIMESTAMP });
+                showToast('✅ Media uploaded!', 'success');
+                loadMediaLibrary();
+            } catch (e) { console.error(e);
+                showToast('❌ Failed.', 'error'); }
+        }
+
+        async function loadMediaLibrary() {
+            try {
+                const snap = await db.ref('media').once('value');
+                const data = snap.val() || {};
+                const c = document.getElementById('media-list');
+                const entries = Object.values(data);
+                c.innerHTML = entries.length ? entries.map(i =>
+                    `<div class="glass-card p-3"><img src="${i.url}" class="w-full h-20 object-cover mb-2" /><p class="text-xs text-gray-500 truncate">${i.name}</p><button onclick="navigator.clipboard.writeText('${i.url}').then(()=>showToast('📋 Copied!','success'))" class="text-xs mt-1" style="color:var(--gold);">Copy URL</button></div>`
+                    ).join('') :
+                    '<p class="text-gray-500 text-xs col-span-2 text-center py-8">No media yet.</p>';
+            } catch (e) { console.error(e); }
+        }
+
+        // ── TAB SWITCHING ──
+        function switchAdminTab(id) {
+            document.querySelectorAll('.admin-tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.section-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + id).style.display = 'block';
+            document.querySelector(`.section-tab[data-tab="${id}"]`)?.classList.add('active');
+            if (id === 'media') loadMediaLibrary();
+            if (id === 'header') loadHeaderData();
+            if (id === 'students') loadAdminData();
+        }
+        document.querySelectorAll('.section-tab').forEach(tab => tab.addEventListener('click', function() {
+            switchAdminTab(this.dataset.tab);
+        }));
+
+        // ── RESET ALL ──
+        async function resetAllContent() {
+            if (!confirm('⚠️ Reset ALL content to defaults?')) return;
+            for (const [k, v] of Object.entries(DEFAULT_CONTENT)) await db.ref('content/' + k).set(v);
+            await db.ref('content/_header').set(DEFAULT_HEADER);
+            showToast('✅ All reset.', 'success');
+            loadAllSectionData();
+            loadHeaderData();
+            loadAdminData();
+        }
+
+        // ── EXPORT STUDENTS ──
+        async function exportStudentData() {
+            const snap = await db.ref('students').once('value');
+            const arr = Object.values(snap.val() || {});
+            if (!arr.length) { showToast('No students.', 'error'); return; }
+            let csv =
+                'ID,Name,Phone,Email,City,Course,Payment Method,Payment Status,Screenshot URL,Status\n';
+            arr.forEach(s => csv +=
+                `"${s.student_id||''}","${s.name||''}","${s.phone||''}","${s.email||''}","${s.city||''}","${s.course||''}","${s.payment_method||''}","${s.payment_status||''}","${s.screenshot_url||''}","${s.status||''}"\n`
+                );
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            a.download = 'students_with_payment.csv';
+            a.click();
+            showToast('📥 Exported!', 'success');
+        }
+
+        document.getElementById('header-color')?.addEventListener('input', function() {
+            document.getElementById('header-color-hex').textContent = this.value;
+        });
+
+        function refreshAdminData() {
+            const btn = document.getElementById('admin-refresh-btn');
+            btn.innerHTML = '<span class="spinner"></span>';
+            loadAdminData().then(() => { btn.innerHTML = '<i data-lucide="refresh-cw" class="w-3 h-3"></i> Sync';
+                lucide.createIcons();
+                showToast('✅ Synced!', 'success'); });
+        }
+
+        // ── INIT ──
+        window.onload = async() => {
+            AOS.init({ duration: 900, once: true, easing: 'ease-out-cubic', offset: 60 });
+            lucide.createIcons();
+            initParticles();
+            await loadAllSectionData();
+            await loadHeaderData();
+            switchAdminTab('content');
+            setTimeout(() => loadSectionForEdit('hero'), 400);
+            setTimeout(() => showToast('🛡️ Academy Ready — Triple-click logo for admin.', 'success'), 1800);
+            checkStoredLogin();
+            updateNavButtons();
+        };
     </script>
 </body>
 </html>
