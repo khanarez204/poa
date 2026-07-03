@@ -1286,6 +1286,44 @@
             justify-content: center;
             color: var(--gold);
         }
+
+        /* Quiz styles */
+        .quiz-option {
+            display: block;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .quiz-option:hover {
+            background: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+        .quiz-option.selected {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.12);
+        }
+        .quiz-option.correct-answer {
+            border-color: #4ade80;
+            background: rgba(74, 222, 128, 0.15);
+        }
+        .quiz-option.wrong-answer {
+            border-color: #f87171;
+            background: rgba(248, 113, 113, 0.12);
+        }
+        .quiz-question-number {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -1957,7 +1995,7 @@
             </div>
         </div>
 
-        <!-- ===== DASHBOARD VIEW (Enhanced) ===== -->
+        <!-- ===== DASHBOARD VIEW (Enhanced with Quiz) ===== -->
         <div id="dashboard-view" class="view-section pt-32 pb-24">
             <div class="max-w-5xl mx-auto px-6" data-aos="fade-up">
                 <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
@@ -2035,6 +2073,51 @@
                             <div class="mt-6 p-4 border border-gold/20 rounded bg-gold/5">
                                 <p class="text-xs text-gray-400 italic">📌 After payment verification, you'll be added to the official group. Stay tuned!</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== QUIZ SECTION ===== -->
+                <div id="quiz-section" class="mt-12">
+                    <div class="border-t border-white/10 pt-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <i data-lucide="zap" class="w-6 h-6 text-gold"></i>
+                            <h3 class="text-2xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Practice Quiz</h3>
+                        </div>
+                        <!-- Quiz intro / start state -->
+                        <div id="quiz-intro">
+                            <p class="text-gray-400 text-sm mb-6">Test your knowledge with a subject‑specific quiz based on your enrolled course. <span class="text-gold">Get instant results!</span></p>
+                            <button onclick="startQuiz()" class="btn-primary" id="start-quiz-btn">
+                                <i data-lucide="play" class="w-4 h-4"></i> Start Quiz
+                            </button>
+                        </div>
+
+                        <!-- Quiz container (hidden initially) -->
+                        <div id="quiz-container" style="display:none;" class="mt-6">
+                            <div id="quiz-questions"></div>
+                            <div class="mt-6 flex gap-4">
+                                <button onclick="submitQuiz()" class="btn-primary">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i> Submit Quiz
+                                </button>
+                                <button onclick="resetQuiz()" class="btn-ghost" style="padding:10px 24px;font-size:10px;">
+                                    <i data-lucide="x" class="w-4 h-4"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quiz results (hidden initially) -->
+                        <div id="quiz-results" style="display:none;" class="mt-6 p-6 border border-gold/30 rounded bg-gold/5">
+                            <h4 class="text-xl font-bold text-white mb-4" style="font-family:'Bebas Neue',sans-serif;">📊 Your Results</h4>
+                            <div id="quiz-score" class="text-3xl font-bold text-gold mb-4">0 / 0</div>
+                            <div id="quiz-detail" class="space-y-3 max-h-96 overflow-y-auto"></div>
+                            <button onclick="resetQuiz()" class="btn-ghost mt-6" style="padding:10px 24px;font-size:10px;">
+                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Try Again
+                            </button>
+                        </div>
+
+                        <!-- Not paid message -->
+                        <div id="quiz-not-paid" style="display:none;" class="mt-6 p-4 border border-yellow-500/30 rounded bg-yellow-500/10 text-yellow-400 text-sm">
+                            <i data-lucide="lock" class="w-5 h-5 inline mr-2"></i> Please complete your payment to access the quiz.
                         </div>
                     </div>
                 </div>
@@ -2878,12 +2961,266 @@
                 }
                 document.getElementById('dash-batch').textContent = batch;
 
+                // Update quiz UI based on payment status
+                renderQuizUI(fresh);
+
                 updateNavButtons();
                 showToast('🔄 Dashboard refreshed.', 'success');
             } catch (e) {
                 console.error('Refresh error:', e);
                 showToast('❌ Could not refresh data.', 'error');
             }
+        }
+
+        // ── QUIZ LOGIC ──
+        let quizQuestions = [];
+        let quizUserAnswers = [];
+        let quizSubmitted = false;
+
+        // Question banks (sample from provided data)
+        const QUESTION_BANKS = {
+            issb: [
+                // Verbal
+                { id: 0, category: 'Verbal', question: 'Doctor is to Hospital as Teacher is to ______.', options: ['School', 'Books', 'Students', 'Class'], correct: 0 },
+                { id: 1, category: 'Verbal', question: 'Find the next number: 3, 6, 11, 18, 27, ?', options: ['38', '39', '40', '41'], correct: 0 },
+                { id: 2, category: 'Verbal', question: 'Choose the word most opposite in meaning: ABUNDANT', options: ['Scarce', 'Plenty', 'Ample', 'Rich'], correct: 0 },
+                { id: 3, category: 'Verbal', question: 'If ZEBRA is coded as 26591, what is the code for BRAZE?', options: ['59126', '91526', '26591', '12695'], correct: 0 },
+                { id: 4, category: 'Verbal', question: 'A is father of B. B is sister of C. C is mother of D. How is A related to D?', options: ['Grandfather', 'Father', 'Uncle', 'Brother'], correct: 0 },
+                { id: 5, category: 'Verbal', question: 'If 2+3=13, 3+4=25, then 5+6=?', options: ['61', '36', '55', '41'], correct: 0 },
+                { id: 6, category: 'Verbal', question: 'A man walks 10m North, then 6m East, then 10m South. How far is he from the start?', options: ['6 m East', '10 m North', '6 m West', '0 m'], correct: 0 },
+                { id: 7, category: 'Verbal', question: 'Rearrange: C O M P U T E R (what city?)', options: ['COMPUTER', 'No city', 'TEMPUROC', 'None of the above'], correct: 0 },
+                { id: 8, category: 'Verbal', question: 'Odd one out: 31, 41, 51, 61', options: ['31', '41', '51', '61'], correct: 2 },
+                { id: 9, category: 'Verbal', question: 'Complete the series: A, C, F, J, ?', options: ['O', 'N', 'P', 'M'], correct: 0 },
+                // Non-Verbal (simplified with descriptive options)
+                { id: 10, category: 'Non-Verbal', question: 'Choose the figure that completes the pattern (a 3x3 matrix missing bottom-right cell, shapes rotating clockwise).', options: ['Option A', 'Option B', 'Option C', 'Option D'], correct: 2 },
+                { id: 11, category: 'Non-Verbal', question: 'Identify the mirror image of the word "ABC9" when mirror is placed on the right.', options: ['Option A', 'Option B', 'Option C', 'Option D'], correct: 1 },
+                { id: 12, category: 'Non-Verbal', question: 'Which cube cannot be made from the given unfolded net?', options: ['Option A', 'Option B', 'Option C', 'Option D'], correct: 2 },
+                { id: 13, category: 'Non-Verbal', question: 'Find the next figure in the sequence: circle with line rotating 45° each step.', options: ['0°', '45°', '90°', '180°'], correct: 3 },
+                // Academic English
+                { id: 14, category: 'English', question: 'He is averse ______ hard work.', options: ['to', 'of', 'from', 'with'], correct: 0 },
+                { id: 15, category: 'English', question: 'Synonym of "COGENT":', options: ['weak', 'convincing', 'confusing', 'blunt'], correct: 1 },
+                { id: 16, category: 'English', question: 'Antonym of "EPHEMERAL":', options: ['transient', 'permanent', 'fleeting', 'brief'], correct: 1 },
+                { id: 17, category: 'English', question: 'Correct spelling:', options: ['accomodate', 'accommodate', 'acommodate', 'accomodate'], correct: 1 },
+                // Academic Math
+                { id: 18, category: 'Math', question: 'Solve: log₂32 = ?', options: ['4', '5', '6', '7'], correct: 1 },
+                { id: 19, category: 'Math', question: 'Derivative of x³ + 2x is:', options: ['3x² + 2', 'x² + 2', '3x² + 2x', 'x³ + 2'], correct: 0 },
+                { id: 20, category: 'Math', question: 'If sinθ = 3/5, then cosθ = ?', options: ['3/5', '4/5', '5/3', '5/4'], correct: 1 },
+                // Academic Physics
+                { id: 21, category: 'Physics', question: 'SI unit of force is:', options: ['Newton', 'Joule', 'Watt', 'Pascal'], correct: 0 },
+                { id: 22, category: 'Physics', question: 'Ohm\'s law formula is:', options: ['V = IR', 'I = VR', 'R = VI', 'V = I/R'], correct: 0 },
+                { id: 23, category: 'Physics', question: 'A ball is thrown upwards. At the highest point, acceleration is:', options: ['9.8 m/s² upwards', '9.8 m/s² downwards', '0', 'unpredictable'], correct: 1 },
+            ],
+            navy: [
+                // English
+                { id: 0, category: 'English', question: 'He is good ______ Mathematics.', options: ['in', 'at', 'on', 'for'], correct: 1 },
+                { id: 1, category: 'English', question: 'Synonym of "VIGILANT":', options: ['careless', 'watchful', 'brave', 'lazy'], correct: 1 },
+                { id: 2, category: 'English', question: 'Antonym of "BENIGN":', options: ['kind', 'malicious', 'gentle', 'soft'], correct: 1 },
+                { id: 3, category: 'English', question: 'Correct the sentence: "He don\'t like coffee."', options: ['He doesn\'t like coffee.', 'He don\'t likes coffee.', 'He not like coffee.', 'He didn\'t like coffee.'], correct: 0 },
+                { id: 4, category: 'English', question: 'Idiom "To bury the hatchet" means:', options: ['to hide treasure', 'to make peace', 'to dig ground', 'to fight'], correct: 1 },
+                // Math
+                { id: 5, category: 'Math', question: 'Solve: x² - 5x + 6 = 0. Roots are:', options: ['2 and 3', '1 and 6', '3 and 4', '2 and 4'], correct: 0 },
+                { id: 6, category: 'Math', question: 'If A={1,2,3} and B={3,4,5}, then A∩B =', options: ['{3}', '{1,2}', '{4,5}', '{1,2,3,4,5}'], correct: 0 },
+                { id: 7, category: 'Math', question: 'tan45° =', options: ['0', '1', '√2', '1/√2'], correct: 1 },
+                { id: 8, category: 'Math', question: 'Derivative of sinx is:', options: ['cosx', '-cosx', 'sec²x', 'csc²x'], correct: 0 },
+                { id: 9, category: 'Math', question: 'Volume of a sphere of radius 3 cm is:', options: ['36π cm³', '27π cm³', '12π cm³', '9π cm³'], correct: 0 },
+                // Physics
+                { id: 10, category: 'Physics', question: 'The unit of electric charge is:', options: ['Coulomb', 'Ampere', 'Volt', 'Ohm'], correct: 0 },
+                { id: 11, category: 'Physics', question: 'The image formed by a plane mirror is:', options: ['Virtual, erect, same size', 'Real, inverted', 'Virtual, inverted', 'No image'], correct: 0 },
+                { id: 12, category: 'Physics', question: 'Newton\'s first law is also called the law of:', options: ['Inertia', 'Gravitation', 'Action-Reaction', 'Conservation'], correct: 0 },
+                { id: 13, category: 'Physics', question: 'Sound cannot travel through:', options: ['Solid', 'Liquid', 'Gas', 'Vacuum'], correct: 3 },
+                { id: 14, category: 'Physics', question: 'The focal length of a convex lens is:', options: ['Positive', 'Negative', 'Zero', 'Infinite'], correct: 0 },
+                // GK / Intelligence
+                { id: 15, category: 'GK', question: 'Current Chief of Naval Staff of Pakistan (as of 2025) is:', options: ['Admiral Naveed Ashraf', 'Admiral Zafar Mahmood', 'Admiral Amjad Khan', 'Admiral Muhammad Zaka'], correct: 0 },
+                { id: 16, category: 'GK', question: 'The capital of Turkey is:', options: ['Ankara', 'Istanbul', 'Izmir', 'Antalya'], correct: 0 },
+                { id: 17, category: 'GK', question: 'Largest ocean in the world:', options: ['Pacific', 'Atlantic', 'Indian', 'Arctic'], correct: 0 },
+                { id: 18, category: 'Intelligence', question: 'Complete: 2, 6, 12, 20, 30, ?', options: ['42', '40', '36', '44'], correct: 0 },
+                { id: 19, category: 'Intelligence', question: 'If a man is facing East and turns 135° clockwise, which direction is he facing now?', options: ['South-West', 'South-East', 'North-West', 'North-East'], correct: 0 },
+            ],
+            afns: [
+                // Biology
+                { id: 0, category: 'Biology', question: 'The powerhouse of the cell is:', options: ['Mitochondria', 'Nucleus', 'Ribosome', 'Golgi'], correct: 0 },
+                { id: 1, category: 'Biology', question: 'Normal human blood pH is around:', options: ['7.4', '6.8', '7.0', '8.0'], correct: 0 },
+                { id: 2, category: 'Biology', question: 'Which part of the brain controls respiration?', options: ['Medulla oblongata', 'Cerebrum', 'Cerebellum', 'Hypothalamus'], correct: 0 },
+                { id: 3, category: 'Biology', question: 'The functional unit of kidney is:', options: ['Nephron', 'Neuron', 'Alveolus', 'Villus'], correct: 0 },
+                { id: 4, category: 'Biology', question: 'A genetic trait that is expressed even with one copy is called:', options: ['Dominant', 'Recessive', 'Codominant', 'Incomplete'], correct: 0 },
+                { id: 5, category: 'Biology', question: 'Photosynthesis takes place in:', options: ['Chloroplasts', 'Mitochondria', 'Ribosomes', 'Nucleus'], correct: 0 },
+                { id: 6, category: 'Biology', question: 'Which vitamin is fat-soluble? (common answer)', options: ['Vitamin D', 'Vitamin B', 'Vitamin C', 'Vitamin E (all are fat-soluble except B,C)'], correct: 0 },
+                { id: 7, category: 'Biology', question: 'Antibiotics are used to kill:', options: ['Bacteria', 'Viruses', 'Fungi', 'Parasites'], correct: 0 },
+                // Chemistry
+                { id: 8, category: 'Chemistry', question: 'The chemical formula of urea is:', options: ['CO(NH₂)₂', 'CH₄N₂O', 'NH₃', 'H₂O'], correct: 0 },
+                { id: 9, category: 'Chemistry', question: 'A solution with pH 3 is ______ than a solution with pH 6.', options: ['1000 times more acidic', '100 times more acidic', '3 times more acidic', 'same'], correct: 0 },
+                { id: 10, category: 'Chemistry', question: 'Which gas is used in anaesthesia as "laughing gas"?', options: ['N₂O', 'CO₂', 'O₂', 'He'], correct: 0 },
+                { id: 11, category: 'Chemistry', question: 'The most abundant element in the human body is:', options: ['Oxygen', 'Carbon', 'Hydrogen', 'Nitrogen'], correct: 0 },
+                { id: 12, category: 'Chemistry', question: 'CH₃COOH is the formula of:', options: ['Acetic acid', 'Formic acid', 'Citric acid', 'Hydrochloric acid'], correct: 0 },
+                { id: 13, category: 'Chemistry', question: 'A reaction that releases heat is called:', options: ['Exothermic', 'Endothermic', 'Neutral', 'Oxidation'], correct: 0 },
+                // Physics
+                { id: 14, category: 'Physics', question: 'The instrument used to measure blood pressure is:', options: ['Sphygmomanometer', 'Thermometer', 'Stethoscope', 'Barometer'], correct: 0 },
+                { id: 15, category: 'Physics', question: 'The ability of a liquid to rise in narrow tubes against gravity is:', options: ['Capillarity', 'Viscosity', 'Surface tension', 'Osmosis'], correct: 0 },
+                { id: 16, category: 'Physics', question: 'The unit of frequency is:', options: ['Hertz', 'Joule', 'Watt', 'Pascal'], correct: 0 },
+                { id: 17, category: 'Physics', question: 'A lens used to correct myopia is:', options: ['Concave lens', 'Convex lens', 'Cylindrical lens', 'Bifocal lens'], correct: 0 },
+                { id: 18, category: 'Physics', question: 'The speed of sound is maximum in:', options: ['Solids', 'Liquids', 'Gases', 'Vacuum'], correct: 0 },
+                // English
+                { id: 19, category: 'English', question: 'She ______ to the hospital yesterday.', options: ['went', 'go', 'going', 'gone'], correct: 0 },
+                { id: 20, category: 'English', question: 'Synonym of "FRAGILE":', options: ['delicate', 'strong', 'hard', 'tough'], correct: 0 },
+                { id: 21, category: 'English', question: 'The doctor ordered the nurse ______ the injection.', options: ['to give', 'give', 'giving', 'gave'], correct: 0 },
+                { id: 22, category: 'English', question: 'One word substitution: A place where dead bodies are kept –', options: ['Mortuary', 'Hospital', 'Clinic', 'Laboratory'], correct: 0 },
+                // GK
+                { id: 23, category: 'GK', question: 'The first revelation of the Holy Quran was in which cave?', options: ['Cave Hira', 'Cave Thawr', 'Cave Noh', 'Cave Abu Bakr'], correct: 0 },
+                { id: 24, category: 'GK', question: 'The capital of Khyber Pakhtunkhwa is:', options: ['Peshawar', 'Islamabad', 'Lahore', 'Karachi'], correct: 0 },
+            ]
+        };
+
+        function getQuizType(course) {
+            const c = course.toLowerCase();
+            if (c.includes('issb')) return 'issb';
+            if (c.includes('navy') || c.includes('ssc')) return 'navy';
+            if (c.includes('afns') || c.includes('nursing') || c.includes('amc')) return 'afns';
+            return 'issb'; // default
+        }
+
+        function getQuizQuestions(course) {
+            const type = getQuizType(course);
+            const bank = QUESTION_BANKS[type] || QUESTION_BANKS.issb;
+            // Shuffle and pick 10-15 questions
+            const shuffled = [...bank].sort(() => Math.random() - 0.5);
+            // Take first 12
+            return shuffled.slice(0, 12);
+        }
+
+        function renderQuizUI(student) {
+            const intro = document.getElementById('quiz-intro');
+            const container = document.getElementById('quiz-container');
+            const results = document.getElementById('quiz-results');
+            const notPaid = document.getElementById('quiz-not-paid');
+
+            // Check payment status
+            const isPaid = student && (student.payment_status === 'Paid' || student.payment_status === 'Confirmed');
+
+            if (!isPaid) {
+                intro.style.display = 'none';
+                container.style.display = 'none';
+                results.style.display = 'none';
+                notPaid.style.display = 'block';
+                return;
+            }
+
+            // Show intro, hide others
+            notPaid.style.display = 'none';
+            intro.style.display = 'block';
+            container.style.display = 'none';
+            results.style.display = 'none';
+        }
+
+        function startQuiz() {
+            const student = loggedInStudent || JSON.parse(localStorage.getItem('poa_student'));
+            if (!student) return;
+
+            // Generate questions
+            quizQuestions = getQuizQuestions(student.course || '');
+            if (quizQuestions.length === 0) {
+                showToast('❌ No questions available for this course.', 'error');
+                return;
+            }
+            quizUserAnswers = new Array(quizQuestions.length).fill(null);
+            quizSubmitted = false;
+
+            // Hide intro, show quiz container
+            document.getElementById('quiz-intro').style.display = 'none';
+            document.getElementById('quiz-results').style.display = 'none';
+            const container = document.getElementById('quiz-container');
+            container.style.display = 'block';
+
+            // Render questions
+            const qDiv = document.getElementById('quiz-questions');
+            qDiv.innerHTML = quizQuestions.map((q, idx) => `
+                <div class="mb-6 p-4 border border-white/10 rounded bg-white/5">
+                    <p class="quiz-question-number">Question ${idx+1} · ${q.category}</p>
+                    <p class="text-white font-medium mt-1">${q.question}</p>
+                    <div class="mt-3 space-y-2">
+                        ${q.options.map((opt, optIdx) => `
+                            <label class="quiz-option ${quizUserAnswers[idx] === optIdx ? 'selected' : ''}" data-q="${idx}" data-opt="${optIdx}">
+                                <input type="radio" name="q${idx}" value="${optIdx}" ${quizUserAnswers[idx] === optIdx ? 'checked' : ''} class="mr-3" style="accent-color:var(--gold);">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Add event listeners for radio changes
+            qDiv.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    const qIdx = parseInt(this.name.replace('q', ''));
+                    quizUserAnswers[qIdx] = parseInt(this.value);
+                    // Update visual selection
+                    const parent = this.closest('.quiz-option');
+                    parent.closest('.mb-6').querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove(
+                    'selected'));
+                    parent.classList.add('selected');
+                });
+            });
+
+            // Show quiz container
+            container.style.display = 'block';
+            document.getElementById('quiz-questions').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function submitQuiz() {
+            if (quizSubmitted) {
+                showToast('⏳ Quiz already submitted.', 'info');
+                return;
+            }
+            // Check if all questions answered
+            const unanswered = quizUserAnswers.some(a => a === null);
+            if (unanswered) {
+                showToast('❌ Please answer all questions before submitting.', 'error');
+                return;
+            }
+
+            quizSubmitted = true;
+            // Calculate score
+            let correct = 0;
+            const details = quizQuestions.map((q, idx) => {
+                const userAns = quizUserAnswers[idx];
+                const isCorrect = userAns === q.correct;
+                if (isCorrect) correct++;
+                return {
+                    ...q,
+                    userAns,
+                    isCorrect
+                };
+            });
+
+            // Show results
+            document.getElementById('quiz-container').style.display = 'none';
+            const resultsDiv = document.getElementById('quiz-results');
+            resultsDiv.style.display = 'block';
+
+            document.getElementById('quiz-score').textContent = `${correct} / ${quizQuestions.length}`;
+
+            const detailDiv = document.getElementById('quiz-detail');
+            detailDiv.innerHTML = details.map((d, idx) => `
+                <div class="p-3 border ${d.isCorrect ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'} rounded">
+                    <p class="text-sm font-semibold text-white">Q${idx+1}: ${d.question}</p>
+                    <p class="text-xs mt-1">Your answer: <span class="${d.isCorrect ? 'text-green-400' : 'text-red-400'}">${d.options[d.userAns]}</span></p>
+                    ${!d.isCorrect ? `<p class="text-xs text-gold">Correct: ${d.options[d.correct]}</p>` : ''}
+                </div>
+            `).join('');
+
+            showToast(`✅ Quiz completed! Score: ${correct}/${quizQuestions.length}`, 'success');
+        }
+
+        function resetQuiz() {
+            // Reset all
+            quizQuestions = [];
+            quizUserAnswers = [];
+            quizSubmitted = false;
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('quiz-results').style.display = 'none';
+            document.getElementById('quiz-intro').style.display = 'block';
+            // Re-render quiz UI based on current student
+            const student = loggedInStudent || JSON.parse(localStorage.getItem('poa_student'));
+            if (student) renderQuizUI(student);
         }
 
         // ── UPDATE NAV BUTTONS ──
@@ -2908,8 +3245,6 @@
                     const s = JSON.parse(stored);
                     loggedInStudent = s;
                     updateNavButtons();
-                    // Optionally auto-show dashboard if currently on landing? 
-                    // We'll let user navigate.
                 } catch (e) { localStorage.removeItem('poa_student'); }
             }
             updateNavButtons();
