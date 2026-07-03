@@ -1242,6 +1242,50 @@
             transform: scale(1.04);
             box-shadow: 0 12px 40px rgba(37, 211, 102, 0.3);
         }
+
+        /* Enhanced dashboard styles */
+        .dash-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .dash-badge.paid {
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+        .dash-badge.pending {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+        .dash-stat-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        .dash-stat-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+        .dash-stat-card .icon-wrap {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+        }
     </style>
 </head>
 <body>
@@ -1913,42 +1957,85 @@
             </div>
         </div>
 
-        <!-- ===== DASHBOARD VIEW ===== -->
+        <!-- ===== DASHBOARD VIEW (Enhanced) ===== -->
         <div id="dashboard-view" class="view-section pt-32 pb-24">
-            <div class="max-w-4xl mx-auto px-6" data-aos="fade-up">
-                <div class="flex justify-between items-center mb-12 flex-wrap gap-4">
-                    <h2 class="section-title text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">Welcome, <span id="dash-name" style="color:var(--gold);">Student</span></h2>
-                    <button onclick="logoutStudent()" class="btn-ghost" style="padding:10px 24px;font-size:10px;">Logout</button>
+            <div class="max-w-5xl mx-auto px-6" data-aos="fade-up">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+                    <div>
+                        <div class="section-eyebrow mb-2">Student Dashboard</div>
+                        <h2 class="section-title text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">
+                            Welcome, <span id="dash-name" style="color:var(--gold);">Student</span>
+                        </h2>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="refreshDashboard()" class="btn-ghost" style="padding:10px 20px;font-size:10px;">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Refresh
+                        </button>
+                        <button onclick="logoutStudent()" class="btn-ghost" style="padding:10px 24px;font-size:10px;">Logout</button>
+                    </div>
                 </div>
-                <div class="dashboard-card">
-                    <div class="grid md:grid-cols-2 gap-8">
+
+                <!-- Quick Stats Cards -->
+                <div class="grid md:grid-cols-4 gap-4 mb-10">
+                    <div class="dash-stat-card flex items-center gap-4">
+                        <div class="icon-wrap"><i data-lucide="user" class="w-5 h-5"></i></div>
                         <div>
-                            <div class="info-label">Student ID</div>
-                            <div class="info-value" id="dash-id">—</div>
-                        </div>
-                        <div>
-                            <div class="info-label">Full Name</div>
-                            <div class="info-value" id="dash-name-full">—</div>
-                        </div>
-                        <div>
-                            <div class="info-label">Course</div>
-                            <div class="info-value" id="dash-course">—</div>
-                        </div>
-                        <div>
-                            <div class="info-label">City</div>
-                            <div class="info-value" id="dash-city">—</div>
-                        </div>
-                        <div>
-                            <div class="info-label">Payment Status</div>
-                            <div class="info-value" id="dash-payment">Pending</div>
-                        </div>
-                        <div>
-                            <div class="info-label">Account Status</div>
-                            <div class="info-value" id="dash-status">Active</div>
+                            <p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Student ID</p>
+                            <p class="text-white font-bold text-lg" id="dash-id">—</p>
                         </div>
                     </div>
-                    <div class="mt-10 p-6 border border-gold/20 rounded bg-gold/5">
-                        <p class="text-gray-300 text-sm leading-relaxed">✅ Your account is active. Check payment status above. After admin verification, you'll be added to the official group.</p>
+                    <div class="dash-stat-card flex items-center gap-4">
+                        <div class="icon-wrap"><i data-lucide="book-open" class="w-5 h-5"></i></div>
+                        <div>
+                            <p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Course</p>
+                            <p class="text-white font-bold text-lg" id="dash-course">—</p>
+                        </div>
+                    </div>
+                    <div class="dash-stat-card flex items-center gap-4">
+                        <div class="icon-wrap"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                        <div>
+                            <p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">City</p>
+                            <p class="text-white font-bold text-lg" id="dash-city">—</p>
+                        </div>
+                    </div>
+                    <div class="dash-stat-card flex items-center gap-4">
+                        <div class="icon-wrap"><i data-lucide="badge-check" class="w-5 h-5"></i></div>
+                        <div>
+                            <p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Status</p>
+                            <p class="text-white font-bold text-lg" id="dash-status">—</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Dashboard Card -->
+                <div class="dashboard-card relative overflow-hidden" style="background:rgba(255,255,255,0.03); border:1px solid rgba(212,175,55,0.15);">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                    <div class="grid md:grid-cols-2 gap-8 relative z-10">
+                        <div>
+                            <div class="info-label">Full Name</div>
+                            <div class="info-value text-2xl" id="dash-name-full">—</div>
+                            <div class="mt-4">
+                                <div class="info-label">Payment Status</div>
+                                <div id="dash-payment-badge" class="mt-2">
+                                    <span class="dash-badge pending">⏳ Pending</span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="info-label">Account Status</div>
+                                <div class="info-value text-gold" id="dash-account-status">Active</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="info-label">Course Details</div>
+                            <div class="mt-2 p-4 border border-white/10 rounded bg-white/5">
+                                <p class="text-sm text-gray-300"><span class="text-gold font-semibold">Course:</span> <span id="dash-course-detail">—</span></p>
+                                <p class="text-sm text-gray-300 mt-1"><span class="text-gold font-semibold">Enrolled:</span> <span id="dash-enroll-date">—</span></p>
+                                <p class="text-sm text-gray-300 mt-1"><span class="text-gold font-semibold">Batch:</span> <span id="dash-batch">—</span></p>
+                            </div>
+                            <div class="mt-6 p-4 border border-gold/20 rounded bg-gold/5">
+                                <p class="text-xs text-gray-400 italic">📌 After payment verification, you'll be added to the official group. Stay tuned!</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2337,6 +2424,9 @@
                 loadAllSectionData();
                 loadHeaderData();
                 loadMediaLibrary(); }
+            if (id === 'dashboard-view') {
+                refreshDashboard(); // fetch fresh data when dashboard is shown
+            }
             updateNavButtons();
         }
 
@@ -2446,14 +2536,7 @@
                 updateNavButtons();
 
                 // Populate and show dashboard
-                document.getElementById('dash-name').textContent = studentData.name || 'Student';
-                document.getElementById('dash-id').textContent = studentData.student_id || '—';
-                document.getElementById('dash-name-full').textContent = studentData.name || '—';
-                document.getElementById('dash-course').textContent = studentData.course || '—';
-                document.getElementById('dash-city').textContent = studentData.city || '—';
-                document.getElementById('dash-payment').textContent = studentData.payment_status || 'Pending';
-                document.getElementById('dash-status').textContent = studentData.status || 'Active';
-
+                await refreshDashboard(); // will use the stored student
                 showView('dashboard-view');
                 showToast('✅ Enrollment successful! Your dashboard is ready.', 'success');
                 e.target.reset();
@@ -2668,6 +2751,10 @@
                 let paid = parseInt(paidEl.textContent) || 0;
                 paidEl.textContent = paid + 1;
                 showToast('✅ ' + studentId + ' marked as Paid.', 'success');
+                // Refresh dashboard if this student is logged in
+                if (loggedInStudent && loggedInStudent.student_id === studentId) {
+                    await refreshDashboard();
+                }
             } catch (e) { console.error(e);
                 showToast('❌ Error updating.', 'error');
                 loadAdminData(); }
@@ -2687,6 +2774,8 @@
                 await db.ref('students').update(updates);
                 showToast('✅ All students marked as Paid.', 'success');
                 loadAdminData();
+                // Refresh dashboard if logged in
+                if (loggedInStudent) await refreshDashboard();
             } catch (e) { console.error(e);
                 showToast('❌ Error updating.', 'error'); }
         }
@@ -2701,21 +2790,12 @@
                 const student = snap.val();
                 if (!student) { showToast('❌ Student ID not found.', 'error'); return; }
                 if (student.phone !== phone) { showToast('❌ Phone number does not match.', 'error'); return; }
-                if (student.payment_status !== 'Paid' && student.payment_status !== 'Confirmed') {
-                    showToast('❌ Payment not verified yet. Please wait for admin confirmation.', 'error');
-                    return;
-                }
+                // Allow login regardless of payment status (they can see pending)
                 loggedInStudent = student;
                 localStorage.setItem('poa_student', JSON.stringify(student));
                 updateNavButtons();
+                await refreshDashboard();
                 showView('dashboard-view');
-                document.getElementById('dash-name').textContent = student.name || 'Student';
-                document.getElementById('dash-id').textContent = student.student_id || '—';
-                document.getElementById('dash-name-full').textContent = student.name || '—';
-                document.getElementById('dash-course').textContent = student.course || '—';
-                document.getElementById('dash-city').textContent = student.city || '—';
-                document.getElementById('dash-payment').textContent = student.payment_status || 'Pending';
-                document.getElementById('dash-status').textContent = student.status || 'Active';
                 showToast('✅ Welcome, ' + student.name + '!', 'success');
             } catch (e) { console.error(e);
                 showToast('❌ Error logging in.', 'error'); }
@@ -2729,22 +2809,89 @@
             showToast('👋 Logged out.', 'success');
         }
 
+        // ── REFRESH DASHBOARD (fetch fresh data from Firebase) ──
+        async function refreshDashboard() {
+            const stored = localStorage.getItem('poa_student');
+            let student = stored ? JSON.parse(stored) : null;
+            if (!student && !loggedInStudent) {
+                // Not logged in, redirect to landing?
+                showView('landing');
+                return;
+            }
+            // Prefer loggedInStudent if available, else use stored
+            const studentId = (loggedInStudent && loggedInStudent.student_id) || (student && student.student_id);
+            if (!studentId) return;
+
+            try {
+                const snap = await db.ref('students/' + studentId).once('value');
+                const fresh = snap.val();
+                if (!fresh) {
+                    // Student deleted? logout
+                    logoutStudent();
+                    showToast('❌ Account not found.', 'error');
+                    return;
+                }
+                // Update loggedInStudent and localStorage
+                loggedInStudent = fresh;
+                localStorage.setItem('poa_student', JSON.stringify(fresh));
+
+                // Update dashboard UI
+                document.getElementById('dash-name').textContent = fresh.name || 'Student';
+                document.getElementById('dash-id').textContent = fresh.student_id || '—';
+                document.getElementById('dash-name-full').textContent = fresh.name || '—';
+                document.getElementById('dash-course').textContent = fresh.course || '—';
+                document.getElementById('dash-city').textContent = fresh.city || '—';
+                document.getElementById('dash-status').textContent = fresh.status || 'Active';
+                document.getElementById('dash-account-status').textContent = fresh.status || 'Active';
+
+                // Payment badge
+                const badgeEl = document.getElementById('dash-payment-badge');
+                const status = fresh.payment_status || 'Pending';
+                if (status === 'Paid' || status === 'Confirmed') {
+                    badgeEl.innerHTML = `<span class="dash-badge paid">✅ Paid</span>`;
+                } else {
+                    badgeEl.innerHTML = `<span class="dash-badge pending">⏳ Pending</span>`;
+                }
+
+                // Course details
+                document.getElementById('dash-course-detail').textContent = fresh.course || '—';
+                // Enrollment date (timestamp)
+                if (fresh.timestamp) {
+                    const date = new Date(fresh.timestamp);
+                    document.getElementById('dash-enroll-date').textContent = date.toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+                } else {
+                    document.getElementById('dash-enroll-date').textContent = '—';
+                }
+                // Batch info (extract from course if possible)
+                let batch = '—';
+                if (fresh.course && fresh.course.includes('Batch')) {
+                    const parts = fresh.course.match(/Batch\s*(\d+)/i);
+                    if (parts) batch = 'Batch ' + parts[1];
+                } else if (fresh.course && fresh.course.toLowerCase().includes('afns')) {
+                    batch = 'AFNS-26';
+                } else {
+                    batch = 'General';
+                }
+                document.getElementById('dash-batch').textContent = batch;
+
+                updateNavButtons();
+                showToast('🔄 Dashboard refreshed.', 'success');
+            } catch (e) {
+                console.error('Refresh error:', e);
+                showToast('❌ Could not refresh data.', 'error');
+            }
+        }
+
         // ── UPDATE NAV BUTTONS ──
         function updateNavButtons() {
             const applyBtn = document.getElementById('nav-apply-btn');
             const dashBtn = document.getElementById('nav-dashboard-btn');
             const stored = localStorage.getItem('poa_student');
-            if (stored) {
-                try {
-                    const s = JSON.parse(stored);
-                    // Always show dashboard if logged in (even if pending)
-                    loggedInStudent = s;
-                    applyBtn.style.display = 'none';
-                    dashBtn.style.display = 'inline-flex';
-                    return;
-                } catch (e) {}
-            }
-            if (loggedInStudent) {
+            if (stored || loggedInStudent) {
                 applyBtn.style.display = 'none';
                 dashBtn.style.display = 'inline-flex';
             } else {
@@ -2761,8 +2908,8 @@
                     const s = JSON.parse(stored);
                     loggedInStudent = s;
                     updateNavButtons();
-                    // If currently on landing and logged in, we could auto-show dashboard? 
-                    // but we leave it to user.
+                    // Optionally auto-show dashboard if currently on landing? 
+                    // We'll let user navigate.
                 } catch (e) { localStorage.removeItem('poa_student'); }
             }
             updateNavButtons();
@@ -3067,6 +3214,10 @@
             setTimeout(() => showToast('🛡️ Academy Ready — Triple-click logo for admin.', 'success'), 1800);
             checkStoredLogin();
             updateNavButtons();
+            // If logged in, pre-fetch dashboard data (but don't show dashboard yet)
+            if (loggedInStudent) {
+                await refreshDashboard();
+            }
         };
     </script>
 </body>
