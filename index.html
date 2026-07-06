@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pakistan Officers Academy | PMA, Navy, AFNS, LCC & AMC Prep</title>
     <script src="https://cdn.tailwindcss.com">
     </script>
@@ -71,10 +71,14 @@
         body:hover #cursor-dot {
             opacity: 1;
         }
+        a:hover~#cursor-ring,
+        button:hover~#cursor-ring {
+            transform: translate(-50%, -50%) scale(1.8);
+        }
 
         /* ── NAVIGATION ── */
         .glass-nav {
-            background: rgba(0, 12, 5, 0.92);
+            background: rgba(0, 12, 5, 0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(212, 175, 55, 0.12);
@@ -176,7 +180,7 @@
         }
         .hero-main-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3.5rem, 12vw, 9rem);
+            font-size: clamp(4rem, 12vw, 9rem);
             line-height: 0.9;
             letter-spacing: 0.02em;
             color: white;
@@ -282,7 +286,7 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 100px;
-            padding: 8px 16px;
+            padding: 10px 20px;
             backdrop-filter: blur(10px);
             transition: all 0.3s;
         }
@@ -293,13 +297,13 @@
         }
         .stat-pill .num {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--gold);
             line-height: 1;
         }
         .stat-pill .label {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 8px;
+            font-size: 9px;
             font-weight: 700;
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -315,7 +319,7 @@
             text-transform: uppercase;
             background: var(--gold);
             color: #000c05;
-            padding: 14px 28px;
+            padding: 16px 36px;
             border-radius: 4px;
             border: none;
             cursor: pointer;
@@ -353,7 +357,7 @@
             text-transform: uppercase;
             background: transparent;
             color: rgba(255, 255, 255, 0.8);
-            padding: 13px 28px;
+            padding: 15px 36px;
             border-radius: 4px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             cursor: pointer;
@@ -473,7 +477,7 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 2px;
-            padding: 32px 24px;
+            padding: 40px 32px;
             position: relative;
             overflow: hidden;
             transition: all 0.4s;
@@ -497,7 +501,7 @@
         }
         .wing-number {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 60px;
+            font-size: 80px;
             line-height: 1;
             color: rgba(212, 175, 55, 0.06);
             position: absolute;
@@ -510,7 +514,7 @@
         }
         .wing-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.6rem;
+            font-size: 2rem;
             letter-spacing: 0.05em;
             color: var(--gold);
             margin-bottom: 8px;
@@ -576,7 +580,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .stat-item {
-            padding: 32px 16px;
+            padding: 48px 32px;
             text-align: center;
             border-right: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
@@ -604,13 +608,13 @@
         }
         .stat-value {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.8rem;
+            font-size: 3.5rem;
             line-height: 1;
             letter-spacing: 0.02em;
         }
         .stat-label {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 8px;
+            font-size: 9px;
             font-weight: 700;
             letter-spacing: 0.35em;
             text-transform: uppercase;
@@ -643,7 +647,7 @@
         .branch-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 24px 16px;
+            padding: 32px 24px;
             text-align: center;
             transition: all 0.4s;
             position: relative;
@@ -669,15 +673,15 @@
             transform: translateY(-6px);
         }
         .branch-icon {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             background: rgba(212, 175, 55, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 2px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 12px;
+            margin: 0 auto 16px;
             color: var(--gold);
             transition: all 0.3s;
         }
@@ -688,14 +692,14 @@
         .branch-name {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: white;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         .branch-sub {
-            font-size: 9px;
+            font-size: 10px;
             color: rgba(255, 255, 255, 0.35);
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -735,7 +739,7 @@
             font-size: 9px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            padding: 6px 14px;
+            padding: 8px 16px;
             z-index: 3;
         }
 
@@ -903,7 +907,6 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
             box-shadow: 0 16px 50px rgba(0, 0, 0, 0.6);
-            max-width: 90%;
         }
         .toast.show {
             opacity: 1;
@@ -939,7 +942,7 @@
         .form-field {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 16px 18px;
+            padding: 18px 20px;
             color: white;
             width: 100%;
             font-family: 'Inter', sans-serif;
@@ -964,7 +967,7 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 2px;
-            padding: 16px 18px;
+            padding: 18px 20px;
             transition: all 0.3s;
         }
         .payment-method-card:hover {
@@ -974,13 +977,13 @@
         .payment-method-card .method-title {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 13px;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--gold);
         }
         .payment-method-card .detail {
-            font-size: 12px;
+            font-size: 13px;
             color: rgba(255, 255, 255, 0.7);
             font-family: 'Inter', sans-serif;
         }
@@ -996,8 +999,8 @@
 
         /* CHAT */
         #chat-widget {
-            width: 340px;
-            height: 500px;
+            width: 360px;
+            height: 520px;
             background: #001a0b;
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 2px;
@@ -1032,15 +1035,12 @@
 
         /* MOBILE MENU */
         #mobile-menu {
-            background: rgba(0, 12, 5, 0.98);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 110;
+            background: #000c05;
         }
 
         /* LCP SECTION STYLES */
         .lcp-section {
-            padding: 80px 0;
+            padding: 120px 0;
             position: relative;
         }
 
@@ -1093,102 +1093,21 @@
                 border-right: none;
             }
             .hero-main-title {
-                font-size: 3.8rem;
+                font-size: 4.5rem;
             }
             #chat-widget {
-                width: 280px;
-                height: 420px;
-            }
-            .lcp-section {
-                padding: 60px 0;
-            }
-            .wing-card {
-                padding: 24px 16px;
-            }
-            .wing-title {
-                font-size: 1.3rem;
-            }
-            .wing-number {
-                font-size: 40px;
-            }
-            .branch-card {
-                padding: 16px 12px;
-            }
-            .branch-icon {
-                width: 40px;
-                height: 40px;
-            }
-            .branch-icon svg {
-                width: 20px;
-                height: 20px;
-            }
-            .stat-item {
-                padding: 24px 12px;
-            }
-            .stat-value {
-                font-size: 2.2rem;
-            }
-            .glass-card {
-                padding: 16px !important;
-            }
-            .dashboard-card {
-                padding: 20px !important;
-            }
-            .btn-primary,
-            .btn-ghost {
-                padding: 12px 20px;
-                font-size: 10px;
-            }
-            .form-field {
-                padding: 14px 16px;
-                font-size: 12px;
-            }
-            #nav-logo-img {
-                height: 36px;
-                max-width: 120px;
-            }
-            .section-title {
-                font-size: 2.2rem !important;
-            }
-            .batch-banner {
-                padding: 24px 16px !important;
+                width: 300px;
+                height: 460px;
             }
         }
         @media (max-width: 480px) {
             .hero-main-title {
-                font-size: 2.8rem;
+                font-size: 3.5rem;
             }
             #chat-widget {
-                width: 260px;
-                height: 380px;
+                width: 280px;
+                height: 420px;
                 right: 0;
-            }
-            .stat-pill {
-                padding: 6px 12px;
-                gap: 6px;
-            }
-            .stat-pill .num {
-                font-size: 1rem;
-            }
-            .stat-pill .label {
-                font-size: 7px;
-            }
-            .hero-content .max-w-4xl {
-                padding-top: 20px;
-            }
-            .section-eyebrow {
-                font-size: 8px;
-                gap: 8px;
-            }
-            .section-eyebrow::before {
-                width: 20px;
-            }
-            .feedback-gallery {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            .feedback-gallery img {
-                height: 140px;
             }
         }
 
@@ -1263,7 +1182,7 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 2px;
-            padding: 32px;
+            padding: 40px;
         }
         .dashboard-card .info-label {
             font-family: 'Rajdhani', sans-serif;
@@ -1275,7 +1194,7 @@
         }
         .dashboard-card .info-value {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: white;
         }
         .whatsapp-section {
@@ -1286,11 +1205,11 @@
         .whatsapp-btn {
             background: #25D366;
             color: white;
-            padding: 12px 28px;
+            padding: 14px 32px;
             border-radius: 40px;
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             display: inline-flex;
@@ -1330,7 +1249,7 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 8px;
-            padding: 16px;
+            padding: 20px;
             transition: all 0.3s;
         }
         .dash-stat-card:hover {
@@ -1339,18 +1258,14 @@
             transform: translateY(-2px);
         }
         .dash-stat-card .icon-wrap {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: rgba(212, 175, 55, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--gold);
-        }
-        .dash-stat-card .icon-wrap svg {
-            width: 18px;
-            height: 18px;
         }
 
         /* Quiz styles */
@@ -1396,7 +1311,7 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
-            padding: 20px;
+            padding: 24px;
             transition: all 0.3s;
         }
         .material-card:hover {
@@ -1410,8 +1325,8 @@
             color: var(--gold);
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 16px;
-            padding: 4px 14px;
+            font-size: 18px;
+            padding: 4px 16px;
             border-radius: 20px;
         }
         .video-container {
@@ -1433,12 +1348,12 @@
         /* Feedback gallery - only images */
         .feedback-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
         }
         .feedback-gallery img {
             width: 100%;
-            height: 180px;
+            height: 200px;
             object-fit: cover;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1453,7 +1368,7 @@
         /* Team member */
         .team-member {
             text-align: center;
-            padding: 16px;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 8px;
@@ -1465,15 +1380,15 @@
             transform: translateY(-4px);
         }
         .team-member .avatar {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            margin: 0 auto 12px;
+            margin: 0 auto 16px;
             border: 2px solid var(--gold);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
+            font-size: 48px;
             background: rgba(212, 175, 55, 0.1);
             color: var(--gold);
             overflow: hidden;
@@ -1486,11 +1401,11 @@
         .team-member .member-name {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 18px;
             color: white;
         }
         .team-member .member-title {
-            font-size: 12px;
+            font-size: 13px;
             color: #9ca3af;
             margin-top: 4px;
         }
@@ -1500,14 +1415,14 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            padding: 24px;
+            padding: 32px;
             max-width: 860px;
             margin: 0 auto;
         }
         .issb-test-container .test-section {
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding-bottom: 20px;
-            margin-bottom: 20px;
+            padding-bottom: 24px;
+            margin-bottom: 24px;
         }
         .issb-test-container .test-section:last-child {
             border-bottom: none;
@@ -1517,10 +1432,10 @@
         .issb-test-container .section-title-sm {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 16px;
             color: var(--gold);
             letter-spacing: 0.05em;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -1616,7 +1531,7 @@
             background: #001a0b;
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 12px;
-            padding: 32px;
+            padding: 40px;
             max-width: 560px;
             width: 100%;
             max-height: 90vh;
@@ -1625,14 +1540,14 @@
         }
         .result-modal .result-score {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 3.5rem;
+            font-size: 4rem;
             color: var(--gold);
             text-align: center;
         }
         .result-modal .result-label {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.4);
@@ -1722,11 +1637,10 @@
         /* Mobile Navigation Fix */
         .mobile-nav-link {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: white;
             text-decoration: none;
             transition: color 0.3s;
-            padding: 8px 0;
         }
         .mobile-nav-link:hover {
             color: var(--gold);
@@ -1734,16 +1648,13 @@
         #mobile-menu {
             background: rgba(0, 12, 5, 0.98);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
         }
         @media (max-width: 1024px) {
             #nav-links {
                 display: none !important;
             }
             #menu-btn {
-                display: flex !important;
-                align-items: center;
-                justify-content: center;
+                display: block !important;
             }
         }
         @media (min-width: 1025px) {
@@ -1761,8 +1672,8 @@
         }
         @media (max-width: 640px) {
             #nav-logo-img {
-                height: 38px;
-                max-width: 130px;
+                height: 40px;
+                max-width: 150px;
             }
         }
 
@@ -1796,7 +1707,7 @@
         }
         .test-timer {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--gold);
             letter-spacing: 0.1em;
@@ -1813,7 +1724,7 @@
             border-radius: 20px;
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
@@ -1828,15 +1739,15 @@
             border: 1px solid rgba(248, 113, 113, 0.2);
         }
         .test-progress-ring {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            border: 6px solid rgba(255, 255, 255, 0.1);
+            border: 8px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--gold);
             position: relative;
             margin: 0 auto;
@@ -1845,7 +1756,7 @@
             position: absolute;
             inset: -4px;
             border-radius: 50%;
-            border: 6px solid transparent;
+            border: 8px solid transparent;
             border-top-color: var(--gold);
             border-right-color: var(--gold);
             transition: all 0.3s;
@@ -1863,7 +1774,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2.5rem;
+            font-size: 3rem;
             z-index: 5;
             text-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
         }
@@ -1880,17 +1791,6 @@
         .test-card-clickable .btn-primary {
             pointer-events: auto;
         }
-
-        /* Mobile test cards - ensure icons show */
-        .test-card-icon {
-            font-size: 2.5rem;
-            line-height: 1;
-        }
-        @media (max-width: 480px) {
-            .test-card-icon {
-                font-size: 2rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1904,12 +1804,12 @@
 
     <!-- ===== NAV ===== -->
     <nav class="fixed w-full z-[100] glass-nav" id="main-nav">
-        <div class="max-w-screen-xl mx-auto px-3 sm:px-6 flex justify-between items-center" style="padding-top:8px; padding-bottom:8px; min-height:58px;">
-            <div class="flex items-center gap-2 sm:gap-3 cursor-pointer flex-shrink-0" id="main-logo" title="Triple Click for Admin">
-                <img id="nav-logo-img" src="logo.png" class="h-10 sm:h-12 w-auto object-contain" loading="lazy" alt="POA Logo" style="height:44px; max-width:160px;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23000c05%22/%3E%3Ctext x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-family=%22Bebas Neue,sans-serif%22 font-size=%2228%22 fill=%22%23D4AF37%22%3EPOA%3C/text%3E%3C/svg%3E'" />
-                <div class="hidden xs:block">
-                    <h1 id="nav-title" class="font-display text-base sm:text-lg text-white tracking-wide leading-tight" style="font-family:'Bebas Neue',sans-serif;letter-spacing:0.05em;line-height:1.1;">Pakistan Officers Academy</h1>
-                    <p id="nav-subtitle" class="text-[6px] sm:text-[7px] tracking-[0.3em] sm:tracking-[0.35em] font-bold uppercase leading-tight" style="color:var(--gold);">Preparing the Protectors</p>
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center" style="padding-top:10px; padding-bottom:10px; min-height:64px;">
+            <div class="flex items-center gap-3 cursor-pointer flex-shrink-0" id="main-logo" title="Triple Click for Admin">
+                <img id="nav-logo-img" src="logo.png" class="h-12 w-auto object-contain" loading="lazy" alt="POA Logo" style="height:50px; max-width:200px;" />
+                <div class="hidden sm:block">
+                    <h1 id="nav-title" class="font-display text-lg text-white tracking-wide leading-tight" style="font-family:'Bebas Neue',sans-serif;letter-spacing:0.05em;line-height:1.1;">Pakistan Officers Academy</h1>
+                    <p id="nav-subtitle" class="text-[7px] tracking-[0.35em] font-bold uppercase leading-tight" style="color:var(--gold);">Preparing the Protectors</p>
                 </div>
             </div>
             <div class="hidden lg:flex items-center gap-6" id="nav-links">
@@ -1918,27 +1818,26 @@
                 <a href="javascript:void(0)" onclick="showView('feedback-view')" class="nav-link">Testimonials</a>
                 <a href="javascript:void(0)" onclick="showView('portal')" class="nav-link">Student Portal</a>
                 <div id="nav-cta-container" class="flex items-center">
-                    <button onclick="showView('apply-view')" class="btn-primary" style="padding:6px 16px;font-size:9px;" id="nav-apply-btn">Apply Now</button>
-                    <button onclick="showView('dashboard-view')" class="btn-primary" style="padding:6px 16px;font-size:9px;display:none;" id="nav-dashboard-btn">Dashboard</button>
+                    <button onclick="showView('apply-view')" class="btn-primary" style="padding:8px 20px;font-size:10px;" id="nav-apply-btn">Apply Now</button>
+                    <button onclick="showView('dashboard-view')" class="btn-primary" style="padding:8px 20px;font-size:10px;display:none;" id="nav-dashboard-btn">Dashboard</button>
                 </div>
             </div>
-            <button class="lg:hidden text-white p-2" onclick="toggleMobileMenu()" id="menu-btn" aria-label="Toggle Menu" style="display:none;">
-                <i data-lucide="menu" class="w-6 h-6 sm:w-7 sm:h-7"></i>
+            <button class="lg:hidden text-white p-2" onclick="toggleMobileMenu()" id="menu-btn" aria-label="Toggle Menu">
+                <i data-lucide="menu" class="w-7 h-7"></i>
             </button>
         </div>
     </nav>
 
     <!-- MOBILE MENU -->
-    <div id="mobile-menu" class="fixed inset-0 z-[110] flex flex-col items-center justify-center gap-4 hidden" style="background:rgba(0,12,5,0.98); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);">
-        <button onclick="toggleMobileMenu()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-2">
-            <i data-lucide="x" class="w-8 h-8"></i>
-        </button>
+    <div id="mobile-menu" class="fixed inset-0 z-[110] flex flex-col items-center justify-center gap-6 hidden">
         <a href="javascript:void(0)" onclick="showView('landing');toggleMobileMenu()" class="mobile-nav-link">Home</a>
         <a href="javascript:void(0)" onclick="showView('about-view');toggleMobileMenu()" class="mobile-nav-link">Our Story</a>
         <a href="javascript:void(0)" onclick="showView('feedback-view');toggleMobileMenu()" class="mobile-nav-link">Testimonials</a>
         <a href="javascript:void(0)" onclick="showView('apply-view');toggleMobileMenu()" class="mobile-nav-link" style="color:var(--gold);">Apply Now</a>
         <a href="javascript:void(0)" onclick="showView('portal');toggleMobileMenu()" class="mobile-nav-link">Portal</a>
-        <a href="javascript:void(0)" onclick="showView('dashboard-view');toggleMobileMenu()" class="mobile-nav-link" style="color:var(--gold);">Dashboard</a>
+        <button onclick="toggleMobileMenu()" class="mt-4 text-gray-500 hover:text-white transition-colors">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
     </div>
 
     <main>
@@ -1951,11 +1850,11 @@
             <section class="hero-section" data-section="hero">
                 <div class="scanline"></div>
                 <canvas id="hero-canvas"></canvas>
-                <img id="hero-bg" src="image1.jpg.png" loading="lazy" alt="" class="hero-bg-img" onerror="this.style.display='none'" />
+                <img id="hero-bg" src="image1.jpg.png" loading="lazy" alt="" class="hero-bg-img" />
                 <div class="hero-gradient"></div>
 
                 <!-- VERTICAL LABEL LEFT -->
-                <div class="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:flex flex-col items-center gap-4">
+                <div class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:flex flex-col items-center gap-4">
                     <div style="writing-mode:vertical-rl;font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.4em;text-transform:uppercase;color:rgba(212,175,55,0.4);">PAKISTAN OFFICERS ACADEMY</div>
                     <div style="width:1px;height:80px;background:linear-gradient(to bottom,rgba(212,175,55,0.4),transparent);"></div>
                 </div>
@@ -1963,17 +1862,17 @@
                 <!-- HERO CONTENT -->
                 <div class="hero-content max-w-screen-xl mx-auto px-4 sm:px-6 w-full" data-aos="fade-up" data-aos-duration="1000">
                     <div class="max-w-4xl">
-                        <div class="section-eyebrow mb-4 md:mb-8" data-aos="fade-right" data-aos-delay="100">Pakistan's Premier Military Prep Institute</div>
-                        <div class="typewriter-wrap mb-3 md:mb-6">
+                        <div class="section-eyebrow mb-6 md:mb-8" data-aos="fade-right" data-aos-delay="100">Pakistan's Premier Military Prep Institute</div>
+                        <div class="typewriter-wrap mb-4 md:mb-6">
                             <h1 id="hero-title" class="hero-main-title glitch" data-text="MASTER THE">MASTER THE</h1>
                             <h1 class="hero-main-title"><span class="gold-word">INITIAL TEST</span></h1>
                         </div>
-                        <p id="hero-desc" class="text-gray-400 text-sm md:text-base lg:text-lg mb-6 md:mb-12 max-w-xl leading-relaxed font-light" data-aos="fade-up" data-aos-delay="200">
+                        <p id="hero-desc" class="text-gray-400 text-sm md:text-base lg:text-lg mb-8 md:mb-12 max-w-xl leading-relaxed font-light" data-aos="fade-up" data-aos-delay="200">
                             Join Pakistan's elite institute for specialized military testing. We forge the intelligence, discipline, and grit required for service in the Armed Forces.
                         </p>
 
                         <!-- STAT PILLS -->
-                        <div class="flex flex-wrap gap-2 mb-6 md:mb-12" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex flex-wrap gap-2 md:gap-3 mb-8 md:mb-12" data-aos="fade-up" data-aos-delay="300">
                             <div class="stat-pill"><div><div class="num">10K+</div><div class="label">Students Trained</div></div></div>
                             <div class="stat-pill"><div><div class="num">850+</div><div class="label">Army Selected</div></div></div>
                             <div class="stat-pill"><div><div class="num">85%</div><div class="label">ISSB Pass Rate</div></div></div>
@@ -1982,8 +1881,8 @@
 
                         <!-- BUTTONS -->
                         <div class="flex flex-wrap gap-3 md:gap-4" data-aos="fade-up" data-aos-delay="400">
-                            <button onclick="showView('apply-view')" class="btn-primary text-xs md:text-sm px-5 md:px-8 py-3 md:py-4"><i data-lucide="shield" class="w-4 h-4"></i>Secure My Seat</button>
-                            <button onclick="toggleChat()" class="btn-ghost text-xs md:text-sm px-5 md:px-8 py-3 md:py-4"><i data-lucide="message-circle" class="w-4 h-4"></i>Consult Duty Officer</button>
+                            <button onclick="showView('apply-view')" class="btn-primary text-xs md:text-sm px-6 md:px-8 py-3 md:py-4"><i data-lucide="shield" class="w-4 h-4"></i>Secure My Seat</button>
+                            <button onclick="toggleChat()" class="btn-ghost text-xs md:text-sm px-6 md:px-8 py-3 md:py-4"><i data-lucide="message-circle" class="w-4 h-4"></i>Consult Duty Officer</button>
                         </div>
                     </div>
                 </div>
@@ -1995,46 +1894,46 @@
             <!-- ===== ISSB TEST SYSTEM ===== -->
             <section class="lcp-section" data-section="issb-test-system" data-aos="fade-up" style="background:linear-gradient(135deg, rgba(0,12,5,0.95) 0%, rgba(0,32,91,0.15) 100%); border-top:1px solid rgba(212,175,55,0.1); border-bottom:1px solid rgba(212,175,55,0.1);">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="text-center mb-8 md:mb-12">
+                    <div class="text-center mb-12">
                         <div class="section-eyebrow justify-center mb-4" style="justify-content:center;">PMA Long Course</div>
-                        <h2 class="section-title text-3xl md:text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">Initial Test <span style="color:var(--gold);">Preparation</span></h2>
+                        <h2 class="section-title text-4xl md:text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">Initial Test <span style="color:var(--gold);">Preparation</span></h2>
                         <p class="text-gray-400 mt-3 max-w-2xl mx-auto text-sm">Practice with our comprehensive test system featuring Verbal, Non-Verbal, and Academic sections. Each test has 60 MCQs with 30 minutes time limit.</p>
                         <p class="text-gold text-xs mt-2 font-bold uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">🔒 Test access is restricted to registered &amp; paid students only.</p>
                     </div>
 
-                    <div class="grid md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-10">
+                    <div class="grid md:grid-cols-3 gap-6 mb-10">
                         <!-- VERBAL -->
-                        <div class="glass-card p-5 md:p-6 text-center hover:border-gold/30 transition-all cursor-pointer test-card-clickable" onclick="startTest('verbal')" id="test-card-verbal">
-                            <div class="test-card-icon mb-2">🧠</div>
-                            <h3 class="text-lg md:text-xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Verbal Intelligence</h3>
-                            <p class="text-gray-400 text-xs md:text-sm mt-1">60 MCQs • 30 Minutes • 50% Passing</p>
-                            <button class="btn-primary mt-3 text-xs py-2 px-4" id="test-btn-verbal">Start Test</button>
+                        <div class="glass-card p-6 text-center hover:border-gold/30 transition-all cursor-pointer test-card-clickable" onclick="startTest('verbal')" id="test-card-verbal">
+                            <div class="text-4xl mb-3">🧠</div>
+                            <h3 class="text-xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Verbal Intelligence</h3>
+                            <p class="text-gray-400 text-sm mt-2">60 MCQs • 30 Minutes • 50% Passing</p>
+                            <button class="btn-primary mt-4 text-xs py-2 px-4" id="test-btn-verbal">Start Test</button>
                             <div id="test-lock-verbal" class="hidden mt-2 text-gold text-xs font-bold uppercase tracking-widest">🔒 Payment Required</div>
                         </div>
                         <!-- NON-VERBAL -->
-                        <div class="glass-card p-5 md:p-6 text-center hover:border-gold/30 transition-all cursor-pointer test-card-clickable" onclick="startTest('nonverbal')" id="test-card-nonverbal">
-                            <div class="test-card-icon mb-2">🔷</div>
-                            <h3 class="text-lg md:text-xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Non-Verbal Intelligence</h3>
-                            <p class="text-gray-400 text-xs md:text-sm mt-1">60 MCQs • 30 Minutes • 50% Passing</p>
-                            <button class="btn-primary mt-3 text-xs py-2 px-4" id="test-btn-nonverbal">Start Test</button>
+                        <div class="glass-card p-6 text-center hover:border-gold/30 transition-all cursor-pointer test-card-clickable" onclick="startTest('nonverbal')" id="test-card-nonverbal">
+                            <div class="text-4xl mb-3">🔷</div>
+                            <h3 class="text-xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Non-Verbal Intelligence</h3>
+                            <p class="text-gray-400 text-sm mt-2">60 MCQs • 30 Minutes • 50% Passing</p>
+                            <button class="btn-primary mt-4 text-xs py-2 px-4" id="test-btn-nonverbal">Start Test</button>
                             <div id="test-lock-nonverbal" class="hidden mt-2 text-gold text-xs font-bold uppercase tracking-widest">🔒 Payment Required</div>
                         </div>
                         <!-- ACADEMIC -->
-                        <div class="glass-card p-5 md:p-6 text-center hover:border-gold/30 transition-all cursor-pointer test-card-clickable" onclick="startTest('academic')" id="test-card-academic">
-                            <div class="test-card-icon mb-2">📚</div>
-                            <h3 class="text-lg md:text-xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Academic</h3>
-                            <p class="text-gray-400 text-xs md:text-sm mt-1">50 MCQs • 30 Minutes • 50% Passing</p>
-                            <button class="btn-primary mt-3 text-xs py-2 px-4" id="test-btn-academic">Start Test</button>
+                        <div class="glass-card p-6 text-center hover:border-gold/30 transition-all cursor-pointer test-card-clickable" onclick="startTest('academic')" id="test-card-academic">
+                            <div class="text-4xl mb-3">📚</div>
+                            <h3 class="text-xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Academic</h3>
+                            <p class="text-gray-400 text-sm mt-2">50 MCQs • 30 Minutes • 50% Passing</p>
+                            <button class="btn-primary mt-4 text-xs py-2 px-4" id="test-btn-academic">Start Test</button>
                             <div id="test-lock-academic" class="hidden mt-2 text-gold text-xs font-bold uppercase tracking-widest">🔒 Payment Required</div>
                         </div>
                     </div>
 
                     <!-- Test Container -->
-                    <div id="test-container" class="glass-card p-5 md:p-8" style="display:none;">
-                        <div class="flex flex-wrap justify-between items-center mb-4 md:mb-6 gap-3">
+                    <div id="test-container" class="glass-card p-6 md:p-8" style="display:none;">
+                        <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
                             <div>
-                                <h3 id="test-title" class="text-xl md:text-2xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Verbal Intelligence Test</h3>
-                                <p id="test-progress" class="text-gray-400 text-xs md:text-sm">Question 1 of 60</p>
+                                <h3 id="test-title" class="text-2xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Verbal Intelligence Test</h3>
+                                <p id="test-progress" class="text-gray-400 text-sm">Question 1 of 60</p>
                             </div>
                             <div class="text-right">
                                 <p class="text-gray-400 text-xs">Time Remaining</p>
@@ -2042,8 +1941,8 @@
                             </div>
                         </div>
                         <div class="progress-bar"><div id="test-progress-bar" class="fill" style="width:0%;"></div></div>
-                        <div id="test-question-container" class="mt-5"></div>
-                        <div class="flex flex-wrap justify-between gap-3 mt-5">
+                        <div id="test-question-container" class="mt-6"></div>
+                        <div class="flex flex-wrap justify-between gap-3 mt-6">
                             <button onclick="prevTestQuestion()" id="prev-btn" class="btn-ghost text-xs py-2 px-4" style="display:none;">Previous</button>
                             <div class="flex gap-3">
                                 <button onclick="nextTestQuestion()" id="next-btn" class="btn-primary text-xs py-2 px-4">Next</button>
@@ -2053,22 +1952,22 @@
                     </div>
 
                     <!-- Results Container -->
-                    <div id="test-results-container" class="glass-card p-5 md:p-8" style="display:none;">
+                    <div id="test-results-container" class="glass-card p-6 md:p-8" style="display:none;">
                         <div class="text-center">
-                            <h3 class="text-2xl md:text-3xl font-bold text-white mb-3 md:mb-4" style="font-family:'Bebas Neue',sans-serif;">Test Results</h3>
-                            <div class="flex justify-center mb-4 md:mb-6">
+                            <h3 class="text-3xl font-bold text-white mb-4" style="font-family:'Bebas Neue',sans-serif;">Test Results</h3>
+                            <div class="flex justify-center mb-6">
                                 <div class="test-progress-ring">
                                     <span id="result-percentage">0%</span>
                                     <div class="fill" id="result-ring" style="transform: rotate(0deg);"></div>
                                 </div>
                             </div>
-                            <div class="flex flex-wrap justify-center gap-3 md:gap-8 mb-4 md:mb-6">
-                                <div><p class="text-gray-400 text-xs md:text-sm">Correct</p><p id="result-correct" class="text-2xl md:text-3xl font-bold text-green-400">0</p></div>
-                                <div><p class="text-gray-400 text-xs md:text-sm">Incorrect</p><p id="result-incorrect" class="text-2xl md:text-3xl font-bold text-red-400">0</p></div>
-                                <div><p class="text-gray-400 text-xs md:text-sm">Total</p><p id="result-total" class="text-2xl md:text-3xl font-bold text-white">0</p></div>
+                            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-6">
+                                <div><p class="text-gray-400 text-sm">Correct</p><p id="result-correct" class="text-3xl font-bold text-green-400">0</p></div>
+                                <div><p class="text-gray-400 text-sm">Incorrect</p><p id="result-incorrect" class="text-3xl font-bold text-red-400">0</p></div>
+                                <div><p class="text-gray-400 text-sm">Total</p><p id="result-total" class="text-3xl font-bold text-white">0</p></div>
                             </div>
-                            <div id="result-status" class="mb-4 md:mb-6"><span class="test-status-badge pass">✅ PASSED</span></div>
-                            <div id="result-details" class="text-left max-w-2xl mx-auto max-h-64 md:max-h-96 overflow-y-auto space-y-2 mb-4 md:mb-6"></div>
+                            <div id="result-status" class="mb-6"><span class="test-status-badge pass">✅ PASSED</span></div>
+                            <div id="result-details" class="text-left max-w-2xl mx-auto max-h-96 overflow-y-auto space-y-2 mb-6"></div>
                             <div class="flex flex-wrap justify-center gap-3">
                                 <button onclick="downloadTestResult()" class="btn-primary"><i data-lucide="download" class="w-4 h-4"></i>Download Results</button>
                                 <button onclick="closeTestResults()" class="btn-ghost">Close</button>
@@ -2081,36 +1980,36 @@
             <!-- ===== AFNS SPECIAL ===== -->
             <section class="lcp-section" data-section="afns-special" data-aos="fade-up" style="background:linear-gradient(135deg, rgba(0,32,91,0.3) 0%, rgba(1,65,28,0.2) 100%); border-top:1px solid rgba(212,175,55,0.15); border-bottom:1px solid rgba(212,175,55,0.15);">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                         <div data-aos="fade-right">
                             <div class="section-eyebrow mb-4 md:mb-6" style="color:#60a5fa;">🔥 Special Session</div>
-                            <h2 class="section-title text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">AFNS <span style="color:var(--gold);">Special Prep</span></h2>
+                            <h2 class="section-title text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">AFNS <span style="color:var(--gold);">Special Prep</span></h2>
                             <div class="section-divider"></div>
                             <p class="text-gray-400 leading-relaxed mb-6 md:mb-8" style="font-size:14px;"><span class="text-white font-semibold">Starts 8 July 2026</span> — Live Zoom classes, 45 days of intensive training for AFNS‑26. Designed for FSc Pre‑Medical girls aiming for the Armed Forces Nursing Service.</p>
                             <ul class="space-y-2 md:space-y-3 text-gray-300 text-sm mb-6 md:mb-10">
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-5 md:w-5 h-5 text-gold"></i> <span><strong>Fee:</strong> 5,500 PKR (one‑time)</span></li>
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-5 md:w-5 h-5 text-gold"></i> <span><strong>Duration:</strong> 45 Days</span></li>
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-5 md:w-5 h-5 text-gold"></i> <span><strong>Platform:</strong> Zoom Meetings (live)</span></li>
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-5 md:w-5 h-5 text-gold"></i> <span><strong>Includes:</strong> Comprehensive notes, recorded lectures, mock tests, and past papers</span></li>
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-5 md:w-5 h-5 text-gold"></i> <span>Expert faculty with AFNS selection experience</span></li>
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-5 md:w-5 h-5 text-gold"></i> <span>Daily practice sessions &amp; doubt‑clearing</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-gold"></i> <span><strong>Fee:</strong> 5,500 PKR (one‑time)</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-gold"></i> <span><strong>Duration:</strong> 45 Days</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-gold"></i> <span><strong>Platform:</strong> Zoom Meetings (live)</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-gold"></i> <span><strong>Includes:</strong> Comprehensive notes, recorded lectures, mock tests, and past papers</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-gold"></i> <span>Expert faculty with AFNS selection experience</span></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-gold"></i> <span>Daily practice sessions &amp; doubt‑clearing</span></li>
                             </ul>
                             <button onclick="showView('apply-view')" class="btn-primary"><i data-lucide="calendar" class="w-4 h-4"></i>Reserve Your Seat</button>
                         </div>
                         <div data-aos="fade-left" data-aos-delay="150">
-                            <div class="glass-card p-5 md:p-8 glow-hover border border-gold/30" style="background:rgba(0,12,5,0.7);">
-                                <div class="flex items-center gap-4 mb-5">
-                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gold/10 flex items-center justify-center border border-gold/30"><i data-lucide="video" class="w-5 h-5 md:w-6 md:h-6 text-gold"></i></div>
-                                    <div><p class="text-xs text-gray-400 uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Session Details</p><p class="text-lg md:text-xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Zoom Batch</p></div>
+                            <div class="glass-card p-6 md:p-8 glow-hover border border-gold/30" style="background:rgba(0,12,5,0.7);">
+                                <div class="flex items-center gap-4 mb-6">
+                                    <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center border border-gold/30"><i data-lucide="video" class="w-6 h-6 text-gold"></i></div>
+                                    <div><p class="text-xs text-gray-400 uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Session Details</p><p class="text-xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Zoom Batch</p></div>
                                 </div>
-                                <div class="space-y-2 md:space-y-3 text-sm border-t border-white/5 pt-5">
+                                <div class="space-y-3 text-sm border-t border-white/5 pt-6">
                                     <div class="flex justify-between"><span class="text-gray-400">Start Date</span><span class="text-white font-semibold">8 July 2026</span></div>
                                     <div class="flex justify-between"><span class="text-gray-400">End Date</span><span class="text-white font-semibold">21 August 2026</span></div>
                                     <div class="flex justify-between"><span class="text-gray-400">Daily Timing</span><span class="text-white font-semibold">8:00 PM – 9:30 PM</span></div>
                                     <div class="flex justify-between"><span class="text-gray-400">Total Sessions</span><span class="text-white font-semibold">45</span></div>
                                     <div class="flex justify-between"><span class="text-gray-400">Fee</span><span class="text-gold font-bold">5,500 PKR</span></div>
                                 </div>
-                                <div class="mt-5 p-4 border border-gold/20 rounded bg-gold/5"><p class="text-xs text-gray-400 italic">📘 <strong>Bonus:</strong> Free access to our exclusive AFNS question bank and 5 full‑length mock tests.</p></div>
+                                <div class="mt-6 p-4 border border-gold/20 rounded bg-gold/5"><p class="text-xs text-gray-400 italic">📘 <strong>Bonus:</strong> Free access to our exclusive AFNS question bank and 5 full‑length mock tests.</p></div>
                             </div>
                         </div>
                     </div>
@@ -2120,10 +2019,10 @@
             <!-- ===== BATCH 16 ===== -->
             <section class="lcp-section" data-section="batch16" data-aos="fade-up" style="background:linear-gradient(135deg, rgba(0,12,5,0.95) 0%, rgba(1,65,28,0.3) 100%); border-top:1px solid rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.04);">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+                    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
                         <div data-aos="fade-right">
                             <div class="section-eyebrow mb-4 md:mb-6" id="batch16-badge">New Batch Enrollment</div>
-                            <h2 id="batch16-title" class="section-title text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">Batch 16: <span style="color:var(--gold);">AFNS-26 Preparation</span></h2>
+                            <h2 id="batch16-title" class="section-title text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">Batch 16: <span style="color:var(--gold);">AFNS-26 Preparation</span></h2>
                             <p id="batch16-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-8" style="font-size:14px;"><span class="text-white font-semibold">Tests Covered:</span> Verbal, Non-Verbal, Academic, Personality, Interview — comprehensive preparation for AFNS-26.</p>
                             <ul class="space-y-2 mb-6 md:mb-8 text-gray-300 text-sm">
                                 <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-4 text-gold"></i><span>Verbal Test</span></li>
@@ -2136,17 +2035,17 @@
                             <div class="glass-card p-4 md:p-6 border border-gold/20"><p class="text-gold text-xs font-bold uppercase tracking-widest mb-2" style="font-family:'Rajdhani',sans-serif;">AFNS-26 Registration</p><p class="text-gray-300 text-sm leading-relaxed" dir="rtl" style="font-family:'Inter',sans-serif; text-align:right;">وہ لڑکیاں جنہوں نے FSc پری میڈیکل کیا ہے، وہ AFNS-26 میں اپلائی کر سکتی ہیں۔ اس کی رجسٹریشن شروع ہوگئی ہے۔<br>Those Students Who Appeared in Part-2 Exams can Apply On The Basis Of Hope Certificate.</p></div>
                         </div>
                         <div data-aos="fade-left" data-aos-delay="150">
-                            <div class="glass-card p-5 md:p-8 glow-hover border border-gold/20">
-                                <h3 class="text-xl md:text-2xl font-bold text-white mb-4" style="font-family:'Bebas Neue',sans-serif;">Batch 16 Features</h3>
-                                <ul class="space-y-2 md:space-y-3 text-gray-300 text-sm">
+                            <div class="glass-card p-6 md:p-8 glow-hover border border-gold/20">
+                                <h3 class="text-2xl font-bold text-white mb-4" style="font-family:'Bebas Neue',sans-serif;">Batch 16 Features</h3>
+                                <ul class="space-y-3 text-gray-300 text-sm">
                                     <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i><span>✅ معیاری لائیو لیکچرز</span></li>
                                     <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i><span>✅ ٹرائل ٹیسٹس</span></li>
                                     <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i><span>✅ مستند گائیڈ بک</span></li>
                                     <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i><span>✅ ریکارڈڈ لیکچرز</span></li>
                                     <li class="flex items-start gap-3"><i data-lucide="check" class="w-4 h-4 text-gold mt-1"></i><span>✅ پاسٹ پیپرز</span></li>
                                 </ul>
-                                <hr class="border-white/10 my-5" />
-                                <div class="space-y-2 md:space-y-3 text-sm">
+                                <hr class="border-white/10 my-6" />
+                                <div class="space-y-3 text-sm">
                                     <p><span class="text-gold font-bold">📌 رجسٹریشن:</span> <span class="text-gray-300">ابھی جاری ہے — رجسٹریشن کے بعد آپ کو لیکچرز میں شامل کر دیا جائے گا۔</span></p>
                                     <p><span class="text-gold font-bold">⏰ وقت:</span> <span class="text-gray-300">رات 8:00 بجے سے 9:00 بجے تک</span></p>
                                     <p><span class="text-gold font-bold">💻 پلیٹ فارم:</span> <span class="text-gray-300">ذوم ایپ</span></p>
@@ -2154,7 +2053,7 @@
                                     <p><span class="text-gold font-bold">📅 Deadline:</span> <span class="text-gray-300">07 July 2026</span></p>
                                     <p><span class="text-gold font-bold">📚 Classes From:</span> <span class="text-gray-300">08 July 2026</span></p>
                                 </div>
-                                <button onclick="showView('apply-view')" class="btn-primary w-full justify-center mt-5">Enroll Now</button>
+                                <button onclick="showView('apply-view')" class="btn-primary w-full justify-center mt-6">Enroll Now</button>
                             </div>
                         </div>
                     </div>
@@ -2162,17 +2061,17 @@
             </section>
 
             <!-- ===== BATCH 12 ===== -->
-            <section class="py-12 md:py-24" data-section="batch12" data-aos="fade-up">
+            <section class="py-16 md:py-24" data-section="batch12" data-aos="fade-up">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="batch-banner p-6 md:p-12 lg:p-16 flex flex-col lg:flex-row justify-between items-center gap-6 lg:gap-12 border-pulse">
+                    <div class="batch-banner p-8 md:p-12 lg:p-16 flex flex-col lg:flex-row justify-between items-center gap-8 lg:gap-12 border-pulse">
                         <div class="lg:w-2/3">
                             <div class="section-eyebrow mb-4 md:mb-6"><span id="batch12-badge">New Batch Enrollment</span></div>
-                            <h2 id="batch12-title" class="section-title text-3xl md:text-5xl lg:text-6xl text-white mb-6 md:mb-8" style="font-family:'Bebas Neue',sans-serif;">Batch 12: <span style="color:var(--gold);">Initial Preparation</span></h2>
+                            <h2 id="batch12-title" class="section-title text-4xl md:text-5xl lg:text-6xl text-white mb-6 md:mb-8" style="font-family:'Bebas Neue',sans-serif;">Batch 12: <span style="color:var(--gold);">Initial Preparation</span></h2>
                             <p id="batch12-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-8 max-w-lg" style="font-size:14px;">Our flagship Batch 12 program delivers aggressive academic and intelligence drill preparation. We cover Verbal, Non-Verbal, and Academic patterns from all Selection Centers across Pakistan.</p>
-                            <div class="flex flex-wrap gap-3 md:gap-6"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>100% Pattern Match</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Daily Mock Tests</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Expert Faculty Panel</div></div>
+                            <div class="flex flex-wrap gap-4 md:gap-6"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>100% Pattern Match</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Daily Mock Tests</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Expert Faculty Panel</div></div>
                         </div>
                         <div class="lg:w-1/3 w-full">
-                            <div class="glass-card p-5 md:p-8 glow-hover"><p style="color:var(--gold);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Available Seats</p><h3 style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem md:text-5xl;line-height:1;color:white;margin-bottom:6px;">14</h3><p class="text-gray-500 text-xs mb-6 md:mb-8">Enrollment closes soon. Reserve now to avoid missing out.</p><button onclick="showView('apply-view')" class="btn-primary w-full justify-center">Enroll in Batch 12</button></div>
+                            <div class="glass-card p-6 md:p-8 glow-hover"><p style="color:var(--gold);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Available Seats</p><h3 style="font-family:'Bebas Neue',sans-serif;font-size:4rem md:text-5xl;line-height:1;color:white;margin-bottom:8px;">14</h3><p class="text-gray-500 text-xs mb-6 md:mb-8">Enrollment closes soon. Reserve now to avoid missing out.</p><button onclick="showView('apply-view')" class="btn-primary w-full justify-center">Enroll in Batch 12</button></div>
                         </div>
                     </div>
                 </div>
@@ -2181,7 +2080,7 @@
             <!-- ===== WINGS ===== -->
             <section class="lcp-section" data-section="wings" data-aos="fade-up">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="mb-10 md:mb-16"><div class="section-eyebrow mb-4">Batch 12 Specializations</div><h2 id="wings-title" class="section-title text-3xl md:text-5xl lg:text-6xl text-white" style="font-family:'Bebas Neue',sans-serif;">Preparation <span style="color:var(--gold);">Wings</span></h2><div class="section-divider"></div><p id="wings-sub" class="text-gray-500 text-sm max-w-md">Four specialized tracks engineered for each branch's unique selection criteria.</p></div>
+                    <div class="mb-12 md:mb-16"><div class="section-eyebrow mb-4">Batch 12 Specializations</div><h2 id="wings-title" class="section-title text-4xl md:text-5xl lg:text-6xl text-white" style="font-family:'Bebas Neue',sans-serif;">Preparation <span style="color:var(--gold);">Wings</span></h2><div class="section-divider"></div><p id="wings-sub" class="text-gray-500 text-sm max-w-md">Four specialized tracks engineered for each branch's unique selection criteria.</p></div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
                         <div class="wing-card" data-aos="fade-up" data-aos-delay="0"><div class="wing-number">01</div><p style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.6);margin-bottom:12px;">Army Wing</p><div class="wing-title">PMA-158</div><p class="wing-desc">Full Academic & Intelligence mastery for Long Course 158. Structured drill sessions targeting all Selection Center patterns.</p></div>
                         <div class="wing-card" data-aos="fade-up" data-aos-delay="100"><div class="wing-number">02</div><p style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.6);margin-bottom:12px;">Lady Wing</p><div class="wing-title">LCC</div><p class="wing-desc">Dedicated coaching for the Lady Cadet Course selection process, covering all academic and personality assessment requirements.</p></div>
@@ -2194,9 +2093,9 @@
             <!-- ===== PMA INITIAL ===== -->
             <section class="lcp-section bg-army-dark" data-section="pma-initial" style="background:rgba(0,12,5,0.6);border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
-                        <div data-aos="fade-right"><div class="section-eyebrow mb-4 md:mb-6" id="pma-initial-badge">Elite Training</div><h2 id="pma-initial-title" class="section-title text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">PMA Initial Test<br><span style="color:var(--gold);">Preparation</span></h2><div class="section-divider"></div><p id="pma-initial-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Master the PMA Long Course initial test with our comprehensive curriculum. Academic (English, Math, GK), Intelligence (Verbal & Non-Verbal), and Personality Assessment — all under one roof.</p><div class="space-y-1 mb-6 md:mb-10"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Complete academic syllabus coverage</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Intelligence quotient (IQ) drills</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Personality & psychological evaluation</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>50+ full-length mock tests</div></div><button onclick="showView('apply-view')" class="btn-primary">Enroll Now</button></div>
-                        <div data-aos="fade-left" data-aos-delay="150"><div class="img-frame" style="height:200px md:height-400px lg:height-500px;"><img id="pma-initial-img" src="pma.jpg" loading="lazy" alt="PMA Initial" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80'" /><div class="img-badge" style="bottom:16px;right:16px;">Batch 12</div></div></div>
+                    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                        <div data-aos="fade-right"><div class="section-eyebrow mb-4 md:mb-6" id="pma-initial-badge">Elite Training</div><h2 id="pma-initial-title" class="section-title text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">PMA Initial Test<br><span style="color:var(--gold);">Preparation</span></h2><div class="section-divider"></div><p id="pma-initial-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Master the PMA Long Course initial test with our comprehensive curriculum. Academic (English, Math, GK), Intelligence (Verbal & Non-Verbal), and Personality Assessment — all under one roof.</p><div class="space-y-1 mb-6 md:mb-10"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Complete academic syllabus coverage</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Intelligence quotient (IQ) drills</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Personality & psychological evaluation</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>50+ full-length mock tests</div></div><button onclick="showView('apply-view')" class="btn-primary">Enroll Now</button></div>
+                        <div data-aos="fade-left" data-aos-delay="150"><div class="img-frame" style="height:300px md:height-400px lg:height-500px;"><img id="pma-initial-img" src="pma.jpg" loading="lazy" alt="PMA Initial" /><div class="img-badge" style="bottom:24px;right:24px;">Batch 12</div></div></div>
                     </div>
                 </div>
             </section>
@@ -2205,9 +2104,9 @@
             <section class="lcp-section navy-panel" data-section="navy-ssc">
                 <div class="grid-overlay"></div>
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6 relative z-10">
-                    <div class="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
-                        <div data-aos="fade-right"><div class="img-frame" style="height:200px md:height-400px lg:height-480px;"><img id="navy-ssc-img" src="navy.jpg" loading="lazy" alt="Navy" onerror="this.src='https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80'" /><div class="img-badge" style="top:16px;left:16px;background:#00205b;color:white;">Navy Wing</div></div></div>
-                        <div data-aos="fade-left" data-aos-delay="150"><div class="section-eyebrow mb-4 md:mb-6" id="navy-ssc-badge" style="color:#60a5fa;">Naval Headquarters</div><h2 id="navy-ssc-title" class="section-title text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">Pak Navy<br><span style="color:var(--gold);">SSC 2026-B</span></h2><div class="section-divider"></div><p id="navy-ssc-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Specialized coaching for the Short Service Commission 2026-B Course — Technical, Supply, Education, and Law branches. We prepare you to meet every professional and psychological standard of the Pakistan Navy.</p><div class="grid grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-10"><div class="glass-card p-4 md:p-5 text-center"><div style="font-family:'Bebas Neue',sans-serif;font-size:2rem md:2.5rem;color:white;line-height:1;">40+</div><div style="font-family:'Rajdhani',sans-serif;font-size:8px md:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">Selected Last Session</div></div><div class="glass-card p-4 md:p-5 text-center"><div style="font-family:'Bebas Neue',sans-serif;font-size:2rem md:2.5rem;color:var(--gold);line-height:1;">100%</div><div style="font-family:'Rajdhani',sans-serif;font-size:8px md:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">Medical Clearance</div></div></div><button onclick="showView('apply-view')" class="btn-primary">Join Navy Prep</button></div>
+                    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                        <div data-aos="fade-right"><div class="img-frame" style="height:300px md:height-400px lg:height-480px;"><img id="navy-ssc-img" src="navy.jpg" loading="lazy" alt="Navy" /><div class="img-badge" style="top:24px;left:24px;background:#00205b;color:white;">Navy Wing</div></div></div>
+                        <div data-aos="fade-left" data-aos-delay="150"><div class="section-eyebrow mb-4 md:mb-6" id="navy-ssc-badge" style="color:#60a5fa;">Naval Headquarters</div><h2 id="navy-ssc-title" class="section-title text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">Pak Navy<br><span style="color:var(--gold);">SSC 2026-B</span></h2><div class="section-divider"></div><p id="navy-ssc-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Specialized coaching for the Short Service Commission 2026-B Course — Technical, Supply, Education, and Law branches. We prepare you to meet every professional and psychological standard of the Pakistan Navy.</p><div class="grid grid-cols-2 gap-4 mb-6 md:mb-10"><div class="glass-card p-5 text-center"><div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:white;line-height:1;">40+</div><div style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">Selected Last Session</div></div><div class="glass-card p-5 text-center"><div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);line-height:1;">100%</div><div style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px;">Medical Clearance</div></div></div><button onclick="showView('apply-view')" class="btn-primary">Join Navy Prep</button></div>
                     </div>
                 </div>
             </section>
@@ -2215,12 +2114,12 @@
             <!-- ===== NAVY DETAILED ===== -->
             <section class="lcp-section" data-section="navy-detailed" data-aos="fade-up" style="background:rgba(0,12,5,0.8);">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="text-center mb-8 md:mb-16"><div class="section-eyebrow justify-center mb-4" id="navy-detailed-badge" style="justify-content:center;">Naval Branches</div><h2 id="navy-detailed-title" class="section-title text-3xl md:text-5xl lg:text-6xl text-white" style="font-family:'Bebas Neue',sans-serif;">Pakistan Navy <span style="color:var(--gold);">SSC</span></h2><p id="navy-detailed-sub" class="text-gray-500 text-sm mt-4 max-w-xl mx-auto">Short Service Commission 2026-B — four specialized branches, one comprehensive prep program.</p></div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-1 mb-8 md:mb-16">
-                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="0"><div class="branch-icon"><i data-lucide="cpu" class="w-5 h-5"></i></div><div class="branch-name">Technical</div><div class="branch-sub">Engineering & IT</div></div>
-                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="80"><div class="branch-icon"><i data-lucide="package" class="w-5 h-5"></i></div><div class="branch-name">Supply</div><div class="branch-sub">Logistics & Admin</div></div>
-                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="160"><div class="branch-icon"><i data-lucide="book-open" class="w-5 h-5"></i></div><div class="branch-name">Education</div><div class="branch-sub">Teaching & Training</div></div>
-                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="240"><div class="branch-icon"><i data-lucide="scale" class="w-5 h-5"></i></div><div class="branch-name">Law</div><div class="branch-sub">Legal & JAG</div></div>
+                    <div class="text-center mb-12 md:mb-16"><div class="section-eyebrow justify-center mb-4" id="navy-detailed-badge" style="justify-content:center;">Naval Branches</div><h2 id="navy-detailed-title" class="section-title text-4xl md:text-5xl lg:text-6xl text-white" style="font-family:'Bebas Neue',sans-serif;">Pakistan Navy <span style="color:var(--gold);">SSC</span></h2><p id="navy-detailed-sub" class="text-gray-500 text-sm mt-4 max-w-xl mx-auto">Short Service Commission 2026-B — four specialized branches, one comprehensive prep program.</p></div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-1 mb-12 md:mb-16">
+                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="0"><div class="branch-icon"><i data-lucide="cpu" class="w-6 h-6"></i></div><div class="branch-name">Technical</div><div class="branch-sub">Engineering & IT</div></div>
+                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="80"><div class="branch-icon"><i data-lucide="package" class="w-6 h-6"></i></div><div class="branch-name">Supply</div><div class="branch-sub">Logistics & Admin</div></div>
+                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="160"><div class="branch-icon"><i data-lucide="book-open" class="w-6 h-6"></i></div><div class="branch-name">Education</div><div class="branch-sub">Teaching & Training</div></div>
+                        <div class="branch-card" data-aos="zoom-in" data-aos-delay="240"><div class="branch-icon"><i data-lucide="scale" class="w-6 h-6"></i></div><div class="branch-name">Law</div><div class="branch-sub">Legal & JAG</div></div>
                     </div>
                     <div class="text-center"><p id="navy-detailed-desc" class="text-gray-400 max-w-3xl mx-auto leading-relaxed mb-6 md:mb-8" style="font-size:14px;">Each branch has a specialized entrance test. Our coaching covers branch-specific preparation, psychological assessment, and physical fitness standards required by the Pakistan Navy.</p><button onclick="showView('apply-view')" class="btn-ghost">Start Navy Prep</button></div>
                 </div>
@@ -2229,9 +2128,9 @@
             <!-- ===== AFNS ===== -->
             <section class="lcp-section" data-section="afns" style="background:linear-gradient(to bottom,rgba(0,12,5,0.9),rgba(1,65,28,0.15),rgba(0,12,5,0.9));">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
-                        <div data-aos="fade-right" class="order-2 lg:order-1"><div class="img-frame" style="height:200px md:height-400px lg:height-500px;"><img id="afns-img" src="images.jpg" loading="lazy" alt="AFNS" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80'" /><div class="img-badge" style="top:16px;left:16px;background:#00205b;color:white;">Nursing Wing</div></div></div>
-                        <div data-aos="fade-left" data-aos-delay="150" class="order-1 lg:order-2"><div class="section-eyebrow mb-4 md:mb-6" id="afns-badge">Medical Corps</div><h2 id="afns-title" class="section-title text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">AFNS <span style="color:var(--gold);">2026</span><br>Preparation</h2><div class="section-divider"></div><p id="afns-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Specialized coaching for the Armed Forces Nursing Service entrance exam. Our curriculum covers Nursing Subjects (Anatomy, Physiology, Pharmacology), English, GK, and Interview techniques.</p><div class="space-y-1 mb-6 md:mb-10"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Nursing subject mastery</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Medical terminology & ethics</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Mock interviews with nursing panel</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>100% pass rate last session</div></div><button onclick="showView('apply-view')" class="btn-primary">Apply for AFNS</button></div>
+                    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                        <div data-aos="fade-right" class="order-2 lg:order-1"><div class="img-frame" style="height:300px md:height-400px lg:height-500px;"><img id="afns-img" src="images.jpg" loading="lazy" alt="AFNS" /><div class="img-badge" style="top:24px;left:24px;background:#00205b;color:white;">Nursing Wing</div></div></div>
+                        <div data-aos="fade-left" data-aos-delay="150" class="order-1 lg:order-2"><div class="section-eyebrow mb-4 md:mb-6" id="afns-badge">Medical Corps</div><h2 id="afns-title" class="section-title text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">AFNS <span style="color:var(--gold);">2026</span><br>Preparation</h2><div class="section-divider"></div><p id="afns-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Specialized coaching for the Armed Forces Nursing Service entrance exam. Our curriculum covers Nursing Subjects (Anatomy, Physiology, Pharmacology), English, GK, and Interview techniques.</p><div class="space-y-1 mb-6 md:mb-10"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Nursing subject mastery</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Medical terminology & ethics</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Mock interviews with nursing panel</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>100% pass rate last session</div></div><button onclick="showView('apply-view')" class="btn-primary">Apply for AFNS</button></div>
                     </div>
                 </div>
             </section>
@@ -2239,9 +2138,9 @@
             <!-- ===== ISSB ===== -->
             <section class="lcp-section" data-section="issb" data-aos="fade-up" style="background:rgba(0,10,4,0.95);border-top:1px solid rgba(255,255,255,0.04);">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
-                        <div data-aos="fade-right"><div class="section-eyebrow mb-4 md:mb-6" id="issb-badge">Psychological Warfare</div><h2 id="issb-title" class="section-title text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">ISSB <span style="color:var(--gold);">Psych</span><br>Assessment</h2><div class="section-divider"></div><p id="issb-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Master the Inter Services Selection Board psychological tests. We cover Picture Story Writing, Word Association, Sentence Completion, and TAT with personalized feedback from ex-ISSB officers.</p><div class="space-y-1 mb-6 md:mb-10"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Story writing & TAT mastery</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Group Testing Officer (GTO) drills</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Interview simulation with ex-ISSB officers</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>85% selection rate in last 2 years</div></div><button onclick="showView('apply-view')" class="btn-primary">Start ISSB Prep</button></div>
-                        <div data-aos="fade-left" data-aos-delay="150"><div class="img-frame" style="height:200px md:height-400px lg:height-500px;"><img id="issb-img" src="issb.png" loading="lazy" alt="ISSB" onerror="this.src='https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80'" /><div class="img-badge" style="bottom:16px;right:16px;background:#027a35;">Expert Panel</div></div></div>
+                    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                        <div data-aos="fade-right"><div class="section-eyebrow mb-4 md:mb-6" id="issb-badge">Psychological Warfare</div><h2 id="issb-title" class="section-title text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">ISSB <span style="color:var(--gold);">Psych</span><br>Assessment</h2><div class="section-divider"></div><p id="issb-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Master the Inter Services Selection Board psychological tests. We cover Picture Story Writing, Word Association, Sentence Completion, and TAT with personalized feedback from ex-ISSB officers.</p><div class="space-y-1 mb-6 md:mb-10"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Story writing & TAT mastery</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Group Testing Officer (GTO) drills</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Interview simulation with ex-ISSB officers</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>85% selection rate in last 2 years</div></div><button onclick="showView('apply-view')" class="btn-primary">Start ISSB Prep</button></div>
+                        <div data-aos="fade-left" data-aos-delay="150"><div class="img-frame" style="height:300px md:height-400px lg:height-500px;"><img id="issb-img" src="issb.png" loading="lazy" alt="ISSB" /><div class="img-badge" style="bottom:24px;right:24px;background:#027a35;">Expert Panel</div></div></div>
                     </div>
                 </div>
             </section>
@@ -2249,9 +2148,9 @@
             <!-- ===== AMC ===== -->
             <section class="lcp-section" data-section="amc" style="background:linear-gradient(135deg,rgba(0,12,5,0.95) 0%,rgba(0,32,91,0.2) 100%);">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                    <div class="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
-                        <div data-aos="fade-right" class="order-2 lg:order-1"><div class="img-frame" style="height:200px md:height-400px lg:height-500px;"><img id="amc-img" src="amc.png" loading="lazy" alt="AMC" onerror="this.src='https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80'" /><div class="img-badge" style="top:16px;left:16px;background:var(--gold);color:#000c05;">Medical Entrance</div></div></div>
-                        <div data-aos="fade-left" data-aos-delay="150" class="order-1 lg:order-2"><div class="section-eyebrow mb-4 md:mb-6" id="amc-badge">Army Medical Corps</div><h2 id="amc-title" class="section-title text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">AMC <span style="color:var(--gold);">2026</span><br>Entrance Prep</h2><div class="section-divider"></div><p id="amc-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Comprehensive AMC entrance preparation covering Biology, Chemistry, Physics, English, and General Knowledge with special focus on medical entrance patterns and interview preparation.</p><div class="space-y-1 mb-6 md:mb-10"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Full science curriculum coverage</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Mock exams with medical professionals</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Interview & personality grooming</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>95% success rate in AMC 2025</div></div><button onclick="showView('apply-view')" class="btn-primary">Enroll for AMC</button></div>
+                    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                        <div data-aos="fade-right" class="order-2 lg:order-1"><div class="img-frame" style="height:300px md:height-400px lg:height-500px;"><img id="amc-img" src="amc.png" loading="lazy" alt="AMC" /><div class="img-badge" style="top:24px;left:24px;background:var(--gold);color:#000c05;">Medical Entrance</div></div></div>
+                        <div data-aos="fade-left" data-aos-delay="150" class="order-1 lg:order-2"><div class="section-eyebrow mb-4 md:mb-6" id="amc-badge">Army Medical Corps</div><h2 id="amc-title" class="section-title text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">AMC <span style="color:var(--gold);">2026</span><br>Entrance Prep</h2><div class="section-divider"></div><p id="amc-desc" class="text-gray-400 leading-relaxed mb-6 md:mb-10" style="font-size:14px;">Comprehensive AMC entrance preparation covering Biology, Chemistry, Physics, English, and General Knowledge with special focus on medical entrance patterns and interview preparation.</p><div class="space-y-1 mb-6 md:mb-10"><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Full science curriculum coverage</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Mock exams with medical professionals</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>Interview & personality grooming</div><div class="feature-check"><div class="check-icon"><i data-lucide="check" class="w-3 h-3"></i></div>95% success rate in AMC 2025</div></div><button onclick="showView('apply-view')" class="btn-primary">Enroll for AMC</button></div>
                     </div>
                 </div>
             </section>
@@ -2267,10 +2166,10 @@
             </section>
 
             <!-- ===== WHATSAPP ===== -->
-            <section class="whatsapp-section py-12 md:py-24 text-center" data-aos="fade-up">
+            <section class="whatsapp-section py-16 md:py-24 text-center" data-aos="fade-up">
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
                     <div class="section-eyebrow justify-center mb-4 md:mb-6" style="justify-content:center;">Join Our Community</div>
-                    <h2 class="section-title text-3xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">WhatsApp <span style="color:#25D366;">Channel</span></h2>
+                    <h2 class="section-title text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">WhatsApp <span style="color:#25D366;">Channel</span></h2>
                     <p class="text-gray-400 max-w-xl mx-auto leading-relaxed mb-6 md:mb-10">Stay updated with live lectures, test schedules, and important announcements. Join our official WhatsApp channel.</p>
                     <a href="https://whatsapp.com/channel/0029VaSarXAAzNbyJh1OxU3l" target="_blank" class="whatsapp-btn"><i data-lucide="message-circle" class="w-5 h-5"></i>Join Channel</a>
                 </div>
@@ -2278,38 +2177,38 @@
         </div>
 
         <!-- ===== ABOUT (Our Story) ===== -->
-        <div id="about-view" class="view-section pt-20 md:pt-32 pb-12 md:pb-24">
+        <div id="about-view" class="view-section pt-24 md:pt-32 pb-16 md:pb-24">
             <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                <div class="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center mb-12 md:mb-24" data-aos="fade-up">
-                    <div class="space-y-5 md:space-y-8">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-16 md:mb-24" data-aos="fade-up">
+                    <div class="space-y-6 md:space-y-8">
                         <div class="section-eyebrow">Our Story</div>
-                        <h2 class="section-title text-3xl md:text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">Leadership <span style="color:var(--gold);">Focus</span></h2>
-                        <div class="border-l-2 pl-5 md:pl-8 py-4 space-y-4" style="border-color:var(--gold);">
+                        <h2 class="section-title text-4xl md:text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">Leadership <span style="color:var(--gold);">Focus</span></h2>
+                        <div class="border-l-2 pl-6 md:pl-8 py-4 space-y-4" style="border-color:var(--gold);">
                             <p class="text-gray-400 italic text-base md:text-lg leading-relaxed">"Excellence is not an outcome; it is a mindset. At Pakistan Officers Academy, we groom that mindset into every student."</p>
                             <p class="text-white font-bold text-xs tracking-widest uppercase" style="font-family:'Rajdhani',sans-serif;">— Sir Awais Sultan, CEO</p>
                         </div>
                     </div>
-                    <div class="img-frame" style="height:200px md:height-400px lg:height-500px;"><img src="ceo.png" loading="lazy" alt="Leadership" style="filter:grayscale(50%);" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80'" /></div>
+                    <div class="img-frame" style="height:300px md:height-400px lg:height-500px;"><img src="ceo.png" loading="lazy" alt="Leadership" style="filter:grayscale(50%);" /></div>
                 </div>
                 <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
-                    <h2 class="section-title text-3xl md:text-5xl text-white mb-6 md:mb-8" style="font-family:'Bebas Neue',sans-serif;">Academy <span style="color:var(--gold);">Story</span></h2>
+                    <h2 class="section-title text-4xl md:text-5xl text-white mb-6 md:mb-8" style="font-family:'Bebas Neue',sans-serif;">Academy <span style="color:var(--gold);">Story</span></h2>
                     <p class="text-gray-400 leading-relaxed mb-8 md:mb-12" style="font-size:15px;">Founded in 2005, Pakistan Officers Academy was built to bridge the gap between civilian education and military selection standards. Our alumni serve with honor in every branch of the Armed Forces of Pakistan.</p>
                 </div>
                 <!-- Team Members -->
-                <div class="mt-12 md:mt-24" data-aos="fade-up">
+                <div class="mt-16 md:mt-24" data-aos="fade-up">
                     <div class="section-eyebrow justify-center mb-6 md:mb-8" style="justify-content:center;">Our Team</div>
-                    <h2 class="section-title text-3xl md:text-5xl text-white text-center mb-10 md:mb-16" style="font-family:'Bebas Neue',sans-serif;">Meet the <span style="color:var(--gold);">Experts</span></h2>
-                    <div id="team-container" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"></div>
+                    <h2 class="section-title text-4xl md:text-5xl text-white text-center mb-12 md:mb-16" style="font-family:'Bebas Neue',sans-serif;">Meet the <span style="color:var(--gold);">Experts</span></h2>
+                    <div id="team-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"></div>
                 </div>
             </div>
         </div>
 
         <!-- ===== FEEDBACK ===== -->
-        <div id="feedback-view" class="view-section pt-20 md:pt-32 pb-12 md:pb-24">
+        <div id="feedback-view" class="view-section pt-24 md:pt-32 pb-16 md:pb-24">
             <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-                <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
+                <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
                     <div class="section-eyebrow justify-center mb-4" style="justify-content:center;">Student Voices</div>
-                    <h2 class="section-title text-3xl md:text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">What Our <span style="color:var(--gold);">Students Say</span></h2>
+                    <h2 class="section-title text-4xl md:text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">What Our <span style="color:var(--gold);">Students Say</span></h2>
                     <p class="text-gray-500 text-sm mt-4 max-w-xl mx-auto">Real feedback from our successful candidates.</p>
                 </div>
                 <div id="feedback-gallery" class="feedback-gallery"></div>
@@ -2318,12 +2217,12 @@
         </div>
 
         <!-- ===== APPLY ===== -->
-        <div id="apply-view" class="view-section pt-20 md:pt-32 pb-12 md:pb-24">
+        <div id="apply-view" class="view-section pt-24 md:pt-32 pb-16 md:pb-24">
             <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
                 <div class="max-w-2xl mx-auto" data-aos="fade-up">
                     <div class="section-eyebrow justify-center mb-4 md:mb-6" style="justify-content:center;">Session 2026-B</div>
-                    <h2 class="section-title text-3xl md:text-5xl text-white text-center mb-8 md:mb-12" style="font-family:'Bebas Neue',sans-serif;">Enlistment <span style="color:var(--gold);">Desk</span></h2>
-                    <div class="glass-card p-5 md:p-10 glow-hover">
+                    <h2 class="section-title text-4xl md:text-5xl text-white text-center mb-8 md:mb-12" style="font-family:'Bebas Neue',sans-serif;">Enlistment <span style="color:var(--gold);">Desk</span></h2>
+                    <div class="glass-card p-6 md:p-10 glow-hover">
                         <div class="mb-6 md:mb-8 p-4 md:p-6 border border-gold/25 rounded bg-gold/5">
                             <h3 class="text-gold font-bold text-base md:text-lg mb-4" style="font-family:'Rajdhani',sans-serif;letter-spacing:0.05em;">💳 Payment Required to Complete Enrollment</h3>
                             <p class="text-gray-400 text-sm mb-5">Please send the fee to either method below, then upload a screenshot of your payment.</p>
@@ -2366,7 +2265,7 @@
                                 <div id="screenshot-preview-container" class="mt-3"></div>
                                 <p class="text-[10px] text-gray-500 mt-1">PNG, JPG or WEBP — max 5MB</p>
                             </div>
-                            <button type="submit" class="btn-primary md:col-span-2 justify-center" style="padding:14px md:padding-18px;"><i data-lucide="shield-check" class="w-4 h-4"></i>Confirm Enrollment with Payment</button>
+                            <button type="submit" class="btn-primary md:col-span-2 justify-center" style="padding:16px md:padding-18px;"><i data-lucide="shield-check" class="w-4 h-4"></i>Confirm Enrollment with Payment</button>
                         </form>
                     </div>
                 </div>
@@ -2374,14 +2273,14 @@
         </div>
 
         <!-- ===== PORTAL ===== -->
-        <div id="portal" class="view-section pt-20 md:pt-32 pb-12 md:pb-24">
+        <div id="portal" class="view-section pt-24 md:pt-32 pb-16 md:pb-24">
             <div class="max-w-md mx-auto px-4 sm:px-6" data-aos="fade-up">
                 <h2 class="section-title text-3xl md:text-4xl text-white text-center mb-8 md:mb-12" style="font-family:'Bebas Neue',sans-serif;">Student <span style="color:var(--gold);">Portal</span></h2>
                 <div class="glass-card p-6 md:p-10 glow-hover">
                     <div class="space-y-5">
                         <div><label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2" style="font-family:'Rajdhani',sans-serif;">Student ID</label><input type="text" id="login-id" class="form-field" placeholder="Enter your ID" /></div>
                         <div><label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2" style="font-family:'Rajdhani',sans-serif;">Phone (Passcode)</label><input type="text" id="login-phone" class="form-field" placeholder="Your WhatsApp number" /></div>
-                        <button onclick="loginStudent()" class="btn-primary w-full justify-center mt-4" style="padding:14px;">Login to Dashboard</button>
+                        <button onclick="loginStudent()" class="btn-primary w-full justify-center mt-4" style="padding:16px;">Login to Dashboard</button>
                         <p class="text-xs text-gray-500 text-center mt-4">Use the Student ID provided after enrollment and your phone number.</p>
                     </div>
                 </div>
@@ -2389,29 +2288,29 @@
         </div>
 
         <!-- ===== DASHBOARD ===== -->
-        <div id="dashboard-view" class="view-section pt-20 md:pt-32 pb-12 md:pb-24">
+        <div id="dashboard-view" class="view-section pt-24 md:pt-32 pb-16 md:pb-24">
             <div class="max-w-5xl mx-auto px-4 sm:px-6" data-aos="fade-up">
                 <div class="flex flex-wrap justify-between items-center mb-6 md:mb-8 gap-4">
-                    <div><div class="section-eyebrow mb-2">Student Dashboard</div><h2 class="section-title text-3xl md:text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">Welcome, <span id="dash-name" style="color:var(--gold);">Student</span></h2></div>
+                    <div><div class="section-eyebrow mb-2">Student Dashboard</div><h2 class="section-title text-4xl md:text-5xl text-white" style="font-family:'Bebas Neue',sans-serif;">Welcome, <span id="dash-name" style="color:var(--gold);">Student</span></h2></div>
                     <div class="flex gap-3">
-                        <button onclick="refreshDashboard()" class="btn-ghost" style="padding:6px 14px md:padding-10px 20px;font-size:10px;"><i data-lucide="refresh-cw" class="w-4 h-4"></i>Refresh</button>
-                        <button onclick="logoutStudent()" class="btn-ghost" style="padding:6px 14px md:padding-10px 24px;font-size:10px;">Logout</button>
+                        <button onclick="refreshDashboard()" class="btn-ghost" style="padding:8px 16px md:padding-10px 20px;font-size:10px;"><i data-lucide="refresh-cw" class="w-4 h-4"></i>Refresh</button>
+                        <button onclick="logoutStudent()" class="btn-ghost" style="padding:8px 16px md:padding-10px 24px;font-size:10px;">Logout</button>
                     </div>
                 </div>
                 <!-- Quick Stats -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-10">
-                    <div class="dash-stat-card flex items-center gap-3 md:gap-4"><div class="icon-wrap"><i data-lucide="user" class="w-4 h-4 md:w-5 md:h-5"></i></div><div><p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Student ID</p><p class="text-white font-bold text-base md:text-lg" id="dash-id">—</p></div></div>
-                    <div class="dash-stat-card flex items-center gap-3 md:gap-4"><div class="icon-wrap"><i data-lucide="book-open" class="w-4 h-4 md:w-5 md:h-5"></i></div><div><p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Course</p><p class="text-white font-bold text-base md:text-lg" id="dash-course">—</p></div></div>
-                    <div class="dash-stat-card flex items-center gap-3 md:gap-4"><div class="icon-wrap"><i data-lucide="map-pin" class="w-4 h-4 md:w-5 md:h-5"></i></div><div><p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">City</p><p class="text-white font-bold text-base md:text-lg" id="dash-city">—</p></div></div>
-                    <div class="dash-stat-card flex items-center gap-3 md:gap-4"><div class="icon-wrap"><i data-lucide="badge-check" class="w-4 h-4 md:w-5 md:h-5"></i></div><div><p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Status</p><p class="text-white font-bold text-base md:text-lg" id="dash-status">—</p></div></div>
+                    <div class="dash-stat-card flex items-center gap-4"><div class="icon-wrap"><i data-lucide="user" class="w-5 h-5"></i></div><div><p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Student ID</p><p class="text-white font-bold text-lg" id="dash-id">—</p></div></div>
+                    <div class="dash-stat-card flex items-center gap-4"><div class="icon-wrap"><i data-lucide="book-open" class="w-5 h-5"></i></div><div><p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Course</p><p class="text-white font-bold text-lg" id="dash-course">—</p></div></div>
+                    <div class="dash-stat-card flex items-center gap-4"><div class="icon-wrap"><i data-lucide="map-pin" class="w-5 h-5"></i></div><div><p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">City</p><p class="text-white font-bold text-lg" id="dash-city">—</p></div></div>
+                    <div class="dash-stat-card flex items-center gap-4"><div class="icon-wrap"><i data-lucide="badge-check" class="w-5 h-5"></i></div><div><p class="text-gray-400 text-xs uppercase tracking-widest" style="font-family:'Rajdhani',sans-serif;">Status</p><p class="text-white font-bold text-lg" id="dash-status">—</p></div></div>
                 </div>
                 <!-- Main Dashboard Card -->
                 <div class="dashboard-card relative overflow-hidden" style="background:rgba(255,255,255,0.03); border:1px solid rgba(212,175,55,0.15);">
-                    <div class="absolute top-0 right-0 w-48 h-48 md:w-64 md:h-64 bg-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative z-10">
                         <div>
                             <div class="info-label">Full Name</div>
-                            <div class="info-value text-xl md:text-2xl" id="dash-name-full">—</div>
+                            <div class="info-value text-2xl" id="dash-name-full">—</div>
                             <div class="mt-4"><div class="info-label">Payment Status</div><div id="dash-payment-badge" class="mt-2"><span class="dash-badge pending">⏳ Pending</span></div></div>
                             <div class="mt-4"><div class="info-label">Account Status</div><div class="info-value text-gold" id="dash-account-status">Active</div></div>
                         </div>
@@ -2429,7 +2328,7 @@
 
                 <!-- ===== VIDEO LECTURES ===== -->
                 <div class="mt-10 md:mt-12 border-t border-white/10 pt-8 md:pt-10">
-                    <div class="flex items-center gap-3 mb-4 md:mb-6"><i data-lucide="video" class="w-5 h-5 md:w-6 md:h-6 text-gold"></i><h3 class="text-xl md:text-2xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Video Lectures</h3></div>
+                    <div class="flex items-center gap-3 mb-4 md:mb-6"><i data-lucide="video" class="w-6 h-6 text-gold"></i><h3 class="text-2xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Video Lectures</h3></div>
                     <div class="glass-card p-4 md:p-6">
                         <div class="video-container">
                             <iframe src="https://www.youtube.com/embed/videoseries?list=PLjDKzNIGMtexBojKK9Q0L2n4-lFryLLhH" title="Pakistan Officers Academy - YouTube Playlist" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -2440,7 +2339,7 @@
 
                 <!-- ===== STUDY MATERIALS ===== -->
                 <div class="mt-10 md:mt-12 border-t border-white/10 pt-8 md:pt-10">
-                    <div class="flex items-center gap-3 mb-4 md:mb-6"><i data-lucide="book" class="w-5 h-5 md:w-6 md:h-6 text-gold"></i><h3 class="text-xl md:text-2xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Study Materials</h3></div>
+                    <div class="flex items-center gap-3 mb-4 md:mb-6"><i data-lucide="book" class="w-6 h-6 text-gold"></i><h3 class="text-2xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Study Materials</h3></div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="material-card">
                             <div class="flex flex-col sm:flex-row items-start justify-between"><div><h4 class="text-lg font-bold text-white" style="font-family:'Rajdhani',sans-serif;">Quiz Book – Sir Awais Sultan</h4><p class="text-gray-400 text-sm mt-1">Comprehensive collection of practice questions for ISSB, Navy, and AFNS tests.</p></div><span class="price-tag mt-2 sm:mt-0">3,500 PKR</span></div>
@@ -2466,7 +2365,7 @@
 
                 <!-- ===== QUIZ ===== -->
                 <div id="quiz-section" class="mt-10 md:mt-12 border-t border-white/10 pt-8 md:pt-10">
-                    <div class="flex items-center gap-3 mb-4 md:mb-6"><i data-lucide="zap" class="w-5 h-5 md:w-6 md:h-6 text-gold"></i><h3 class="text-xl md:text-2xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Practice Quiz</h3></div>
+                    <div class="flex items-center gap-3 mb-4 md:mb-6"><i data-lucide="zap" class="w-6 h-6 text-gold"></i><h3 class="text-2xl font-bold text-white" style="font-family:'Bebas Neue',sans-serif;">Practice Quiz</h3></div>
                     <div id="quiz-intro">
                         <p class="text-gray-400 text-sm mb-6">Test your knowledge with a subject‑specific quiz based on your enrolled course. <span class="text-gold">Get instant results!</span></p>
                         <button onclick="startQuiz()" class="btn-primary" id="start-quiz-btn"><i data-lucide="play" class="w-4 h-4"></i>Start Quiz</button>
@@ -2478,7 +2377,7 @@
                             <button onclick="resetQuiz()" class="btn-ghost" style="padding:10px 24px;font-size:10px;"><i data-lucide="x" class="w-4 h-4"></i>Cancel</button>
                         </div>
                     </div>
-                    <div id="quiz-results" style="display:none;" class="mt-6 p-5 md:p-6 border border-gold/30 rounded bg-gold/5">
+                    <div id="quiz-results" style="display:none;" class="mt-6 p-6 border border-gold/30 rounded bg-gold/5">
                         <h4 class="text-xl font-bold text-white mb-4" style="font-family:'Bebas Neue',sans-serif;">📊 Your Results</h4>
                         <div id="quiz-score" class="text-3xl font-bold text-gold mb-4">0 / 0</div>
                         <div id="quiz-detail" class="space-y-3 max-h-96 overflow-y-auto"></div>
@@ -2490,7 +2389,7 @@
         </div>
 
         <!-- ===== ADMIN ===== -->
-        <div id="admin" class="view-section pt-20 md:pt-32 pb-12 md:pb-24">
+        <div id="admin" class="view-section pt-24 md:pt-32 pb-16 md:pb-24">
             <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
                 <div class="flex flex-wrap justify-between items-center mb-6 md:mb-10 gap-4">
                     <div><div class="section-eyebrow mb-2">Command Center</div><h2 class="section-title text-3xl md:text-4xl" style="font-family:'Bebas Neue',sans-serif;color:var(--gold);">HQ Dashboard</h2></div>
@@ -2664,22 +2563,22 @@
 
     <!-- CHATBOT -->
     <div id="chat-container" class="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-[150] flex flex-col items-end">
-        <div id="chat-widget" class="hidden flex-col mb-4 w-[280px] sm:w-[340px] h-[400px] sm:h-[500px]">
+        <div id="chat-widget" class="hidden flex-col mb-4 w-[280px] sm:w-[360px] h-[420px] sm:h-[520px]">
             <div class="p-4 flex items-center justify-between border-b border-white/10" style="background:rgba(1,65,28,0.8);">
                 <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div><span class="font-bold text-xs uppercase tracking-widest text-white" style="font-family:'Rajdhani',sans-serif;">Duty Officer AI</span></div>
                 <button onclick="toggleChat()" class="text-gray-400"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col" style="background:#001a0b;"><div class="bot-msg text-gray-300">Reporting for duty! Type <span class="font-bold" style="color:var(--gold);">"JOIN"</span> to start your admission now.</div></div>
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-3 flex flex-col" style="background:#001a0b;"><div class="bot-msg text-gray-300">Reporting for duty! Type <span class="font-bold" style="color:var(--gold);">"JOIN"</span> to start your admission now.</div></div>
             <div class="p-3 flex gap-2 border-t border-white/10" style="background:rgba(1,65,28,0.6);"><input type="text" id="chat-input" placeholder="Type command..." class="flex-1 text-xs text-white outline-none px-3 py-2 rounded" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);" onkeydown="if(event.key==='Enter')handleChat()" /><button onclick="handleChat()" class="btn-primary" style="padding:8px 14px;font-size:10px;"><i data-lucide="send" class="w-4 h-4"></i></button></div>
         </div>
         <button onclick="toggleChat()" class="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shadow-xl transition-all hover:scale-110 btn-primary" style="border-radius:2px;"><i data-lucide="message-circle" class="w-5 h-5 sm:w-6 sm:h-6"></i></button>
     </div>
 
     <!-- FOOTER -->
-    <footer class="pt-12 md:pt-24 pb-6 md:pb-12">
+    <footer class="pt-16 md:pt-24 pb-8 md:pb-12">
         <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 mb-10 md:mb-16">
-                <div><h3 class="text-2xl md:text-3xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">Pakistan Officers <span style="color:var(--gold);">Academy</span></h3><p class="text-gray-500 text-sm leading-relaxed mb-6 md:mb-8 max-w-sm">Elite training wings for future commanders. PMA Initial Prep, ISSB, Navy SSC, AFNS, and AMC — under one roof.</p><div class="flex gap-5 text-gray-600"><a href="#" class="footer-link"><i data-lucide="facebook" class="w-5 h-5"></i></a><a href="#" class="footer-link"><i data-lucide="instagram" class="w-5 h-5"></i></a><a href="#" class="footer-link"><i data-lucide="youtube" class="w-5 h-5"></i></a></div></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 mb-12 md:mb-16">
+                <div><h3 class="text-3xl text-white mb-4 md:mb-6" style="font-family:'Bebas Neue',sans-serif;">Pakistan Officers <span style="color:var(--gold);">Academy</span></h3><p class="text-gray-500 text-sm leading-relaxed mb-6 md:mb-8 max-w-sm">Elite training wings for future commanders. PMA Initial Prep, ISSB, Navy SSC, AFNS, and AMC — under one roof.</p><div class="flex gap-5 text-gray-600"><a href="#" class="footer-link"><i data-lucide="facebook" class="w-5 h-5"></i></a><a href="#" class="footer-link"><i data-lucide="instagram" class="w-5 h-5"></i></a><a href="#" class="footer-link"><i data-lucide="youtube" class="w-5 h-5"></i></a></div></div>
                 <div><h4 class="text-xs font-bold uppercase tracking-widest mb-4 md:mb-8" style="font-family:'Rajdhani',sans-serif;color:var(--gold);">HQ Contact</h4><ul class="space-y-4 md:space-y-5 text-gray-400 text-sm"><li class="flex items-center gap-4"><i data-lucide="phone" class="w-5 h-5" style="color:var(--gold);"></i>+92 317 5088193</li><li class="flex items-center gap-4"><i data-lucide="mail" class="w-5 h-5" style="color:var(--gold);"></i>pakarmyofficer2k22@gmail.com</li><li class="flex items-center gap-4"><i data-lucide="map-pin" class="w-5 h-5" style="color:var(--gold);"></i>Rawalpindi / Islamabad</li></ul></div>
                 <div><h4 class="text-xs font-bold uppercase tracking-widest mb-4 md:mb-8" style="font-family:'Rajdhani',sans-serif;color:var(--gold);">Office of the CEO</h4><p class="text-white font-bold text-lg mb-1" style="font-family:'Rajdhani',sans-serif;">Sir Awais Sultan</p><p class="text-gray-500 text-xs uppercase tracking-widest mb-6 md:mb-8" style="font-family:'Rajdhani',sans-serif;">Founder & Chief Executive Officer</p><button onclick="showView('apply-view')" class="btn-ghost" style="padding:10px 20px md:padding-12px 24px;font-size:10px;">Start Your Career</button></div>
             </div>
@@ -2705,7 +2604,7 @@
         const db = firebase.database();
         const storage = firebase.storage();
 
-        // ── TEST DATA ── (shortened for brevity, full version in original)
+        // ── TEST DATA ──
         const testData = {
             verbal: {
                 title: "Verbal Intelligence Test",
@@ -3164,7 +3063,7 @@
             status: null,
             timestamp: 0
         };
-        const CACHE_TTL = 30000;
+        const CACHE_TTL = 30000; // 30 seconds
 
         // ── START TEST with PAYMENT CHECK ──
         async function startTest(type) {
@@ -3173,6 +3072,7 @@
                 return;
             }
 
+            // 1. Check if user is logged in
             const stored = localStorage.getItem('poa_student');
             let student = stored ? JSON.parse(stored) : null;
 
@@ -3189,6 +3089,7 @@
                 return;
             }
 
+            // 2. Check payment status from Firebase (with cache)
             const now = Date.now();
             if (paymentCheckCache.studentId === studentId &&
                 paymentCheckCache.timestamp > now - CACHE_TTL) {
@@ -3202,6 +3103,7 @@
                 }
             }
 
+            // 3. Fetch fresh data
             try {
                 const snap = await db.ref('students/' + studentId).once('value');
                 const fresh = snap.val();
@@ -3210,10 +3112,12 @@
                     return;
                 }
 
+                // Update cache
                 paymentCheckCache.studentId = studentId;
                 paymentCheckCache.status = fresh.payment_status || 'Pending';
                 paymentCheckCache.timestamp = now;
 
+                // Update loggedInStudent
                 if (loggedInStudent && loggedInStudent.student_id === studentId) {
                     loggedInStudent = fresh;
                     localStorage.setItem('poa_student', JSON.stringify(fresh));
@@ -3232,6 +3136,7 @@
             }
         }
 
+        // ── INTERNAL TEST STARTER ──
         function _startTestInternal(type) {
             const data = testData[type];
             currentTest = type;
@@ -3492,9 +3397,7 @@
         }
 
         function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-            lucide.createIcons();
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         }
 
         // ── TOAST ──
@@ -3542,7 +3445,7 @@
                 H = canvas.height = window.innerHeight;
             window.addEventListener('resize', () => { W = canvas.width = window.innerWidth;
                 H = canvas.height = window.innerHeight; });
-            const particles = Array.from({ length: 50 }, () => ({
+            const particles = Array.from({ length: 60 }, () => ({
                 x: Math.random() * W,
                 y: Math.random() * H,
                 vx: (Math.random() - .5) * .3,
@@ -3715,15 +3618,18 @@
                     badgeText = '✅ Paid'; } else if (pStatus === 'Missing' || !pStatus) { badgeClass =
                         'missing';
                     badgeText = '❌ Missing'; }
-                const screenshotHtml = s.screenshot_url ?
-                    (s.screenshot_url.startsWith('data:') ? 
-                        `<img src="${s.screenshot_url}" class="screenshot-thumb" style="width:60px;height:60px;object-fit:cover;border-radius:2px;border:1px solid rgba(255,255,255,0.08);cursor:pointer;" onclick="window.open('${s.screenshot_url}','_blank')" title="Click to view" />` :
-                        `<img src="${s.screenshot_url}" class="screenshot-thumb" onclick="window.open('${s.screenshot_url}','_blank')" title="Click to view" />`
-                    ) :
-                    `<span class="text-gray-500 text-[8px]">No SS</span>`;
+                
+                // Handle both Storage URL and Base64
+                let screenshotHtml = '<span class="text-gray-500 text-[8px]">No SS</span>';
+                if (s.screenshot_url) {
+                    screenshotHtml = `<img src="${s.screenshot_url}" class="screenshot-thumb" onclick="window.open('${s.screenshot_url}','_blank')" title="Click to view" />`;
+                } else if (s.screenshot && s.screenshot.startsWith('data:image')) {
+                    screenshotHtml = `<img src="${s.screenshot}" class="screenshot-thumb" onclick="window.open('${s.screenshot}','_blank')" title="Click to view" />`;
+                }
+
                 let actionHtml = '';
                 if (pStatus !== 'Paid' && pStatus !== 'Confirmed') {
-                    actionHtml += `<button onclick="markStudentPaid('${s.student_id}')" class="admin-btn admin-btn-success" style="padding:4px 8px md:padding-4px 12px;font-size:9px;margin-right:4px md:margin-right-6px;">Mark Paid</button>`;
+                    actionHtml += `<button onclick="markStudentPaid('${s.student_id}')" class="admin-btn admin-btn-success" style="padding:4px 8px;font-size:9px;margin-right:4px;">Mark Paid</button>`;
                 } else {
                     actionHtml += `<span class="text-green-400 text-[9px] mr-2">✔</span>`;
                 }
@@ -4436,8 +4342,8 @@
                     <div class="team-member">
                         <div class="avatar">
                             ${m.gender === 'female' 
-                                ? `<i data-lucide="user" class="w-10 h-10"></i>` 
-                                : (m.image ? `<img src="${m.image}" alt="${m.name}" loading="lazy" />` : `<i data-lucide="user" class="w-10 h-10"></i>`)}
+                                ? `<i data-lucide="user" class="w-12 h-12"></i>` 
+                                : (m.image ? `<img src="${m.image}" alt="${m.name}" loading="lazy" />` : `<i data-lucide="user" class="w-12 h-12"></i>`)}
                         </div>
                         <div class="member-name">${m.name}</div>
                         <div class="member-title">${m.title}</div>
@@ -4459,12 +4365,12 @@
                 }
                 container.innerHTML = entries.map(m => `
                     <div class="glass-card p-4 flex items-start gap-4">
-                        <div class="avatar w-14 h-14 rounded-full flex items-center justify-center bg-gold/10 text-gold" style="font-size:28px;">
-                            ${m.gender === 'female' ? `<i data-lucide="user" class="w-7 h-7"></i>` : (m.image ? `<img src="${m.image}" class="w-full h-full object-cover rounded-full" loading="lazy" />` : `<i data-lucide="user" class="w-7 h-7"></i>`)}
+                        <div class="avatar w-16 h-16 rounded-full flex items-center justify-center bg-gold/10 text-gold" style="font-size:32px;">
+                            ${m.gender === 'female' ? `<i data-lucide="user" class="w-8 h-8"></i>` : (m.image ? `<img src="${m.image}" class="w-full h-full object-cover rounded-full" loading="lazy" />` : `<i data-lucide="user" class="w-8 h-8"></i>`)}
                         </div>
                         <div class="flex-1">
-                            <p class="font-bold text-white text-sm">${m.name}</p>
-                            <p class="text-xs text-gray-400">${m.title}</p>
+                            <p class="font-bold text-white">${m.name}</p>
+                            <p class="text-sm text-gray-400">${m.title}</p>
                             <button onclick="deleteTeamMember('${m.key}')" class="admin-btn admin-btn-danger mt-2" style="padding:4px 12px;font-size:9px;">Delete</button>
                         </div>
                     </div>
@@ -4568,7 +4474,7 @@
         function startISSBFullTest() {}
         function resetISSBFullTest() {}
 
-        // ── ADMISSION FORM SUBMISSION (FAST & RELIABLE with FALLBACK) ──
+        // ── ADMISSION FORM SUBMISSION (FIXED - NO CORS) ──
         document.getElementById('admission-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const submitBtn = this.querySelector('button[type="submit"]');
@@ -4594,56 +4500,35 @@
                     return;
                 }
 
-                showToast('⏳ Compressing image...', 'success');
+                const studentId = 'S-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 1000);
 
-                // ── COMPRESS IMAGE ──
-                const compressedDataUrl = await new Promise((resolve, reject) => {
+                // ✅ CONVERT TO BASE64 - NO CORS NEEDED!
+                let screenshotBase64 = await new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.onload = function(ev) {
                         const img = new Image();
                         img.onload = function() {
                             const canvas = document.createElement('canvas');
-                            const maxW = 800;
-                            let w = img.width,
-                                h = img.height;
-                            if (w > maxW) { h = (h * maxW) / w;
-                                w = maxW; }
-                            if (h > maxW) { w = (w * maxW) / h;
-                                h = maxW; }
-                            canvas.width = w;
-                            canvas.height = h;
+                            const maxWidth = 600;
+                            let width = img.width;
+                            let height = img.height;
+                            if (width > maxWidth) {
+                                height = (height * maxWidth) / width;
+                                width = maxWidth;
+                            }
+                            canvas.width = width;
+                            canvas.height = height;
                             const ctx = canvas.getContext('2d');
-                            ctx.drawImage(img, 0, 0, w, h);
+                            ctx.drawImage(img, 0, 0, width, height);
                             resolve(canvas.toDataURL('image/jpeg', 0.6));
                         };
-                        img.onerror = function() { reject(new Error('Failed to load image')); };
+                        img.onerror = reject;
                         img.src = ev.target.result;
                     };
-                    reader.onerror = function() { reject(new Error('File reading failed')); };
+                    reader.onerror = reject;
                     reader.readAsDataURL(file);
                 });
 
-                const studentId = 'S-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 1000);
-                let screenshotUrl = null;
-                let storageFallback = false;
-
-                // ── TRY UPLOAD TO STORAGE ──
-                try {
-                    showToast('⏳ Uploading to secure storage...', 'success');
-                    const blob = dataURLToBlob(compressedDataUrl);
-                    const storageRef = storage.ref('screenshots/' + studentId + '_' + Date.now() + '.jpg');
-                    const uploadTask = await storageRef.put(blob);
-                    screenshotUrl = await uploadTask.ref.getDownloadURL();
-                } catch (storageError) {
-                    console.warn('Storage upload failed, using base64 fallback:', storageError);
-                    storageFallback = true;
-                    // Use the compressed data URL as fallback (it's small after compression)
-                    screenshotUrl = compressedDataUrl;
-                }
-
-                showToast('⏳ Saving your enrollment...', 'success');
-
-                // ── SAVE TO DATABASE ──
                 const studentData = {
                     student_id: studentId,
                     name: name,
@@ -4653,11 +4538,10 @@
                     course: course,
                     book: book === 'yes' ? 'Quiz Book (+2,500 PKR)' : 'No',
                     payment_method: paymentMethod,
-                    screenshot_url: screenshotUrl,
+                    screenshot: screenshotBase64,
                     payment_status: 'Pending',
                     status: 'Pending Verification',
-                    timestamp: firebase.database.ServerValue.TIMESTAMP,
-                    storage_fallback: storageFallback // flag to indicate fallback used
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
                 };
 
                 await db.ref('students/' + studentId).set(studentData);
@@ -4670,12 +4554,11 @@
                 this.reset();
                 document.getElementById('screenshot-preview-container').innerHTML = '';
 
-                // Pre-fill login and redirect to portal
                 setTimeout(() => {
                     document.getElementById('login-id').value = studentId;
                     document.getElementById('login-phone').value = phone;
                     showView('portal');
-                }, 1200);
+                }, 1500);
 
             } catch (error) {
                 console.error('Submission error:', error);
@@ -4685,19 +4568,6 @@
                 submitBtn.disabled = false;
             }
         });
-
-        // Helper: data URL to Blob
-        function dataURLToBlob(dataURL) {
-            const parts = dataURL.split(',');
-            const mime = parts[0].match(/:(.*?);/)[1];
-            const bstr = atob(parts[1]);
-            const n = bstr.length;
-            const u8arr = new Uint8Array(n);
-            for (let i = 0; i < n; i++) {
-                u8arr[i] = bstr.charCodeAt(i);
-            }
-            return new Blob([u8arr], { type: mime });
-        }
 
         // Screenshot preview
         document.getElementById('adm-screenshot').addEventListener('change', function(e) {
@@ -4713,20 +4583,14 @@
 
         // ── INIT ──
         window.onload = async() => {
-            AOS.init({ duration: 700, once: true, easing: 'ease-out-cubic', offset: 50 });
+            AOS.init({ duration: 900, once: true, easing: 'ease-out-cubic', offset: 60 });
             lucide.createIcons();
             initParticles();
-
-            const menuBtn = document.getElementById('menu-btn');
-            if (window.innerWidth <= 1024) {
-                menuBtn.style.display = 'flex';
-            }
-
             await loadAllSectionData();
             await loadHeaderData();
             switchAdminTab('content');
-            setTimeout(() => loadSectionForEdit('hero'), 300);
-            setTimeout(() => showToast('🛡️ Academy Ready — Triple-click logo for admin.', 'success'), 1500);
+            setTimeout(() => loadSectionForEdit('hero'), 400);
+            setTimeout(() => showToast('🛡️ Academy Ready — Triple-click logo for admin.', 'success'), 1800);
             checkStoredLogin();
             updateNavButtons();
             if (loggedInStudent) {
@@ -4734,16 +4598,6 @@
             }
             loadFeedbackData();
             loadTeamData();
-
-            window.addEventListener('resize', function() {
-                const btn = document.getElementById('menu-btn');
-                if (window.innerWidth <= 1024) {
-                    btn.style.display = 'flex';
-                } else {
-                    btn.style.display = 'none';
-                    document.getElementById('mobile-menu').classList.add('hidden');
-                }
-            });
         };
     </script>
 </body>
