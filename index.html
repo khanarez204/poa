@@ -2188,7 +2188,7 @@
                             <p class="text-white font-bold text-xs tracking-widest uppercase" style="font-family:'Rajdhani',sans-serif;">— Sir Awais Sultan, CEO</p>
                         </div>
                     </div>
-                    <div class="img-frame" style="height:300px md:height-400px lg:height-500px;"><img src="ceo.png" loading="lazy" alt="Leadership" style="filter:grayscale(80%);" /></div>
+                    <div class="img-frame" style="height:300px md:height-400px lg:height-500px;"><img src="ceo.png" loading="lazy" alt="Leadership" style="filter:grayscale(50%);" /></div>
                 </div>
                 <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
                     <h2 class="section-title text-4xl md:text-5xl text-white mb-6 md:mb-8" style="font-family:'Bebas Neue',sans-serif;">Academy <span style="color:var(--gold);">Story</span></h2>
@@ -3094,7 +3094,6 @@
             if (paymentCheckCache.studentId === studentId &&
                 paymentCheckCache.timestamp > now - CACHE_TTL) {
                 if (paymentCheckCache.status === 'Paid' || paymentCheckCache.status === 'Confirmed') {
-                    // Paid — start the test
                     _startTestInternal(type);
                     return;
                 } else {
@@ -4468,6 +4467,97 @@
         function joinISSPPrep() {}
         function startISSBFullTest() {}
         function resetISSBFullTest() {}
+
+        // ── ADMISSION FORM SUBMISSION ──
+        document.getElementById('admission-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="spinner"></span> Submitting...';
+            submitBtn.disabled = true;
+
+            try {
+                // Gather data
+                const name = document.getElementById('adm-name').value.trim();
+                const phone = document.getElementById('adm-phone').value.trim();
+                const email = document.getElementById('adm-email').value.trim();
+                const city = document.getElementById('adm-city').value.trim();
+                const course = document.getElementById('adm-course').value;
+                const book = document.getElementById('adm-book').value;
+                const paymentMethod = document.getElementById('adm-payment-method').value;
+                const fileInput = document.getElementById('adm-screenshot');
+                const file = fileInput.files[0];
+
+                // Validate
+                if (!name || !phone || !email || !city || !file) {
+                    showToast('❌ Please fill all fields and upload a screenshot.', 'error');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                // Generate Student ID
+                const studentId = 'S-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 1000);
+
+                // Upload screenshot to Firebase Storage
+                const storageRef = storage.ref('screenshots/' + studentId + '_' + file.name);
+                const uploadTask = await storageRef.put(file);
+                const screenshotUrl = await uploadTask.ref.getDownloadURL();
+
+                // Save student data
+                const studentData = {
+                    student_id: studentId,
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    city: city,
+                    course: course,
+                    book: book === 'yes' ? 'Quiz Book (+2,500 PKR)' : 'No',
+                    payment_method: paymentMethod,
+                    screenshot_url: screenshotUrl,
+                    payment_status: 'Pending',
+                    status: 'Pending Verification',
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+
+                await db.ref('students/' + studentId).set(studentData);
+                // Also save to chatbot leads for admin view
+                await db.ref('chatbot_leads/' + studentId).set({
+                    ...studentData,
+                    interested_course: course
+                });
+
+                showToast('✅ Enrollment submitted! Your ID: ' + studentId, 'success');
+                this.reset();
+                document.getElementById('screenshot-preview-container').innerHTML = '';
+
+                // Optionally redirect to portal
+                setTimeout(() => {
+                    document.getElementById('login-id').value = studentId;
+                    document.getElementById('login-phone').value = phone;
+                    showView('portal');
+                }, 1500);
+
+            } catch (error) {
+                console.error('Submission error:', error);
+                showToast('❌ Error submitting. Please try again.', 'error');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Screenshot preview
+        document.getElementById('adm-screenshot').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const container = document.getElementById('screenshot-preview-container');
+            if (!file) { container.innerHTML = ''; return; }
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                container.innerHTML = `<img src="${ev.target.result}" class="screenshot-preview" />`;
+            };
+            reader.readAsDataURL(file);
+        });
 
         // ── INIT ──
         window.onload = async() => {
