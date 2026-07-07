@@ -1675,6 +1675,12 @@
                 height: 40px;
                 max-width: 150px;
             }
+            .hidden-sm {
+                display: none !important;
+            }
+            #nav-title {
+                font-size: 1.1rem !important;
+            }
         }
 
         /* Test Styles */
@@ -1791,6 +1797,26 @@
         .test-card-clickable .btn-primary {
             pointer-events: auto;
         }
+
+        /* ----- ADMIN: download screenshot button ----- */
+        .admin-download-btn {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 2px 8px;
+            font-size: 9px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .admin-download-btn:hover {
+            background: rgba(59, 130, 246, 0.25);
+            border-color: #60a5fa;
+        }
     </style>
 </head>
 <body>
@@ -1804,8 +1830,8 @@
 
     <!-- ===== NAV ===== -->
     <nav class="fixed w-full z-[100] glass-nav" id="main-nav">
-        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center" style="padding-top:10px; padding-bottom:10px; min-height:64px;">
-            <div class="flex items-center gap-3 cursor-pointer flex-shrink-0" id="main-logo" title="Triple Click for Admin">
+        <div class="max-w-screen-xl mx-auto px-3 sm:px-6 flex justify-between items-center" style="padding-top:10px; padding-bottom:10px; min-height:64px;">
+            <div class="flex items-center gap-2 cursor-pointer flex-shrink-0" id="main-logo" title="Triple Click for Admin">
                 <img id="nav-logo-img" src="logo.png" class="h-12 w-auto object-contain" loading="lazy" alt="POA Logo" style="height:50px; max-width:200px;" />
                 <div class="hidden sm:block">
                     <h1 id="nav-title" class="font-display text-lg text-white tracking-wide leading-tight" style="font-family:'Bebas Neue',sans-serif;letter-spacing:0.05em;line-height:1.1;">Pakistan Officers Academy</h1>
@@ -3636,6 +3662,16 @@
                 actionHtml +=
                     `<button onclick="deleteStudent('${s.student_id}', this)" class="admin-btn admin-btn-danger" style="padding:4px 8px;font-size:9px;"><i data-lucide="trash-2" class="w-3 h-3"></i></button>`;
 
+                // --- DOWNLOAD SCREENSHOT BUTTON ---
+                let downloadScreenshotHtml = '';
+                if (s.screenshot && s.screenshot.startsWith('data:image')) {
+                    downloadScreenshotHtml = `
+                        <button class="admin-download-btn" onclick="downloadScreenshot('${s.student_id}')" title="Download Screenshot">
+                            ⬇️
+                        </button>
+                    `;
+                }
+
                 return `
                     <tr class="border-b border-white/5 hover:bg-white/2">
                         <td class="px-3 md:px-6 py-3 md:py-4 text-gray-400" style="font-size:9px;">${s.student_id||'—'}</td>
@@ -3648,12 +3684,36 @@
                             <span class="block text-[8px] text-gray-500 mt-1">${s.payment_method||'—'}</span>
                             ${s.book ? `<span class="block text-[8px] text-gray-500">${s.book}</span>` : ''}
                         </td>
-                        <td class="px-3 md:px-6 py-3 md:py-4">${screenshotHtml}</td>
+                        <td class="px-3 md:px-6 py-3 md:py-4">
+                            ${screenshotHtml}
+                            ${downloadScreenshotHtml}
+                        </td>
                         <td class="px-3 md:px-6 py-3 md:py-4">${actionHtml}</td>
                         <td class="px-3 md:px-6 py-3 md:py-4 text-green-400" style="font-size:9px;">${s.status||'Active'}</td>
                     </tr>`;
             }).join('');
             setTimeout(() => lucide.createIcons(), 100);
+        }
+
+        // --- DOWNLOAD SCREENSHOT FUNCTION ---
+        function downloadScreenshot(studentId) {
+            const student = cachedStudents.find(s => s.student_id === studentId);
+            if (!student || !student.screenshot) {
+                showToast('❌ No screenshot found for this student.', 'error');
+                return;
+            }
+            try {
+                const link = document.createElement('a');
+                link.href = student.screenshot;
+                link.download = `screenshot_${studentId}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast('📥 Screenshot downloading...', 'success');
+            } catch (e) {
+                showToast('❌ Could not download screenshot.', 'error');
+                console.error(e);
+            }
         }
 
         // ── MARK STUDENT PAID ──
@@ -4474,7 +4534,7 @@
         function startISSBFullTest() {}
         function resetISSBFullTest() {}
 
-        // ── ADMISSION FORM SUBMISSION (FIXED - NO CORS) ──
+        // ── ADMISSION FORM SUBMISSION ──
         document.getElementById('admission-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const submitBtn = this.querySelector('button[type="submit"]');
@@ -4502,7 +4562,7 @@
 
                 const studentId = 'S-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 1000);
 
-                // ✅ CONVERT TO BASE64 - NO CORS NEEDED!
+                // Convert to Base64
                 let screenshotBase64 = await new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.onload = function(ev) {
